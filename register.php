@@ -33,7 +33,7 @@ if ($stmt = $con->prepare('SELECT firstName, lastName, cust_password FROM custom
             $cust_password = password_hash($_POST['cust_password'], PASSWORD_DEFAULT);
             $stmt->bind_param('sssss', $_POST['firstName'], $_POST['lastName'], $_POST['cust_email'], $_POST['cust_phno'], $cust_password);
             $stmt->execute();
-            echo 'Successfully Registered';
+            header("Location: login.html");
         } else {
             echo 'Error Occurred';
         }
