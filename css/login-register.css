@@ -77,3 +77,82 @@ header {
     color:#2e180b;
     opacity: 0.8;
 }
+body
+{
+    background-image: url(backdrop.png);
+    background-size: 100% 103%;
+    background-repeat: no-repeat;
+}
+
+.subTitle
+{
+    font-size: larger;
+}
+
+
+header {
+    background-color: #2e180b; 
+    color: bisque;
+    padding: 10px;
+    text-align:left;
+    padding-left: 5%;
+}
+
+.logo img {
+    width: 100px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    
+}
+
+#forPas
+{
+    font-weight: 500;
+    font-size:13px;
+    color: bisque;
+}
+
+#RegAcc
+{
+    font-weight: 500;
+    font-size:13px;
+    color: bisque;
+}
+
+#LogAcc
+{
+    font-weight: 500;
+    font-size:13px;
+    color: bisque;
+}
+
+#logoLink
+{
+    text-decoration: none;
+    color: bisque;
+}
+
+#AltLink
+{
+    color: bisque;
+}
+
+#brownBtn
+{
+    background-color: #2e180b;
+    border-color: #2e180b;
+}
+
+.inputFields
+{
+    background-color:rgba(255, 228, 196, 0.616);
+    border-radius: 5%;
+    width: 100%;
+    height:max-content;
+
+}
+
+.inputFields::placeholder
+{
+    color:#2e180b;
+    opacity: 0.8;
+}
