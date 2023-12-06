@@ -1,47 +1,68 @@
 <?php
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'eyeweardb';
+session_start();
+include "connect.php";
 
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+require 'phpmailer2/SMTP.php';
+require 'phpmailer2/POP3.php';
+require 'phpmailer2/PHPMailer.php';
+require 'phpmailer2/Exception.php';
+require 'phpmailer2/DSNConfigurator.php';
 
-if (mysqli_connect_error()) {
-    exit('Error connecting to the database' . mysqli_connect_error());
-}
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
-if (!isset($_POST['firstName'], $_POST['lastName'], $_POST['cust_email'], $_POST['cust_phno'], $_POST['cust_password'])) {
-    exit('Empty Field(s)');
-}
-
-if (empty($_POST['firstName']) || empty($_POST['lastName']) || empty($_POST['cust_email']) || empty($_POST['cust_phno']) || empty($_POST['cust_password'])) 
-{
-    exit('Values Empty');
-}
-
-if ($stmt = $con->prepare('SELECT firstName, lastName, cust_password FROM customer WHERE cust_email = ?')) {
-    $stmt->bind_param('s', $_POST['cust_email']);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        echo 'This email is already registered. Try again with a different email.';
-    } else {
-        $stmt->close();  // Close the previous statement before preparing a new one
-
-        if ($stmt = $con->prepare('INSERT INTO customer (firstName, lastName, cust_email, cust_phno, cust_password) VALUES (?, ?, ?, ?, ?)')) {
-            $cust_password = password_hash($_POST['cust_password'], PASSWORD_DEFAULT);
-            $stmt->bind_param('sssss', $_POST['firstName'], $_POST['lastName'], $_POST['cust_email'], $_POST['cust_phno'], $cust_password);
-            $stmt->execute();
-            header("Location: login.html");
-        } else {
-            echo 'Error Occurred';
-        }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['firstName'], $_POST['lastName'], $_POST['cust_email'], $_POST['cust_phno'], $_POST['cust_password'])) {
+        exit('Empty Field(s)');
     }
-    $stmt->close();
-} else {
-    echo 'Error Occurred';
-}
 
-$con->close();
+    if (empty($_POST['firstName']) || empty($_POST['lastName']) || empty($_POST['cust_email']) || empty($_POST['cust_phno']) || empty($_POST['cust_password'])) {
+        exit('Values Empty');
+    }
+
+    // Generate OTP
+    $otp = rand(100000, 999999);
+
+    // Store OTP and user data in session
+    $_SESSION['otp'] = $otp;
+    $_SESSION['user_data'] = [
+        'firstName' => $_POST['firstName'],
+        'lastName' => $_POST['lastName'],
+        'cust_email' => $_POST['cust_email'],
+        'cust_phno' => $_POST['cust_phno'],
+        'cust_password' => password_hash($_POST['cust_password'], PASSWORD_DEFAULT),
+    ];
+
+    // Send OTP via email using PHPMailer
+    try {
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'editwithcharms@gmail.com'; // Replace with your Gmail email
+        $mail->Password   = 'yomq apbp rkcq ktly'; // Use the App Password here
+        $mail->SMTPSecure = 'tls';
+        $mail->Port       = 587;
+
+        $mail->setFrom('editwithcharms@gmail.com');
+        $mail->addAddress($_POST['cust_email']);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Registration OTP';
+        $mail->Body    = 'Your OTP for registration is: ' . $otp;
+
+        $mail->send();
+    } catch (Exception $e) {
+        exit('Message could not be sent. Mailer Error: ' . $mail->ErrorInfo);
+    }
+
+    // Redirect to verify-otp.html for OTP verification
+    header("Location: verify-otp.html");
+    exit();
+} else {
+    // Redirect to the registration form if accessed without form submission
+    header("Location: register.html");
+    exit();
+}
 ?>

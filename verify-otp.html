@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification</title>
+	<!-- Bootstrap 5 CDN Link -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Custom CSS Link -->
+	<link rel="stylesheet" href="css/forgot-password.css">
+</head>
+<body> 
+    <section class="wrapper">
+		<div class="container">
+			<div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4 text-center">
+				
+				<form action="verify-otp.php" method="post" class="rounded shadow p-5" style="background-color: rgba(250, 246, 242, 0.315);">
+                    <div class="logo">
+                        <img decoding="async" src="logo.png" class="img-fluid" alt="logo">
+                    </div>
+					<h3 class="fw-bolder fs-4 mb-3" style="color: rgb(255, 255, 255);">Enter OTP</h3>
+
+					<div class="fw-normal mb-4" style="color: bisque;">
+						Enter the otp code sent to your registered email.
+					</div>  
+
+					<div class="form-floating mb-3">
+						<input type="text" name="entered_otp" class="form-control" id="floatingInput">
+						<label for="floatingInput">Otp Code</label>
+					</div>  
+
+					<button type="submit" class="btn submit_btn my-4" style="background-color:#2e180b; color: bisque;" >Submit</button>
+
+				</form>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
+
