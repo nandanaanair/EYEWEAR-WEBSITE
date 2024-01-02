@@ -1,0 +1,32 @@
+
+ .container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+
+.table th {
+    background-color: #2e180b;
+    color: #ffffff;
+}
+
+/* Target specific th elements for background color */
+.table th:nth-child(1), /* Appointment ID */
+.table th:nth-child(2), /* Date */
+.table th:nth-child(3), /* Time */
+.table th:nth-child(4) { /* Location */
+    background-color: #2e180b; /* Replace YourColor with the desired background color */
+    color: #ffffff; /* Text color for better visibility */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #2e180b10;
+}

@@ -27,7 +27,7 @@ if (isset($_POST['cust_email']) && isset($_POST['cust_password'])) {
     if ($fetchedEmail === $email && password_verify($pass, $hashedPassword)) {
         echo "Logged in!";
         $_SESSION['cust_email'] = $fetchedEmail;
-        header("Location: index.html");
+        header("Location: home.html");
         exit();
     } else {
         echo "Incorrect email or password";

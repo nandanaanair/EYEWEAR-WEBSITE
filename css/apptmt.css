@@ -1,0 +1,105 @@
+
+/* body
+{
+    background-image: url(backdrop.png);
+    background-size: 100% 103%;
+    background-repeat: no-repeat;
+} */
+
+.subTitle
+{
+    font-size: larger;
+}
+
+header {
+    background-color: #2e180b; 
+    color: bisque;
+    padding: 10px;
+    text-align:left;
+    padding-left: 5%;
+}
+#logoLink
+{
+    text-decoration: none;
+    color: bisque;
+}
+
+#apptmt-head
+{
+    color: rgb(255, 255, 255);
+    font-size:xx-large;
+    text-align: center;
+    font-weight: 650;
+}
+#brownBtn
+{
+    background-color: #2e180b;
+    border-color: #2e180b;
+    color: white;
+}
+
+body {
+    background-image: url('backdrop.png');
+    background-size: cover; /* Updated to cover for better responsiveness */
+    background-repeat: no-repeat;
+    background-color: #FFEBEE;
+    margin: 0; /* Added to remove default body margin */
+}
+
+.card {
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff;
+    border: none;
+    border-radius: 12px;
+    margin: auto; /* Center the card horizontally */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Added a subtle box shadow */
+}
+
+label.radio {
+    cursor: pointer;
+    width: 100%;
+    display: block; /* Make labels block-level for better spacing */
+}
+
+label.radio span {
+    padding: 7px 14px;
+    border: 2px solid #eee;
+    display: inline-block;
+    color: #039be5;
+    border-radius: 10px;
+    width: 100%;
+    height: 48px;
+    line-height: 27px;
+    box-sizing: border-box; /* Added to include padding and border in element's total width and height */
+}
+
+.form-control {
+    margin-top: 10px;
+    height: 48px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid #039BE5;
+}
+
+.agree-text, .terms {
+    font-size: 12px;
+}
+
+.confirm-button {
+    height: 50px;
+    border-radius: 10px;
+    background-color: #2e180b;
+    border-color: #2e180b;
+    color: white;
+    width: 100%; /* Make the button full width */
+}
+/* .information
+{
+    font-size: 17px;
+} */
