@@ -13,12 +13,10 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_POST['firstName'], $_POST['lastName'], $_POST['cust_email'], $_POST['cust_phno'], $_POST['cust_password'])) {
-        exit('Empty Field(s)');
-    }
-
-    if (empty($_POST['firstName']) || empty($_POST['lastName']) || empty($_POST['cust_email']) || empty($_POST['cust_phno']) || empty($_POST['cust_password'])) {
-        exit('Values Empty');
+    // Check for validation errors
+    if (isset($_POST['validationErrors']) && !empty($_POST['validationErrors'])) {
+        // Handle validation errors (if needed), or simply exit without any message
+        exit();
     }
 
     // Generate OTP
@@ -54,7 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $mail->send();
     } catch (Exception $e) {
-        exit('Message could not be sent. Mailer Error: ' . $mail->ErrorInfo);
+        // Handle email sending error (if needed), or simply exit without any message
+        exit();
     }
 
     // Redirect to verify-otp.html for OTP verification
@@ -62,7 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 } else {
     // Redirect to the registration form if accessed without form submission
-    header("Location: register.html");
+    header("Location: register.php");
     exit();
 }
 ?>
+

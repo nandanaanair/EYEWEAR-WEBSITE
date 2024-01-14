@@ -10,6 +10,107 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <title>Get Started</title>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const form = document.querySelector('form');
+
+          form.addEventListener('submit', function (event) {
+              let isValid = true;
+
+              // Validation for First Name
+              const firstName = document.getElementById('fname');
+              const firstNameError = document.getElementById('fnameError');
+              if (firstName.value.trim() === '') {
+                  firstNameError.textContent = 'First Name is required.';
+                  isValid = false;
+              } else if (/\d/.test(firstName.value)) {
+                  firstNameError.textContent = 'First Name should not contain integers.';
+                  isValid = false;
+              } else {
+                  firstNameError.textContent = '';
+              }
+
+              // Validation for Last Name
+              const lastName = document.getElementById('lname');
+              const lastNameError = document.getElementById('lnameError');
+              if (lastName.value.trim() === '') {
+                  lastNameError.textContent = 'Last Name is required.';
+                  isValid = false;
+              } else if (/\d/.test(lastName.value)) {
+                  lastNameError.textContent = 'Last Name should not contain integers.';
+                  isValid = false;
+              } else {
+                  lastNameError.textContent = '';
+              }
+
+              // Validation for Email
+              const email = document.getElementById('emailID');
+              const emailError = document.getElementById('emailError');
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (email.value.trim() === '') {
+                  emailError.textContent = 'Email is required.';
+                  isValid = false;
+              } else if (!emailRegex.test(email.value)) {
+                  emailError.textContent = 'Enter a valid email address.';
+                  isValid = false;
+              } else {
+                  emailError.textContent = '';
+              }
+
+              // Validation for Phone Number
+              const phoneNumber = document.getElementById('mobNoID');
+              const phoneNumberError = document.getElementById('mobNoError');
+              const phoneNumberRegex = /^[6789]\d{9}$/;
+              if (phoneNumber.value.trim() === '') {
+                  phoneNumberError.textContent = 'Phone Number is required.';
+                  isValid = false;
+              } else if (!phoneNumberRegex.test(phoneNumber.value)) {
+                  phoneNumberError.textContent = 'Enter a valid phone number.';
+                  isValid = false;
+              } else {
+                  phoneNumberError.textContent = '';
+              }
+
+              // Validation for Password
+              const password = document.getElementById('passwordID');
+              const passwordError = document.getElementById('passwordError');
+              if (password.value.trim() === '') {
+                  passwordError.textContent = 'Password is required.';
+                  isValid = false;
+              } else if (password.value.length < 6) {
+                  passwordError.textContent = 'Password should be 6 or more characters.';
+                  isValid = false;
+              } else {
+                  passwordError.textContent = '';
+              }
+
+              const confirmPassword = document.getElementById('confirmPasswordID');
+              const confirmPasswordError = document.getElementById('confirmPasswordError');
+              if (confirmPassword.value.trim() === '') {
+                  confirmPasswordError.textContent = 'Confirm Password is required.';
+                  isValid = false;
+              } else if (confirmPassword.value !== password.value) {
+                  confirmPasswordError.textContent = 'Passwords do not match. Re-enter the correct password.';
+                  isValid = false;
+              } else {
+                  confirmPasswordError.textContent = '';
+              }
+
+              if (!isValid) {
+                  event.preventDefault();
+              }
+          });
+      });
+  </script>
+  <style>
+      .error-message {
+    color: rgb(255, 176, 176);
+    font-size: 14px;
+    margin-top: 5px;
+}
+  </style>
+
 </head>
 <body>
   <!-- logo -->
@@ -39,19 +140,21 @@
   
           <div class="card bg-glass" style="background-color:rgba(250, 246, 242, 0.315);">
             <div class="card-body px-4 py-5 px-md-5">
-              <form action="register.php" method="post">
+              <form action="register.php" method="post" novalidate onsubmit="return validateForm()">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
                       <label for="firstName"></label>
-                      <input type="text" id="fname" class="inputFields" placeholder="First Name*" name="firstName" required/>
+                      <input type="text" id="fname" class="inputFields" placeholder="First Name*" name="firstName" maxlength="20" required/>
+                      <div id="fnameError" class="error-message"></div>
                     </div>
                   </div>
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
                       <label for="lastName"></label>
-                      <input type="text" id="lname" class="inputFields" placeholder="Last Name*" name="lastName" required/>
+                      <input type="text" id="lname" class="inputFields" placeholder="Last Name*" name="lastName" maxlength="20" required/>
+                      <div id="lnameError" class="error-message"></div>
                     </div>
                   </div>
                 </div>
@@ -60,18 +163,27 @@
                 <div class="form-outline mb-4">
                   <label for="cust_email"></label>
                   <input type="email" id="emailID" class="inputFields" placeholder="Email*" name="cust_email" required/>
+                  <div id="emailError" class="error-message"></div>
                 </div>
 
                 <!-- Phone Number input -->
                 <div class="form-outline mb-4">
                   <label for="cust_phno"></label>
                   <input type="tel" id="mobNoID" pattern="[6789][0-9]{9}" class="inputFields" placeholder="Mobile Number*" name="cust_phno" required/>
+                  <div id="mobNoError" class="error-message"></div>
                 </div>
   
                 <!-- Password input -->
                 <div class="form-outline mb-4">
                   <label for="cust_password"></label>
-                  <input type="password" id="passwordID" class="inputFields" placeholder="Password*" name="cust_password" required/>
+                  <input type="password" id="passwordID" class="inputFields" placeholder="New Password*" name="cust_password" required/>
+                  <div id="passwordError" class="error-message"></div>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <label for="c_password"></label>
+                  <input type="password" id="confirmPasswordID" class="inputFields" placeholder="Confirm Password*" name="c_password" required/>
+                  <div id="confirmPasswordError" class="error-message"></div>
                 </div>
 
   

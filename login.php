@@ -3,6 +3,11 @@
 session_start();
 include "connect.php";
 
+if (isset($_SESSION['cust_email'])) {
+    header("Location: home.html");
+    exit();
+}
+
 if (isset($_POST['cust_email']) && isset($_POST['cust_password'])) {
     function validate($data)
     {
@@ -25,16 +30,18 @@ if (isset($_POST['cust_email']) && isset($_POST['cust_password'])) {
     mysqli_stmt_close($stmt);
 
     if ($fetchedEmail === $email && password_verify($pass, $hashedPassword)) {
-        echo "Logged in!";
         $_SESSION['cust_email'] = $fetchedEmail;
         header("Location: home.html");
         exit();
     } else {
-        echo "Incorrect email or password";
+        echo "<script>createPopup('Incorrect email or password');</script>";
         exit();
     }
-} else {
+} 
+else {
     header("Location: login.html");
     exit();
 }
 ?>
+
+

@@ -13,12 +13,17 @@
 </head>
 <body>
   <!-- logo -->
-  <header>
+  <!-- <header>
     <h4 class="logo">
-        <!-- <img src="path/to/your-logo.png" alt="Your Logo"> -->
-        <a href="landing-page.html"  id="logoLink"> O⌄O VisionVibes </a>
+        <img src="path/to/your-logo.png" alt="Your Logo"> -->
+        <!-- <a href="landing-page.html"  id="logoLink"> O⌄O VisionVibes </a>
     </h4>
-</header>
+</header> -->
+
+    <!-- Navigation Bar -->
+    <?php
+    include 'nav.html';
+    ?>
 
 <div class="container mt-5 mb-5 d-flex flex-column align-items-center" >
     <div id="apptmt-head" class="mb-4">Contact Us Form</div>
