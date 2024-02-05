@@ -34,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
 
             // Redirect to a success page or login page
-            header("Location: login.html");
+            // header("Location: login.html");
+            echo "<script> window.location.href='login.html'</script>";
             exit();
         } else {
             $error_message = 'Error updating the password.';

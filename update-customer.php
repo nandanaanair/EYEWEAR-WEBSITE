@@ -22,7 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         // Redirect to the customer list page after successful update
-        header("Location: list-customer.php");
+        // header("Location: list-customer.php");
+        echo "<script> window.location.href='list-customer.php'</script>";
         exit();
     } else {
         // Handle the update failure (you might want to log the error)

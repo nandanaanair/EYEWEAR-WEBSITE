@@ -77,7 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->close();
 } else {
     // Redirect to the forgot-password.html if accessed without form submission
-    header("Location: forgot-password.html");
+    // header("Location: forgot-password.html");
+    echo "<script> window.location.href='forgot-password.html'</script>";
     exit();
 }
 ?>

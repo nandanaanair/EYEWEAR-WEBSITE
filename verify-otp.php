@@ -5,7 +5,8 @@ session_start();
 // Check if the user data and OTP are in the session
 if (!isset($_SESSION['otp'], $_SESSION['user_data'])) {
     // Redirect to register.html if accessed without proper context
-    header("Location: register.html");
+    // header("Location: register.html");
+    echo "<script> window.location.href='register.html'</script>";
     exit();
 }
 
@@ -33,16 +34,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entered_otp'])) {
         $stmt->close();
 
         // Redirect to a success page or login page
-        header("Location: login.html");
+        // header("Location: login.html");
+        echo "<script> window.location.href='login.html'</script>";
         exit();
     } else {
         // Incorrect OTP, redirect back to verify-otp.html
-        header("Location: verify-otp.html");
+        // header("Location: verify-otp.html");
+        echo "<script> window.location.href='verify-otp.html'</script>";
         exit();
     }
 } else {
     // Redirect to verify-otp.html if accessed without proper form submission
-    header("Location: verify-otp.html");
+    // header("Location: verify-otp.html");
+    echo "<script> window.location.href='verify-otp.html'</script>";
     exit();
 }
 

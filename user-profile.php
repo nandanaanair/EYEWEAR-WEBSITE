@@ -5,7 +5,8 @@ include "connect.php";
 // Check if the user is logged in
 if (!isset($_SESSION['cust_email'])) {
     // Redirect to the login page if not logged in
-    header("Location: login.php");
+    // header("Location: login.php");
+    echo "<script> window.location.href='login.html'</script>";
     exit();
 }
 
@@ -29,7 +30,8 @@ if ($result->num_rows > 0) {
     // ... Add more user details if needed
 } else {
     // Redirect to the login page if the user does not exist
-    header("Location: login.php");
+    // header("Location: login.php");
+    echo "<script> window.location.href='login.html'</script>";
     exit();
 }
 

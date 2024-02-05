@@ -18,10 +18,10 @@
                 <a href="admin-home.php">Dashboard</a>
             </li>
             <li>
-                <a href="admin-prod.php">Products</a>
+                <a href="edit-products.php">Products</a>
             </li>
             <li>
-                <a href="admin-apptmt.php">Appointments</a>
+                <a href="list-appointment.php">Appointments</a>
             </li>
             <li>
                 <a href="list-customer.php">Customers</a>
@@ -41,7 +41,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Add Products</h5>
                         <p class="card-text">Click below to add a new product to the inventory.</p>
-                        <a href="#" class="btn btn-primary">Add a Product</a>
+                        <a href="add-products.php" class="btn btn-primary">Add a Product</a>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Edit products</h5>
                         <p class="card-text">Click below to edit product information.</p>
-                        <a href="#" class="btn btn-primary">Edit Products</a>
+                        <a href="edit-products.php" class="btn btn-primary">Edit Products</a>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                     <div class="card-body">
                         <h5 class="card-title">List Appointments</h5>
                         <p class="card-text">Click below to view the appointment details.</p>
-                        <a href="#" class="btn btn-primary">List Appointments</a>
+                        <a href="list-appointment.php" class="btn btn-primary">List Appointments</a>
                     </div>
                 </div>
             </div>

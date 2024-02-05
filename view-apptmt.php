@@ -68,7 +68,7 @@
     
     <!-- Add Appointment Button -->
     <div class="text-center mt-3">
-        <a href="apptmt.html" class="btn btn-primary">
+        <a href="apptmtform.php" class="btn btn-primary">
             Get Appointment
         </a>
     </div>

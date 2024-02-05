@@ -5,7 +5,8 @@ include "connect.php";
 // Check if the user is logged in
 if (!isset($_SESSION['cust_email'])) {
     // Redirect to the login page if not logged in
-    header("Location: login.php");
+    // header("Location: login.php");
+    echo "<script> window.location.href='login.html'</script>";
     exit();
 }
 
@@ -28,11 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
 
     // Redirect back to the profile page
-    header("Location: user-profile.php");
+    // header("Location: user-profile.php");
+    echo "<script> window.location.href='user-profile.php'</script>";
     exit();
 } else {
     // Redirect to the user profile page if accessed without form submission
-    header("Location: user-profile.php");
+    // header("Location: user-profile.php");
+    echo "<script> window.location.href='user-profile.php'</script>";
     exit();
 }
 ?>

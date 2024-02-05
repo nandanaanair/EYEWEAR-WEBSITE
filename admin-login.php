@@ -4,7 +4,8 @@ include "connect.php";
 
 // Check if admin is already logged in
 if (isset($_SESSION['admin_email'])) {
-    header("Location: home.html");
+    // header("Location: home.html");
+    echo "<script> window.location.href='home.html'</script>";
     exit();
 }
 
@@ -32,7 +33,8 @@ if (isset($_POST['admin_email']) && isset($_POST['admin_password'])) {
     if ($fetchedEmail === $email && $pass === $storedPassword) {
         echo "Admin Logged in!";
         // $_SESSION['admin_email'] = $fetchedEmail;
-        header("Location: admin-home.php");
+        // header("Location: admin-home.php");
+        echo "<script> window.location.href='admin-home.php'</script>";
         exit();
     } else {
         echo "Incorrect email or password";
