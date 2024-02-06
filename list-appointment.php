@@ -50,19 +50,26 @@ $result = $conn->query($sql);
                 </tr>
             </thead>
             <tbody>
-                <?php
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . $row['apptmt_id'] . "</td>";
-                    echo "<td>" . $row['cust_email'] . "</td>";
-                    echo "<td>" . $row['apptmt_date'] . "</td>";
-                    echo "<td>" . $row['apptmt_time'] . "</td>";
-                    echo "<td>" . $row['apptmt_loc'] . "</td>";
-                    echo "<td>" . $row['apptmt_status'] . "</td>";
+            <?php
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row['apptmt_id'] . "</td>";
+                echo "<td>" . $row['cust_email'] . "</td>";
+                echo "<td>" . $row['apptmt_date'] . "</td>";
+                echo "<td>" . $row['apptmt_time'] . "</td>";
+                echo "<td>" . $row['apptmt_loc'] . "</td>";
+                echo "<td>" . $row['apptmt_status'] . "</td>";
+                // Check if the status is "Completed"
+                if ($row['apptmt_status'] != "Completed") {
+                    // Display the "Edit" link
                     echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['apptmt_id'] . "\", \"" . $row['cust_email'] . "\", \"" . $row['apptmt_date'] . "\", \"" . $row['apptmt_time'] . "\", \"" . $row['apptmt_loc'] . "\", \"" . $row['apptmt_status'] . "\")'>Edit</a></td>";
-                    echo "</tr>";
+                } else {
+                    // Display a disabled "Edit" link
+                    echo "<td><a style='color: gray; cursor: not-allowed;'>Edit</a></td>";
                 }
-                ?>
+                echo "</tr>";
+            }
+            ?>
             </tbody>
         </table>
 
