@@ -59,9 +59,115 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha384-4mOC5PJSq1Yq3Jasv4G1kAqQ6owlsOfQ1uHRzBy6ZYgdT1pef0nGhHPfD5QZbb3J" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css">
-
-    
     <title>Add Product</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const name = document.getElementById('prod_name');
+            const nameError = document.getElementById('nameError');
+
+            const description = document.getElementById('prod_description');
+            const descriptionError = document.getElementById('descriptionError');
+
+            const frameType = document.getElementById('prod_frametype');
+            const frameTypeError = document.getElementById('frameTypeError');
+
+            const category = document.getElementById('prod_category');
+            const categoryError = document.getElementById('categoryError');
+
+            const price = document.getElementById('prod_price');
+            const priceError = document.getElementById('priceError');
+
+            const brand = document.getElementById('prod_brand');
+            const brandError = document.getElementById('brandError');
+
+            const color = document.getElementById('prod_color');
+            const colorError = document.getElementById('colorError');
+
+            const image = document.getElementById('prod_img');
+            const imageError = document.getElementById('imageError');
+
+            // Add event listener for name input
+            name.addEventListener('input', function () {
+                if (name.value.trim() === '') {
+                    nameError.textContent = 'Name is required.';
+                } else {
+                    nameError.textContent = '';
+                }
+            });
+
+            // Add event listener for description input
+            description.addEventListener('input', function () {
+                if (description.value.trim() === '') {
+                    descriptionError.textContent = 'Description is required.';
+                } else {
+                    descriptionError.textContent = '';
+                }
+            });
+
+            // Add event listener for frame type selection
+            frameType.addEventListener('change', function () {
+                if (frameType.value === '') {
+                    frameTypeError.textContent = 'Frame type is required.';
+                } else {
+                    frameTypeError.textContent = '';
+                }
+            });
+
+            // Add event listener for category selection
+            category.addEventListener('change', function () {
+                if (category.value === '') {
+                    categoryError.textContent = 'Category is required.';
+                } else {
+                    categoryError.textContent = '';
+                }
+            });
+
+            // Add event listener for price input
+            price.addEventListener('input', function () {
+                if (price.value.trim() === '') {
+                    priceError.textContent = 'Price is required.';
+                } else {
+                    priceError.textContent = '';
+                }
+            });
+
+            // Add event listener for brand selection
+            brand.addEventListener('change', function () {
+                if (brand.value === '') {
+                    brandError.textContent = 'Brand is required.';
+                } else {
+                    brandError.textContent = '';
+                }
+            });
+
+            // Add event listener for color input
+            color.addEventListener('input', function () {
+                if (color.value.trim() === '') {
+                    colorError.textContent = 'Color is required.';
+                } else {
+                    colorError.textContent = '';
+                }
+            });
+
+            // Add event listener for image input
+            image.addEventListener('change', function () {
+                if (image.files.length === 0) {
+                    imageError.textContent = 'Image is required.';
+                } else {
+                    imageError.textContent = '';
+                }
+            });
+        });
+    </script>
+
+    <style>
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+        font-weight:bold;
+    }
+  </style>
 </head>
 
 <body>
@@ -71,15 +177,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <br>
 
         <!-- Product Details Form -->
-        <form action="add-products.php" method="post" enctype="multipart/form-data">
+        <form action="add-products.php" method="post" enctype="multipart/form-data" novalidate>
             <div class="form-group">
                 <label class="form-label" for="prod_name">Name:</label>
                 <input type="text" class="form-control" id="prod_name" name="prod_name" required>
+                <div id="nameError" class="error-message"></div>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="prod_description">Description:</label>
                 <textarea class="form-control" id="prod_description" name="prod_description" rows="4" required></textarea>
+                <div id="descriptionError" class="error-message"></div>
             </div>
 
             <div class="form-group">
@@ -93,6 +201,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <option value="cat_eye">Cat Eye</option>
                         <option value="transparent">Transparent</option>
                     </select>
+                    <div id="frameTypeError" class="error-message"></div>
                 </div>
             </div>
 
@@ -103,11 +212,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="sunglass">Sunglass</option>
                     <option value="screen_glass">Screen Glass</option>
                 </select>
+                <div id="categoryError" class="error-message"></div>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="prod_price">Price:</label>
                 <input type="number" class="form-control" id="prod_price" name="prod_price" step="0.01" required>
+                <div id="priceError" class="error-message"></div>
             </div>
 
             <div class="form-group">
@@ -119,17 +230,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="Vincent_Chase">Vincent Chase</option>
                     <option value="Oakley">Oakley</option>
                 </select>
+                <div id="brandError" class="error-message"></div>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="prod_color">Color:</label>
                 <input type="text" class="form-control" id="prod_color" name="prod_color" required>
+                <div id="colorError" class="error-message"></div>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="form-label" for="prod_img">Image(s):</label>
                 <input type="file" class="form-control" id="prod_img" name="prod_img[]" accept="image/*" multiple>
-            </div>
+                <div id="imageError" class="error-message"></div>
+            </div> -->
 
             <button type="submit" class="btn btn-primary">Add Product</button>
         </form>
