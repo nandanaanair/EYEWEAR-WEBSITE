@@ -41,8 +41,8 @@ $result = $conn->query($sql);
             const color = document.getElementById('edit_prod_color');
             const colorError = document.getElementById('colorError');
 
-            const image = document.getElementById('edit_prod_img');
-            const imageError = document.getElementById('imageError');
+            // const image = document.getElementById('edit_prod_img');
+            // const imageError = document.getElementById('imageError');
 
             // Add event listener for name input
             name.addEventListener('input', function () {
@@ -147,7 +147,7 @@ $result = $conn->query($sql);
                     <th>Price</th>
                     <th>Brand</th>
                     <th>Color</th>
-                    <th>Images</th>
+                    <!-- <th>Images</th> -->
                     <th>Action</th>
                 </tr>
             </thead>
@@ -163,8 +163,8 @@ $result = $conn->query($sql);
                     echo "<td>" . $row['prod_price'] . "</td>";
                     echo "<td>" . $row['prod_brand'] . "</td>";
                     echo "<td>" . $row['prod_color'] . "</td>";
-                    echo "<td>" . $row['prod_img'] . "</td>";
-                    echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['prod_id'] . "\", \"" . $row['prod_name'] . "\", \"" . $row['prod_description'] . "\", \"" . $row['prod_frametype'] . "\", \"" . $row['prod_category'] . "\", \"" . $row['prod_price'] . "\", \"" . $row['prod_brand'] . "\", \"" . $row['prod_color'] . "\", \"" . $row['prod_img'] . "\")'>Edit</a></td>";
+                    // echo "<td>" . $row['prod_img'] . "</td>";
+                    echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['prod_id'] . "\", \"" . $row['prod_name'] . "\", \"" . $row['prod_description'] . "\", \"" . $row['prod_frametype'] . "\", \"" . $row['prod_category'] . "\", \"" . $row['prod_price'] . "\", \"" . $row['prod_brand'] . "\", \"" . $row['prod_color'] . "\")'>Edit</a></td>";
                     echo "</tr>";
                 }
                 ?>
@@ -248,7 +248,7 @@ $result = $conn->query($sql);
 
     <!-- Add this part inside the showEditForm function -->
     <script>
-        function showEditForm(prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color, prod_img) {
+        function showEditForm(prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color) {
     // Set the values of the form fields
     document.getElementById("edit_prod_id").value = prod_id;
     document.getElementById("edit_prod_name").value = prod_name;

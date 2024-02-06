@@ -25,6 +25,85 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha384-4mOC5PJSq1Yq3Jasv4G1kAqQ6owlsOfQ1uHRzBy6ZYgdT1pef0nGhHPfD5QZbb3J" crossorigin="anonymous">
     <title>Admin Appointments</title>
     <link rel="stylesheet" href="list-appointment.css">
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const email = document.querySelector('input[name="edit_cust_email"]');
+        // const emailError = document.getElementById('emailError');
+        // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const date = document.querySelector('input[name="edit_apptmt_date"]');
+        const dateError = document.getElementById('dateError');
+
+        const time = document.querySelector('input[name="edit_apptmt_time"]');
+        const timeError = document.getElementById('timeError');
+
+        const location = document.querySelector('input[name="edit_apptmt_loc"]');
+        const locationError = document.getElementById('locationError');
+
+        // Email validation
+        // email.addEventListener('input', function () {
+        //     if (email.value.trim() === '') {
+        //         emailError.textContent = 'Email is required.';
+        //     } else if (!emailRegex.test(email.value)) {
+        //         emailError.textContent = 'Enter a valid email address.';
+        //     } else {
+        //         emailError.textContent = '';
+        //     }
+        // });
+
+        // Date validation
+        date.addEventListener('input', function () {
+            const currentDate = new Date();
+            const selectedDate = new Date(date.value);
+
+            if (selectedDate < currentDate) {
+                dateError.textContent = 'Select a future date between 2 months from today.';
+            } else {
+                dateError.textContent = '';
+            }
+        });
+
+        // Time validation
+        time.addEventListener('input', function () {
+            // You can add time validation logic here if needed
+            // For example, checking if the selected time is within your business hours
+            // Currently, it's left empty as a placeholder
+        });
+
+        // Location validation
+        location.addEventListener('input', function () {
+            if (location.value.trim() === '') {
+                locationError.textContent = 'Location is required.';
+            } else {
+                locationError.textContent = '';
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const selectTime = document.getElementById('edit_apptmt_time');
+
+        // Generate time options
+        for (let hour = 1; hour <= 23; hour++) {
+            for (let minutes of ['00', '30']) {
+                const timeString = `${hour}:${minutes}`;
+                const option = new Option(timeString, timeString);
+                selectTime.appendChild(option);
+            }
+        }
+    });
+</script>
+<style>
+      .error-message {
+    color: rgb(255, 176, 176);
+    font-size: 14px;
+    margin-top: 5px;
+    width: 100%; /* Ensure the error message spans the full width */
+    text-align: left; /* Align the error message to the left */
+}
+
+  </style>
 </head>
 
 <body>
@@ -77,30 +156,39 @@ $result = $conn->query($sql);
         <!-- Edit Appointment Form -->
         <div id="editFormContainer" style="display: none;">
             <h2 class="text-center">Edit Appointment</h2>
-            <form action="update-appointment.php" method="post" id="editForm">
+            <form action="update-appointment.php" method="post" id="editForm" novalidate>
                 <!-- Display appointment details in form fields for editing -->
                 <label for="edit_apptmt_id">Appointment ID:</label>
                 <input type="text" id="edit_apptmt_id" name="apptmt_id" required readonly>
-                <br>
+                <br><br>
                 <label for="edit_cust_email">Customer Email:</label>
                 <input type="email" id="edit_cust_email" name="cust_email" required readonly>
-                <br>
+                <br><br>
                 <label for="edit_apptmt_date">Date:</label>
-                <input type="date" id="edit_apptmt_date" name="apptmt_date" required>
-                <br>
+                <input type="date" id="edit_apptmt_date" name="apptmt_date" required min="<?php echo date('Y-m-d'); ?>" max="<?= date('Y-m-d', strtotime('+2 months')); ?>">
+                <div id="dateError" class="error-message"></div>
+                <br><br>
                 <label for="edit_apptmt_time">Time:</label>
-                <input type="time" id="edit_apptmt_time" name="apptmt_time" required>
-                <br>
+                <select id="edit_apptmt_time" name="apptmt_time">
+                    <option value="">Select Time</option>
+                </select>                
+                <br><br>
                 <label for="edit_apptmt_loc">Location:</label>
-                <input type="text" id="edit_apptmt_loc" name="apptmt_loc" required>
-                <br>
+                <select id="edit_apptmt_loc" name="apptmt_loc">
+                            <option value="">Select Location</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Thane">Thane</option>
+                            <option value="Kalyan">Kalyan</option>
+                        </select>
+                        <div id="locationError" class="error-message"></div>
+                <br><br>
                 <!-- Add the appointment status dropdown -->
                 <label for="edit_apptmt_status">Status:</label>
                 <select id="edit_apptmt_status" name="apptmt_status">
                     <option value="Pending">Pending</option>
                     <option value="Completed">Completed</option>
                 </select>
-                <br>
+                <br><br>
                 <!-- Add more fields if needed -->
                 <button type="submit">Update Appointment</button>
             </form>
