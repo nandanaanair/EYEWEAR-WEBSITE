@@ -92,13 +92,11 @@
   </style>
 </head>
 <body>
-  <!-- logo -->
-  <header>
-    <h4 class="logo">
-        <!-- <img src="path/to/your-logo.png" alt="Your Logo"> -->
-        <a href="home.html"  id="logoLink"> O⌄O VisionVibes </a>
-    </h4>
-</header>
+    <!-- Navigation Bar -->
+    <?php
+    include 'nav.html';
+    ?>
+  
 
 <div class="container mt-5 mb-5 d-flex flex-column align-items-center" >
     <div id="apptmt-head" class="mb-4">Schedule Your Eye-Checkup Appointment</div>
