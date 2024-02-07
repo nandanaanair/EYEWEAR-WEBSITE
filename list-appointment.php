@@ -1,4 +1,3 @@
-<!-- list-appointment.php -->
 <?php
 session_start();
 include "connect.php";
@@ -9,6 +8,21 @@ include "connect.php";
 //     header("Location: admin-login.php");
 //     exit();
 // }
+
+// Handle delete action
+if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['apptmt_id'])) {
+    $apptmt_id = $_GET['apptmt_id'];
+    // Delete the entry from the database based on appointment ID
+    $sql_delete = "DELETE FROM appointment WHERE apptmt_id = $apptmt_id";
+    if ($conn->query($sql_delete) === TRUE) {
+        // Redirect back to the page to reflect changes
+        // header("Location: ".$_SERVER['PHP_SELF']);
+        echo "<script> window.location.href='list-appointment.php'</script>";
+        exit();
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+}
 
 // Retrieve all appointment data from the database
 $sql = "SELECT * FROM appointment";
@@ -124,7 +138,8 @@ $result = $conn->query($sql);
                     <th>Time</th>
                     <th>Location</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th>Edit/Update</th>
+                    <th>Remove</th>
                     <!-- Add more columns if needed -->
                 </tr>
             </thead>
@@ -146,6 +161,7 @@ $result = $conn->query($sql);
                     // Display a disabled "Edit" link
                     echo "<td><a style='color: gray; cursor: not-allowed;'>Edit</a></td>";
                 }
+                echo "<td><a href='?action=delete&apptmt_id=" . $row['apptmt_id'] . "' onclick='return confirm(\"Are you sure you want to delete this appointment?\")'>Delete</a></td>";
                 echo "</tr>";
             }
             ?>

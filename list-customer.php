@@ -9,6 +9,21 @@ include "connect.php";
 //     exit();
 // }
 
+// Handle delete action
+if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['email'])) {
+    $email = $_GET['email'];
+    // Delete the entry from the database based on email
+    $sql_delete = "DELETE FROM customer WHERE cust_email = '$email'";
+    if ($conn->query($sql_delete) === TRUE) {
+        // Redirect back to the page to reflect changes
+        // header("Location: ".$_SERVER['PHP_SELF']);
+        echo "<script> window.location.href='list-customer.php'</script>";
+        exit();
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+}
+
 // Retrieve all customer data from the database
 $sql = "SELECT * FROM customer";
 $result = $conn->query($sql);
@@ -26,6 +41,71 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha384-4mOC5PJSq1Yq3Jasv4G1kAqQ6owlsOfQ1uHRzBy6ZYgdT1pef0nGhHPfD5QZbb3J" crossorigin="anonymous">
     <title>Customer List</title>
     <link rel="stylesheet" href="list-customer.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const editFirstName = document.getElementById('edit_first_name');
+        const editFirstNameError = document.getElementById('edit_first_name_error');
+
+        const editLastName = document.getElementById('edit_last_name');
+        const editLastNameError = document.getElementById('edit_last_name_error');
+
+        const editEmail = document.getElementById('edit_email');
+        const editEmailError = document.getElementById('edit_email_error');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const editPhone = document.getElementById('edit_phone');
+        const editPhoneError = document.getElementById('edit_phone_error');
+        const phoneNumberRegex = /^[6789]\d{9}$/;
+
+        // First Name validation
+        editFirstName.addEventListener('input', function () {
+            if (editFirstName.value.trim() === '') {
+                editFirstNameError.textContent = 'First Name is required.';
+            } else {
+                editFirstNameError.textContent = '';
+            }
+        });
+
+        // Last Name validation
+        editLastName.addEventListener('input', function () {
+            if (editLastName.value.trim() === '') {
+                editLastNameError.textContent = 'Last Name is required.';
+            } else {
+                editLastNameError.textContent = '';
+            }
+        });
+
+        // Email validation
+        editEmail.addEventListener('input', function () {
+            if (editEmail.value.trim() === '') {
+                editEmailError.textContent = 'Email is required.';
+            } else if (!emailRegex.test(editEmail.value)) {
+                editEmailError.textContent = 'Enter a valid email address.';
+            } else {
+                editEmailError.textContent = '';
+            }
+        });
+
+        // Phone Number validation
+        editPhone.addEventListener('input', function () {
+            if (editPhone.value.trim() === '') {
+                editPhoneError.textContent = 'Phone Number is required.';
+            } else if (!phoneNumberRegex.test(editPhone.value)) {
+                editPhoneError.textContent = 'Enter a valid phone number.';
+            } else {
+                editPhoneError.textContent = '';
+            }
+        });
+    });
+
+    </script>
+    <style>
+      .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+  </style>
 </head>
 
 <body>
@@ -43,7 +123,8 @@ $result = $conn->query($sql);
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Phone Number</th>
-                    <th>Action</th>
+                    <th>Edit/Update</th>
+                    <th>Remove</th>
                     <!-- Add more columns if needed -->
                 </tr>
             </thead>
@@ -57,6 +138,7 @@ $result = $conn->query($sql);
                     echo "<td>" . $row['cust_email'] . "</td>";
                     echo "<td>" . $row['cust_phno'] . "</td>";
                     echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['firstName'] . "\", \"" . $row['lastName'] . "\", \"" . $row['cust_email'] . "\", \"" . $row['cust_phno'] . "\")'>Edit</a></td>";
+                    echo "<td><a href='?action=delete&email=" . $row['cust_email'] . "' onclick='return confirm(\"Are you sure you want to delete this entry?\")'>Delete</a></td>";
                     // Add more cells if needed
                     echo "</tr>";
                 }
@@ -67,19 +149,23 @@ $result = $conn->query($sql);
         <!-- Edit Customer Form -->
         <div id="editFormContainer" style="display: none;">
             <h2 class="text-center">Edit Customer</h2>
-            <form action="update-customer.php" method="post" id="editForm"> <!-- Change id to 'editForm' -->
+            <form action="update-customer.php" method="post" id="editForm" novalidate> <!-- Change id to 'editForm' -->
                 <!-- Display customer details in form fields for editing -->
                 <label for="edit_first_name">First Name:</label>
                 <input type="text" id="edit_first_name" name="first_name" required>
+                <span id="edit_first_name_error" class="error-message"></span>
                 <br>
                 <label for="edit_last_name">Last Name:</label>
                 <input type="text" id="edit_last_name" name="last_name" required>
+                <span id="edit_last_name_error" class="error-message"></span>
                 <br>
                 <label for="edit_email">Email:</label>
                 <input type="email" id="edit_email" name="email" required>
+                <span id="edit_email_error" class="error-message"></span>
                 <br>
                 <label for="edit_phone">Phone Number:</label>
                 <input type="tel" id="edit_phone" name="phone" required>
+                <span id="edit_phone_error" class="error-message"></span>
                 <br>
                 <!-- Add more fields if needed -->
                 <button type="submit">Update Customer</button>

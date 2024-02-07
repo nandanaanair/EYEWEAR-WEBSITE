@@ -2,6 +2,21 @@
 session_start();
 include "connect.php";
 
+// Handle delete action
+if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_id'])) {
+    $prod_id = $_GET['prod_id'];
+    // Delete the entry from the database based on product ID
+    $sql_delete = "DELETE FROM products WHERE prod_id = $prod_id";
+    if ($conn->query($sql_delete) === TRUE) {
+        // Redirect back to the page to reflect changes
+        // header("Location: ".$_SERVER['PHP_SELF']);
+        echo "<script> window.location.href='edit-products.php'</script>";
+        exit();
+    } else {
+        echo "Error deleting record: " . $conn->error;
+    }
+}
+
 // Retrieve all product data from the database
 $sql = "SELECT * FROM products";
 $result = $conn->query($sql);
@@ -148,7 +163,8 @@ $result = $conn->query($sql);
                     <th>Brand</th>
                     <th>Color</th>
                     <!-- <th>Images</th> -->
-                    <th>Action</th>
+                    <th>Edit/Update</th>
+                    <th>Remove</th>
                 </tr>
             </thead>
             <tbody>
@@ -165,6 +181,7 @@ $result = $conn->query($sql);
                     echo "<td>" . $row['prod_color'] . "</td>";
                     // echo "<td>" . $row['prod_img'] . "</td>";
                     echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['prod_id'] . "\", \"" . $row['prod_name'] . "\", \"" . $row['prod_description'] . "\", \"" . $row['prod_frametype'] . "\", \"" . $row['prod_category'] . "\", \"" . $row['prod_price'] . "\", \"" . $row['prod_brand'] . "\", \"" . $row['prod_color'] . "\")'>Edit</a></td>";
+                    echo "<td><a href='?action=delete&prod_id=" . $row['prod_id'] . "' onclick='return confirm(\"Are you sure you want to delete this product?\")'>Delete</a></td>";
                     echo "</tr>";
                 }
                 ?>
