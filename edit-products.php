@@ -149,6 +149,8 @@ $result = $conn->query($sql);
     <div class="container mt-5">
         <h2 class="text-center">Product List</h2>
         <br>
+    <!-- Display image preview
+    <img id="edit_prod_img_preview" src="" alt="Product Image Preview" style="max-width: 100px; max-height: 100px;"> -->
 
         <!-- Display product information in a table -->
         <table class="table table-striped">
@@ -162,7 +164,7 @@ $result = $conn->query($sql);
                     <th>Price</th>
                     <th>Brand</th>
                     <th>Color</th>
-                    <!-- <th>Images</th> -->
+                    <th>Image</th>
                     <th>Edit/Update</th>
                     <th>Remove</th>
                 </tr>
@@ -179,8 +181,8 @@ $result = $conn->query($sql);
                     echo "<td>" . $row['prod_price'] . "</td>";
                     echo "<td>" . $row['prod_brand'] . "</td>";
                     echo "<td>" . $row['prod_color'] . "</td>";
-                    // echo "<td>" . $row['prod_img'] . "</td>";
-                    echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['prod_id'] . "\", \"" . $row['prod_name'] . "\", \"" . $row['prod_description'] . "\", \"" . $row['prod_frametype'] . "\", \"" . $row['prod_category'] . "\", \"" . $row['prod_price'] . "\", \"" . $row['prod_brand'] . "\", \"" . $row['prod_color'] . "\")'>Edit</a></td>";
+                    echo "<td><img src='" . $row['prod_img'] . "' alt='Product Image' style='width: 100px; height: auto;'></td>";
+                    echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['prod_id'] . "\", \"" . $row['prod_name'] . "\", \"" . $row['prod_description'] . "\", \"" . $row['prod_frametype'] . "\", \"" . $row['prod_category'] . "\", \"" . $row['prod_price'] . "\", \"" . $row['prod_brand'] . "\", \"" . $row['prod_color'] . "\", \"" . $row['prod_img'] . "\")'>Edit</a></td>";
                     echo "<td><a href='?action=delete&prod_id=" . $row['prod_id'] . "' onclick='return confirm(\"Are you sure you want to delete this product?\")'>Delete</a></td>";
                     echo "</tr>";
                 }
@@ -265,25 +267,22 @@ $result = $conn->query($sql);
 
     <!-- Add this part inside the showEditForm function -->
     <script>
-        function showEditForm(prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color) {
-    // Set the values of the form fields
-    document.getElementById("edit_prod_id").value = prod_id;
-    document.getElementById("edit_prod_name").value = prod_name;
-    document.getElementById("edit_prod_description").value = prod_description;
-    document.getElementById("edit_prod_frametype").value = prod_frametype;
-    document.getElementById("edit_prod_category").value = prod_category;
-    document.getElementById("edit_prod_price").value = prod_price;
-    document.getElementById("edit_prod_brand").value = prod_brand;
-    document.getElementById("edit_prod_color").value = prod_color;
+        function showEditForm(prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color, prod_img) {
+            // Set the values of the form fields
+            document.getElementById("edit_prod_id").value = prod_id;
+            document.getElementById("edit_prod_name").value = prod_name;
+            document.getElementById("edit_prod_description").value = prod_description;
+            document.getElementById("edit_prod_frametype").value = prod_frametype;
+            document.getElementById("edit_prod_category").value = prod_category;
+            document.getElementById("edit_prod_price").value = prod_price;
+            document.getElementById("edit_prod_brand").value = prod_brand;
+            document.getElementById("edit_prod_color").value = prod_color;
+            document.getElementById("edit_prod_img_preview").src = prod_img; // Set the preview image source
 
-    // // Display the selected image(s) - you may need a different approach for handling images
-    // document.getElementById("edit_prod_img").innerHTML = prod_img;
-
-    // Toggle the display of the edit form
-    var editProductFormContainer = document.getElementById("editProductFormContainer");
-    editProductFormContainer.style.display = (editProductFormContainer.style.display === "none") ? "block" : "none";
-}
-
+            // Toggle the display of the edit form
+            var editProductFormContainer = document.getElementById("editProductFormContainer");
+            editProductFormContainer.style.display = (editProductFormContainer.style.display === "none") ? "block" : "none";
+        }
     </script>
 
     <script>

@@ -26,9 +26,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //     $imagePaths[] = $imagePath;
     // }
 
+    // Handle image upload
+    $imagePath = '';
+    if ($_FILES["prod_img"]["size"] > 0) {
+        $fileName = $_FILES["prod_img"]["name"];
+        $tempFileName = $_FILES["prod_img"]["tmp_name"];
+        $uploadDirectory = "/EYEWEAR-WEBSITE/uploads/";// Set your upload directory
+        $targetFilePath = $uploadDirectory . basename($fileName);
+        
+        if (move_uploaded_file($tempFileName, $targetFilePath)) {
+            $imagePath = $targetFilePath;
+        } else {
+            echo "Error uploading image.";
+        }
+    }
     // Insert product details into the 'product' table
-    $sql = "INSERT INTO products (prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color) 
-            VALUES ('$prod_id', '$prod_name', '$prod_description', '$prod_frametype', '$prod_category', '$prod_price', '$prod_brand', '$prod_color')";
+    $sql = "INSERT INTO products (prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color, prod_img) 
+        VALUES ('$prod_id', '$prod_name', '$prod_description', '$prod_frametype', '$prod_category', '$prod_price', '$prod_brand', '$prod_color', '$imagePath')";
 
     if ($conn->query($sql) === TRUE) {
         // Insert image paths into the 'prod_images' table (commented out for now)
@@ -239,6 +253,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div id="colorError" class="error-message"></div>
             </div>
 
+            <div class="form-group">
+                <label class="form-label" for="prod_img">Image:</label>
+                <input type="file" class="form-control" id="prod_img" name="prod_img" accept="image/*">
+                <div id="imageError" class="error-message"></div>
+            </div>
             <!-- <div class="form-group">
                 <label class="form-label" for="prod_img">Image(s):</label>
                 <input type="file" class="form-control" id="prod_img" name="prod_img[]" accept="image/*" multiple>

@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha384-4mOC5PJSq1Yq3Jasv4G1kAqQ6owlsOfQ1uHRzBy6ZYgdT1pef0nGhHPfD5QZbb3J" crossorigin="anonymous">
     <title>VisionVibes</title>
+    <script>
+        // Initialize Bootstrap components
+        $(document).ready(function(){
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
 </head>
 
 <body>
@@ -24,8 +30,15 @@
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="products.php">Products</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Products
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="eyeglasses-prod.php">Eyeglasses</a>
+                        <a class="dropdown-item" href="sunglasses-prod.php">Sunglasses</a>
+                        <a class="dropdown-item" href="screenglasses-prod.php">Screen Glasses</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="login.html"">Appointments</a>
