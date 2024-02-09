@@ -6,7 +6,7 @@
 include "connect.php";
 
 // Retrieve products from the database
-$sql = "SELECT * FROM products WHERE prod_category = 'eyeglass'";
+$sql = "SELECT * FROM products WHERE prod_category = 'screen_glass'";
 $result = $conn->query($sql);
 
 // Close the database connection
