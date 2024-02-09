@@ -1,0 +1,84 @@
+/* product-details.css */
+
+.container {
+    padding-top: 50px;
+}
+
+.product-card {
+    display: flex;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-image-container {
+    flex: 0 0 auto;
+    margin-right: 20px;
+}
+
+.product-details {
+    flex: 1;
+}
+
+.product-image {
+    max-width: 100%;
+    height: auto;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.color-box {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.review-section {
+    margin-top: 30px;
+}
+
+.review-form {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.review-form label {
+    font-weight: bold;
+}
+
+.review-form textarea {
+    min-height: 100px;
+}
+
+.review-form button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.review-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Adjusted button styles */
+.btn-order-now {
+    background-color: #2e180b;
+    color: #fff;
+}
+
+.btn-add-to-cart {
+    background-color: #d67433;
+    color: #fff;
+    border: none;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #b5b5b5;
+}

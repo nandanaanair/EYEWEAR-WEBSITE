@@ -54,6 +54,8 @@ $conn->close();
                                 <p class="card-text"><?php echo $row["prod_description"]; ?></p>
                                 <p class="card-text">Price: <?php echo $row["prod_price"]; ?></p>
                                 <p class="card-text">Brand: <?php echo $row["prod_brand"]; ?></p>
+                                <!-- Add link to view product details -->
+                                <a href="product-details.php?id=<?php echo $row['prod_id']; ?>" class="btn btn-primary">View Details</a>
                             </div>
                         </div>
                     </div>
