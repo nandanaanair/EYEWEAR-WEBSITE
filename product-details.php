@@ -1,5 +1,5 @@
 <?php
-// Assuming you have a database connection
+session_start();
 include "connect.php";
 
 // Retrieve product details based on the product ID from the URL
@@ -17,13 +17,32 @@ if (isset($_GET['id'])) {
     echo "Product ID not provided";
 }
 
+// Fetch customer's first name from the customer table based on their email
+if (isset($_SESSION['cust_email'])) {
+    $cust_email = $_SESSION['cust_email'];
+    $sql_customer = "SELECT firstName FROM customer WHERE cust_email = '$cust_email'";
+    $result_customer = $conn->query($sql_customer);
+
+    if ($result_customer->num_rows > 0) {
+        $customer = $result_customer->fetch_assoc();
+        $customer_fname = $customer['firstName'];
+    } else {
+        echo "Customer not found";
+    }
+} else {
+    echo "<script> window.location.href='login.html'</script>";
+}
+
+// Retrieve existing reviews for the product
+$reviews_sql = "SELECT * FROM reviews WHERE prod_id = '$product_id'";
+$reviews_result = $conn->query($reviews_sql);
+
 // Close the database connection
 $conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,67 +50,118 @@ $conn->close();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/product-details.css">
 </head>
-
 <body>
+    <!-- Navigation Bar -->
+    <?php include 'nav.html'; ?>
 
-    <div class="container">
-        <h2 class="mt-2 mb-3">Product Details</h2>
-        <br>
-        <?php if (isset($product)) : ?>
-            <div class="card product-card">
-                <div class="product-image-container">
-                    <img src="<?php echo $product['prod_image']; ?>" class="card-img-top product-image" alt="Product Image">
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-4">Product Details</h2>
+            </div>
+        </div>
+        <div class="row">
+            <?php if (isset($product)) : ?>
+                <div class="col-lg-6">
+                    <div class="card product-card">
+                        <div class="product-image-container">
+                            <img src="<?php echo $product['prod_image']; ?>" class="card-img-top product-image" alt="Product Image">
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body product-details">
-                    <h5 class="card-title"><?php echo $product["prod_name"]; ?></h5>
-                    <p class="card-text"> <?php echo $product["prod_description"]; ?></p>
-                    <p class="card-text"><strong>₹<?php echo $product["prod_price"]; ?></strong> </p>
-                    <p class="card-text"><strong>Frame Type:</strong> <?php echo $product["prod_frametype"]; ?></p>
-                    <p class="card-text"><strong>Category:</strong> <?php echo $product["prod_category"]; ?></p>
-                    <p class="card-text"><strong>Brand:</strong> <?php echo $product["prod_brand"]; ?></p>
-                    <!-- Display color as a colored box -->
-                    <p class="card-text"><strong>Color:</strong> <span class="color-box" style="background-color: <?php echo $product['prod_color']; ?>;"></span></p>
-                    <!-- Add more details here -->
-                    <div class="mt-4">
-                        <button class="btn btn-order-now mr-2">Order Now</button>
-                        <form action="add-to-cart.php" method="post" class="d-inline">
-                            <input type="hidden" name="product_id" value="<?php echo $product['prod_id']; ?>">
-                            <button type="submit" class="btn btn-add-to-cart">Add to Cart</button>
+                <div class="col-lg-6">
+                    <div class="card product-details">
+                        <div class="card-body">
+                            <h2 class="card-title"><?php echo $product["prod_name"]; ?></h2>
+                            <p class="card-text"><?php echo $product["prod_description"]; ?></p>
+                            <p class="card-text"><strong>₹<?php echo $product["prod_price"]; ?></strong></p>
+                            <p class="card-text"><strong>Frame Type:</strong> <?php echo $product["prod_frametype"]; ?></p>
+                            <p class="card-text"><strong>Category:</strong> <?php echo $product["prod_category"]; ?></p>
+                            <p class="card-text"><strong>Brand:</strong> <?php echo $product["prod_brand"]; ?></p>
+                            <p class="card-text"><strong>Color:</strong> <span class="color-box" style="background-color: <?php echo $product['prod_color']; ?>;"></span></p>
+                            <div class="mt-4">
+                            <button class="btn btn-primary" id="orderNowBtn">Order Now</button>
+                                <form action="add-to-cart.php" method="post" class="d-inline">
+                                    <input type="hidden" name="product_id" value="<?php echo $product['prod_id']; ?>">
+                                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Review Section -->
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <div class="card">
+                    <h5 class="card-header">Reviews</h5>
+                    <div class="card-body">
+                        <?php if ($reviews_result->num_rows > 0) : ?>
+                            <ul class="list-group">
+                                <?php while ($review = $reviews_result->fetch_assoc()) : ?>
+                                    <li class="list-group-item">
+                                        <h6><?php echo $review['cust_fname']; ?></h6>
+                                        <p><?php echo $review['rev_comment']; ?></p>
+                                        <p>Rating: <?php echo $review['rev_rating']; ?></p>
+                                    </li>
+                                <?php endwhile; ?>
+                            </ul>
+                        <?php else : ?>
+                            <p>No reviews yet.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Review Section -->
+        <div class="row mt-3" id="addReviewSection" style="display: none;">
+            <div class="col-lg-12">
+                <div class="card">
+                    <h5 class="card-header">Add Review</h5>
+                    <div class="card-body">
+                        <form action="submit-review.php" method="post">
+                            <!-- Hide the input fields for customer's first name and prod ID -->
+                            <input type="hidden" name="firstName" value="<?php echo $customer_fname; ?>">
+                            <input type="hidden" name="prod_id" value="<?php echo $product_id; ?>">
+                            <div class="form-group">
+                                <label for="review_content">Content</label>
+                                <textarea class="form-control" id="review_content" name="review_content" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="review_rating">Rating</label>
+                                <select class="form-control" id="review_rating" name="review_rating" required>
+                                    <option value="5">5 stars</option>
+                                    <option value="4">4 stars</option>
+                                    <option value="3">3 stars</option>
+                                    <option value="2">2 stars</option>
+                                    <option value="1">1 star</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
                         </form>
                     </div>
                 </div>
             </div>
-            <!-- Review Section -->
-            <div class="card mt-4">
-                <h5 class="card-header">Add Review</h5>
-                <div class="card-body">
-                    <!-- Form to add a review -->
-                    <form action="add-review.php" method="post">
-                        <div class="form-group">
-                            <label for="review_title">Title</label>
-                            <input type="text" class="form-control" id="review_title" name="review_title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="review_content">Content</label>
-                            <textarea class="form-control" id="review_content" name="review_content" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="review_rating">Rating</label>
-                            <select class="form-control" id="review_rating" name="review_rating" required>
-                                <option value="5">5 stars</option>
-                                <option value="4">4 stars</option>
-                                <option value="3">3 stars</option>
-                                <option value="2">2 stars</option>
-                                <option value="1">1 star</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit Review</button>
-                    </form>
-                </div>
+        </div>
+
+        <!-- Add Review Button -->
+        <div class="row mt-3" id="addReviewBtnRow">
+            <div class="col-lg-12">
+                <button class="btn btn-primary" id="addReviewBtn">Add a Review</button>
             </div>
-        <?php endif; ?>
+        </div>
     </div>
 
+    <script>
+        // Toggle visibility of add review section and scroll to it
+        document.getElementById('addReviewBtn').addEventListener('click', function() {
+            document.getElementById('addReviewSection').style.display = 'block';
+            document.getElementById('addReviewBtnRow').style.display = 'none'; // Hide the button
+            document.getElementById('addReviewSection').scrollIntoView({ behavior: 'smooth' }); // Scroll to the form
+        });
+    </script>
 </body>
-
 </html>
