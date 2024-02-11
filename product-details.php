@@ -2,14 +2,18 @@
 session_start();
 include "connect.php";
 
+
 // Retrieve product details based on the product ID from the URL
 if (isset($_GET['id'])) {
-    $product_id = $_GET['id'];
-    $sql = "SELECT * FROM products WHERE prod_id = '$product_id'";
+    $prod_id = $_GET['id'];
+    $sql = "SELECT * FROM products WHERE prod_id = '$prod_id'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $product = $result->fetch_assoc();
+        // Set session variables after retrieving product details
+        $_SESSION['prod_price'] = $product['prod_price'];
+        $_SESSION['prod_id'] = $product['prod_id'];
     } else {
         echo "Product not found";
     }
@@ -34,8 +38,23 @@ if (isset($_SESSION['cust_email'])) {
 }
 
 // Retrieve existing reviews for the product
-$reviews_sql = "SELECT * FROM reviews WHERE prod_id = '$product_id'";
+$reviews_sql = "SELECT * FROM reviews WHERE prod_id = '$prod_id'";
 $reviews_result = $conn->query($reviews_sql);
+
+// Check for success message
+if(isset($_GET['success']) && $_GET['success'] == 1) {
+    echo "<div class='alert alert-success' role='alert'>Product added to cart successfully!</div>";
+}
+
+// Check for error messages
+if(isset($_GET['error'])) {
+    $error_code = $_GET['error'];
+    if($error_code == 1) {
+        echo "<div class='alert alert-danger' role='alert'>Product not found!</div>";
+    } elseif($error_code == 2) {
+        echo "<div class='alert alert-danger' role='alert'>Product ID not provided!</div>";
+    }
+}
 
 // Close the database connection
 $conn->close();
@@ -80,9 +99,12 @@ $conn->close();
                             <p class="card-text"><strong>Brand:</strong> <?php echo $product["prod_brand"]; ?></p>
                             <p class="card-text"><strong>Color:</strong> <span class="color-box" style="background-color: <?php echo $product['prod_color']; ?>;"></span></p>
                             <div class="mt-4">
-                            <button class="btn btn-primary" id="orderNowBtn">Order Now</button>
+                            <form action="checkout-form.php" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-primary" id="orderNowBtn">Order Now</button>
+                                </form>
+                            
                                 <form action="add-to-cart.php" method="post" class="d-inline">
-                                    <input type="hidden" name="product_id" value="<?php echo $product['prod_id']; ?>">
+                                    <input type="hidden" name="prod_id" value="<?php echo $product['prod_id']; ?>">
                                     <button type="submit" class="btn btn-primary">Add to Cart</button>
                                 </form>
                             </div>
@@ -125,7 +147,7 @@ $conn->close();
                         <form action="submit-review.php" method="post">
                             <!-- Hide the input fields for customer's first name and prod ID -->
                             <input type="hidden" name="firstName" value="<?php echo $customer_fname; ?>">
-                            <input type="hidden" name="prod_id" value="<?php echo $product_id; ?>">
+                            <input type="hidden" name="prod_id" value="<?php echo $prod_id; ?>">
                             <div class="form-group">
                                 <label for="review_content">Content</label>
                                 <textarea class="form-control" id="review_content" name="review_content" rows="3" required></textarea>
