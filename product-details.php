@@ -45,6 +45,9 @@ $reviews_result = $conn->query($reviews_sql);
 if(isset($_GET['success']) && $_GET['success'] == 1) {
     echo "<div class='alert alert-success' role='alert'>Product added to cart successfully!</div>";
 }
+if(isset($_GET['success']) && $_GET['success'] == 2) {
+    echo "<div class='alert alert-success' role='alert'>Order placed successfully!</div>";
+}
 
 // Check for error messages
 if(isset($_GET['error'])) {
@@ -53,6 +56,9 @@ if(isset($_GET['error'])) {
         echo "<div class='alert alert-danger' role='alert'>Product not found!</div>";
     } elseif($error_code == 2) {
         echo "<div class='alert alert-danger' role='alert'>Product ID not provided!</div>";
+    }
+    elseif($error_code == 3) {
+        echo "<div class='alert alert-danger' role='alert'>Order not placed!</div>";
     }
 }
 

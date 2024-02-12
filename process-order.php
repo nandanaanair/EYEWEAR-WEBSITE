@@ -30,9 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$order_id', '$order_date', '$order_bldg', '$order_city', '$order_state', '$order_pincode', '$total_price', '$cust_email', '$prod_id')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Order placed successfully.";
+        // echo "Order placed successfully.";
+        echo "<script>window.location.href='product-details.php?id=$prod_id&success=2'</script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "<script>window.location.href='product-details.php?id=$prod_id&error=3'</script>";
     }
 }
 // Close database connection

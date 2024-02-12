@@ -39,6 +39,54 @@ if(isset($_POST['remove_prod_id'])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/cart.css"> <!-- Your custom styles -->
     <title>Cart</title>
+    <!-- <script>
+        // Function to display cart details from local storage
+        function displayCart() {
+            var cart = JSON.parse(localStorage.getItem('cart'));
+            var cartItemsContainer = document.getElementById('cart-items');
+            var totalPrice = 0;
+            var totalItems = 0;
+
+            if (cart && cart.length > 0) {
+                cart.forEach(function(item) {
+                    var cartItemDiv = document.createElement('div');
+                    cartItemDiv.classList.add('cart-item');
+                    cartItemDiv.classList.add('bg-white');
+                    cartItemDiv.classList.add('shadow-sm');
+                    cartItemDiv.classList.add('p-3');
+                    cartItemDiv.classList.add('mb-3');
+                    cartItemDiv.classList.add('rounded');
+
+                    var productName = document.createElement('h4');
+                    productName.textContent = item.prod_name;
+                    cartItemDiv.appendChild(productName);
+
+                    var productDescription = document.createElement('div');
+                    productDescription.textContent = item.prod_description;
+                    cartItemDiv.appendChild(productDescription);
+
+                    var productPrice = document.createElement('p');
+                    productPrice.textContent = '$' + item.prod_price;
+                    cartItemDiv.appendChild(productPrice);
+
+                    cartItemsContainer.appendChild(cartItemDiv);
+
+                    totalPrice += parseFloat(item.prod_price);
+                    totalItems++;
+                });
+            } else {
+                cartItemsContainer.textContent = 'Cart is empty';
+            }
+
+            document.getElementById('total-items').textContent = totalItems;
+            document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+        }
+
+        // Call the displayCart function when the page loads
+        window.onload = function() {
+            displayCart();
+        };
+    </script> -->
 </head>
 
 <body>
@@ -50,7 +98,7 @@ if(isset($_POST['remove_prod_id'])) {
         <div class="row">
             <div class="col-lg-8">
                 <h2 class="mb-4">Shopping Cart</h2>
-                <div class="cart-items">
+                <div id="cart-items" class="cart-items">
                     <!-- Loop through cart items -->
                     <?php foreach($cart as $item) : ?>
                         <div class="cart-item bg-white shadow-sm p-3 mb-3 rounded">
@@ -95,13 +143,13 @@ if(isset($_POST['remove_prod_id'])) {
                             echo $totalPrice; 
                         ?>
                     </span></p> <!-- Total price -->
-                    <form action="checkout-form.php" method="post">
-                        <button type="submit" class="btn btn-primary btn-block">Checkout</button>
-                    </form>
+                    <button id="checkout-btn" class="btn btn-primary btn-block">Checkout</button>
                 </div>
             </div>
         </div>
     </div>
+
+    
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>

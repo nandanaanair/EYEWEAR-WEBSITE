@@ -1,11 +1,9 @@
 <?php
-// helloo
 session_start();
 include "connect.php";
 
 if (isset($_SESSION['cust_email'])) {
-    // header("Location: home.html");
-    echo "<script> window.location.href='home.html'</script>";
+    echo "<script>window.location.href='home.html'</script>";
     exit();
 }
 
@@ -21,7 +19,6 @@ if (isset($_POST['cust_email']) && isset($_POST['cust_password'])) {
     $email = validate($_POST['cust_email']);
     $pass = validate($_POST['cust_password']);
 
-    // Use parameterized query to prevent SQL injection
     $sql = "SELECT cust_email, cust_password FROM customer WHERE cust_email = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $email);
@@ -32,19 +29,17 @@ if (isset($_POST['cust_email']) && isset($_POST['cust_password'])) {
 
     if ($fetchedEmail === $email && password_verify($pass, $hashedPassword)) {
         $_SESSION['cust_email'] = $fetchedEmail;
-        // header("Location: home.html");
-        echo "<script> window.location.href='home.html'</script>";
+        echo "<script>window.location.href='home.html'</script>";
         exit();
     } else {
-        echo "<script>createPopup('Incorrect email or password');</script>";
+        echo "<script>alert('Incorrect email or password');</script>";
+        echo "<script>window.location.href='login.html'</script>";
+        // After successful login, store the user's email in a session variable
+        $_SESSION['cust_email'] = $user_email; // Assuming $user_email is the email retrieved from login process
         exit();
     }
-} 
-else {
-    // header("Location: login.html");
-    echo "<script> window.location.href='login.html'</script>";
+} else {
+    echo "<script>window.location.href='login.html'</script>";
     exit();
 }
 ?>
-
-
