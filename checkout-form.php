@@ -1,3 +1,9 @@
+<?php
+session_start();
+// Fetch the product price from the session variable
+$prod_price = $_SESSION['prod_price'] ?? 0; // Default to 0 if session variable is not set
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/checkout-form.css">
     <title>Checkout</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 </head>
 <body>
     <?php
@@ -14,7 +22,8 @@
 <div class="container mt-5">
     <h2 class="text-center">Shipping Address</h2>
     <br>
-
+    <!-- <input type="button" id="razorGateway" name="submit" class="submit action-button"
+                                    value="Pay" /> -->
     <!-- Checkout Form -->
     <form id="paymentForm" action="process-order.php" method="post" novalidate>
         <div class="form-group">
@@ -45,71 +54,103 @@
     </form>
 </div>
 <!-- Include Razorpay SDK -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script>
-        var options = {
-            "key": "rzp_test_cUE46WfnuayEgH", // Enter the Key ID generated from the Dashboard
-            "amount": "100",
-            "currency": "INR",
-            "description": "VisionVibes",
-            "image": "https://s3.amazonaws.com/rzp-mobile/images/rzp.jpg",
-            "prefill": {
-            "email": "nan@gmail.com",
-            "contact": "9372828399", // Make sure to enclose the contact number in quotes
-            },
-            "config": {
+<script>
+    var prod_price = <?php echo json_encode($prod_price); ?>;
+    var options = {
+        "key": "rzp_test_cUE46WfnuayEgH", 
+        "amount": prod_price * 100,
+        "currency": "INR",
+        "description": "VisionVibes",
+        "image": "https://visionvibes.000webhostapp.com/logo2.png",
+        "notes": {
+            "address": "note value"
+        },
+        "theme": {
+            "color": "#644432"
+        },
+        "config": {
             "display": {
                 "blocks": {
-                "card": { // Name for Card block
-                    "name": "Pay using Card",
-                    "instruments": [
-                    {
-                        "method": "card",
+                    "upi": {
+                        "name": "Pay via UPI",
+                        "instruments": [
+                            {
+                                "method": "upi"
+                            }
+                        ]
                     }
-                    ]
                 },
-                "netbanking": { // Name for Netbanking block
-                    "name": "Pay using Netbanking",
-                    "instruments": [
-                    {
-                        "method": "netbanking",
-                    }
-                    ]
-                },
-                "upi": { // Name for UPI block
-                    "name": "Pay using UPI",
-                    "instruments": [
-                    {
-                        "method": "upi",
-                    }
-                    ]
-                }
-                },
-                "sequence": ["block.card", "block.netbanking", "block.upi"], // Define the sequence of payment methods
-                "preferences": {
-                "show_default_blocks": false // Should Checkout show its default blocks?
-                }
+                "sequence": ["block.upi"] // Corrected sequence
             }
-            },
-            "handler": function (response) {
+        },
+        "handler": function (response) {
             alert(response.razorpay_payment_id);
-            },
-            "modal": {
+        },
+        "modal": {
             "ondismiss": function () {
                 if (confirm("Are you sure you want to close the form?")) {
-                console.log("Checkout form closed by the user");
+                    txt = "You pressed OK!";
+                    console.log("Checkout form closed by the user");
                 } else {
-                console.log("Complete the Payment");
+                    txt = "You pressed Cancel!";
+                    console.log("Complete the Payment");
                 }
             }
-            }
-        };
-        var rzp1 = new Razorpay(options);
-        document.getElementById('rzp-button').onclick = function (e) {
-            rzp1.open();
-            e.preventDefault();
         }
-        </script>
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzp-button').onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
+
+<!-- <script type="text/javascript"> 
+    var options = {
+        "key": "rzp_test_cUE46WfnuayEgH", // Enter the Key ID generated from the Dashboard
+        "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise or INR 500.
+        "currency": "INR",
+        "name": "Acme Corp",
+        "description": "Ecommerce",
+        "image": "image",
+        //This is a sample Order ID. Create an Order using Orders API. (https://razorpay.com/docs/payment-gateway/orders/integration/#step-1-create-an-order). Refer the Checkout form table given below
+        "handler": function (response){
+            alert(response.razorpay_payment_id);
+        },
+        "prefill": {
+            "name": "Gaurav Kumar",
+            "email": "gaurav.kumar@example.com",
+            "contact": "9999999999"
+        },
+        "notes": {
+            "address": "note value"
+        },
+        "theme": {
+            "color": "#EA5B29"
+        },
+        "config": {
+            "display": {
+                "blocks": {
+                    "upi": {
+                        "name": "Pay via UPI",
+                        "instruments": [
+                            {
+                                "method": "upi"
+                            }
+                        ]
+                    }
+                },
+                "sequence": ["block.upi"] // Corrected sequence
+            }
+        }
+    };
+    var rzp1 = new window.Razorpay(options);
+    document.getElementById('razorGateway').onclick = function(e){
+        rzp1.open();
+        e.preventDefault();
+    }
+</script> -->
+
 
 </body>
 </html>
