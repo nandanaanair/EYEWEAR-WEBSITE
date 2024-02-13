@@ -15,42 +15,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Generate a random 5-digit prod_id
     $prod_id = rand(10000, 99999);
 
-    // Handle image upload (commented out for now)
-    // $imageFiles = $_FILES["prod_img"];
-    // $imagePaths = [];
-
-    // foreach ($imageFiles["tmp_name"] as $key => $tmpName) {
-    //     $fileName = $imageFiles["name"][$key];
-    //     $imagePath = "path/to/upload/directory/" . $fileName; // Set your upload directory
-    //     move_uploaded_file($tmpName, $imagePath);
-    //     $imagePaths[] = $imagePath;
-    // }
-
     // Handle image upload
     $imagePath = '';
     if ($_FILES["prod_img"]["size"] > 0) {
-        $fileName = $_FILES["prod_img"]["name"];
-        $tempFileName = $_FILES["prod_img"]["tmp_name"];
-        $uploadDirectory = "/EYEWEAR-WEBSITE/uploads/";// Set your upload directory
-        $targetFilePath = $uploadDirectory . basename($fileName);
-        
-        if (move_uploaded_file($tempFileName, $targetFilePath)) {
-            $imagePath = $targetFilePath;
-        } else {
-            echo "Error uploading image.";
-        }
+    $fileName = $_FILES["prod_img"]["name"];
+    $tempFileName = $_FILES["prod_img"]["tmp_name"];
+    $uploadDirectory = "uploads/"; // Set your upload directory relative to the current script
+    $targetFilePath = $uploadDirectory . basename($fileName);
+    
+    // Check if the file is an actual image
+    $imageFileType = strtolower(pathinfo($targetFilePath,PATHINFO_EXTENSION));
+    $allowedExtensions = array("jpg", "jpeg", "png", "gif","webp");
+    if (!in_array($imageFileType, $allowedExtensions)) {
+        echo "Only JPG, JPEG, PNG, and GIF files are allowed.";
+        exit;
     }
+
+    // Check file size
+    if ($_FILES["prod_img"]["size"] > 500000) {
+        echo "Sorry, your file is too large.";
+        exit;
+    }
+
+    // Move the uploaded file to the specified directory
+    if (move_uploaded_file($tempFileName, $targetFilePath)) {
+        $imagePath = $targetFilePath;
+    } else {
+        echo "Error uploading image.";
+        exit;
+    }
+}
+
     // Insert product details into the 'product' table
     $sql = "INSERT INTO products (prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color, prod_img) 
         VALUES ('$prod_id', '$prod_name', '$prod_description', '$prod_frametype', '$prod_category', '$prod_price', '$prod_brand', '$prod_color', '$imagePath')";
 
     if ($conn->query($sql) === TRUE) {
-        // Insert image paths into the 'prod_images' table (commented out for now)
-        // foreach ($imagePaths as $imagePath) {
-        //     $sql = "INSERT INTO prod_images (prod_id, image_path) VALUES ('$prod_id', '$imagePath')";
-        //     $conn->query($sql);
-        // }
-
         echo "Product added successfully";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

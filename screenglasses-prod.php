@@ -49,6 +49,12 @@ $conn->close();
                     ?>
                     <div class="col-md-4">
                         <div class="card">
+                            <?php if (!empty($row["prod_img"])) { ?>
+                                <img src="<?php echo $row["prod_img"]; ?>" class="card-img-top" alt="Product Image">
+                            <?php } else { ?>
+                                <!-- Add a placeholder image or default image here -->
+                                <img src="placeholder.jpg" class="card-img-top" alt="Product Image">
+                            <?php } ?>
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $row["prod_name"]; ?></h5>
                                 <p class="card-text"><?php echo $row["prod_description"]; ?></p>

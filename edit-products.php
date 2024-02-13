@@ -16,6 +16,47 @@ if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_id
         echo "Error deleting record: " . $conn->error;
     }
 }
+// Handle update action
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
+    $prod_id = $_POST['prod_id'];
+    $prod_name = $_POST['prod_name'];
+    $prod_description = $_POST['prod_description'];
+    $prod_frametype = $_POST['prod_frametype'];
+    $prod_category = $_POST['prod_category'];
+    $prod_price = $_POST['prod_price'];
+    $prod_brand = $_POST['prod_brand'];
+    $prod_color = $_POST['prod_color'];
+
+    // Check if a file was uploaded
+    if(isset($_FILES['prod_img']) && $_FILES['prod_img']['error'] === UPLOAD_ERR_OK) {
+        $file_tmp = $_FILES['prod_img']['tmp_name'];
+        $file_name = $_FILES['prod_img']['name'];
+        $file_type = $_FILES['prod_img']['type'];
+
+        // Move uploaded file to desired location
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename($file_name);
+
+        if (move_uploaded_file($file_tmp, $target_file)) {
+            // Update the image path in the database
+            $sql_update_img = "UPDATE products SET prod_name='$prod_name', prod_description='$prod_description', prod_frametype='$prod_frametype', prod_category='$prod_category', prod_price='$prod_price', prod_brand='$prod_brand', prod_color='$prod_color', prod_img='$target_file' WHERE prod_id=$prod_id";
+
+            if ($conn->query($sql_update_img) === TRUE) {
+                // Redirect back to the page to reflect changes
+                echo "<script> window.location.href='edit-products.php'</script>";
+                exit();
+            } else {
+                echo "Error updating record: " . $conn->error;
+            }
+        } else {
+            echo "Error uploading file.";
+        }
+    }
+}
+
+// Retrieve all product data from the database
+$sql = "SELECT * FROM products";
+$result = $conn->query($sql);
 
 // Retrieve all product data from the database
 $sql = "SELECT * FROM products";
@@ -243,10 +284,9 @@ $result = $conn->query($sql);
                 <input type="text" id="edit_prod_color" name="prod_color" required>
                 <div id="colorError" class="error-message"></div>
                 <br><br>
-                <!-- <label for="edit_prod_img">Image(s):</label>
-                <input type="file" id="edit_prod_img" name="prod_img[]" accept="image/*" multiple>
-                <br><br> -->
-                <!-- Add more fields if needed -->
+                <label for="edit_prod_img">Image:</label>
+                <input type="file" id="edit_prod_img" name="prod_img" accept="image/*">
+                <br><br>
                 <button type="submit">Update Product</button>
             </form>
         </div>
@@ -277,7 +317,7 @@ $result = $conn->query($sql);
             document.getElementById("edit_prod_price").value = prod_price;
             document.getElementById("edit_prod_brand").value = prod_brand;
             document.getElementById("edit_prod_color").value = prod_color;
-            document.getElementById("edit_prod_img_preview").src = prod_img; // Set the preview image source
+            document.getElementById("edit_prod_img").src = prod_img; // Set the preview image source
 
             // Toggle the display of the edit form
             var editProductFormContainer = document.getElementById("editProductFormContainer");
