@@ -45,8 +45,17 @@ function addToCart($product) {
     if(!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = array();
     }
-    $_SESSION['cart'][$product['prod_id']] = $product;
+    // Ensure 'prod_image' key is included in the product details array
+    $cartProduct = array(
+        'prod_id' => $product['prod_id'],
+        'prod_name' => $product['prod_name'],
+        'prod_description' => $product['prod_description'],
+        'prod_price' => $product['prod_price'],
+        'prod_image' => $product['prod_img'] // Change to 'prod_img'
+    );
+    $_SESSION['cart'][$product['prod_id']] = $cartProduct; // Use $cartProduct instead of $product
 }
+
 
 // Function to store cart details in local storage
 function storeCartInLocalStorage($cart) {

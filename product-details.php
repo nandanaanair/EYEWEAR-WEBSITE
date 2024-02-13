@@ -90,7 +90,8 @@ $conn->close();
                 <div class="col-lg-6">
                     <div class="card product-card">
                         <div class="product-image-container">
-                            <img src="<?php echo $product['prod_image']; ?>" class="card-img-top product-image" alt="Product Image">
+                            <!-- Display product image -->
+                            <img src="<?php echo $product['prod_img']; ?>" class="card-img-top product-image" alt="Product Image">
                         </div>
                     </div>
                 </div>
@@ -98,17 +99,19 @@ $conn->close();
                     <div class="card product-details">
                         <div class="card-body">
                             <h2 class="card-title"><?php echo $product["prod_name"]; ?></h2>
+                            <!-- Display other product details -->
                             <p class="card-text"><?php echo $product["prod_description"]; ?></p>
                             <p class="card-text"><strong>₹<?php echo $product["prod_price"]; ?></strong></p>
+                            <!-- Display other product details -->
                             <p class="card-text"><strong>Frame Type:</strong> <?php echo $product["prod_frametype"]; ?></p>
                             <p class="card-text"><strong>Category:</strong> <?php echo $product["prod_category"]; ?></p>
                             <p class="card-text"><strong>Brand:</strong> <?php echo $product["prod_brand"]; ?></p>
                             <p class="card-text"><strong>Color:</strong> <span class="color-box" style="background-color: <?php echo $product['prod_color']; ?>;"></span></p>
+                            <!-- Add to cart and order now buttons -->
                             <div class="mt-4">
-                            <form action="checkout-form.php" method="post" class="d-inline">
+                                <form action="checkout-form.php" method="post" class="d-inline">
                                     <button type="submit" class="btn btn-primary" id="orderNowBtn">Order Now</button>
                                 </form>
-                            
                                 <form action="add-to-cart.php" method="post" class="d-inline">
                                     <input type="hidden" name="prod_id" value="<?php echo $product['prod_id']; ?>">
                                     <button type="submit" class="btn btn-primary">Add to Cart</button>
@@ -191,5 +194,8 @@ $conn->close();
             document.getElementById('addReviewSection').scrollIntoView({ behavior: 'smooth' }); // Scroll to the form
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
