@@ -29,14 +29,14 @@ if (isset($_POST['cust_email']) && isset($_POST['cust_password'])) {
 
     if ($fetchedEmail === $email && password_verify($pass, $hashedPassword)) {
         $_SESSION['cust_email'] = $fetchedEmail;
-        echo "<script>window.location.href='home.html'</script>";
+        // echo "<script>window.location.href='home.html'</script>";
+        echo "<script>window.location.href = 'home.html?success=1';</script>";
         exit();
     } else {
-        echo "<script>alert('Incorrect email or password');</script>";
-        echo "<script>window.location.href='login.html'</script>";
-        // After successful login, store the user's email in a session variable
-        $_SESSION['cust_email'] = $user_email; // Assuming $user_email is the email retrieved from login process
-        exit();
+        // echo "<script>alert('Incorrect email or password');</script>";
+        // echo "<script>window.location.href='login.html'</script>";
+        echo "<script>window.location.href = 'login.html?error=1';</script>";
+        $_SESSION['cust_email'] = $user_email; 
     }
 } else {
     echo "<script>window.location.href='login.html'</script>";

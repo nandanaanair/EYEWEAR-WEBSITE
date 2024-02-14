@@ -58,7 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Redirect to verify-otp.html for OTP verification
     // header("Location: verify-otp.html");
-    echo "<script> window.location.href='verify-otp.html'</script>";
+    // echo "<script> window.location.href='verify-otp.html'</script>";
+    echo "<script>window.location.href = 'verify-otp.html?success=1';</script>";
     exit();
 } else {
     // Redirect to the registration form if accessed without form submission
