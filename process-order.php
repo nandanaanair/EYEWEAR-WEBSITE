@@ -3,7 +3,7 @@ session_start();
 include "connect.php";
 
 // Generate random order ID
-$order_id = mt_rand(100000, 999999);
+// $order_id = mt_rand(100000, 999999);
 
 // Get current date and time
 $order_date = date("Y-m-d H:i:s");
@@ -16,6 +16,10 @@ $cust_email = $_SESSION['cust_email'];
 
 // Retrieve product ID from session
 $prod_id = $_SESSION['prod_id'];
+
+// Set session variables for customer email and order ID
+$_SESSION['cust_email'] = $cust_email;
+$_SESSION['order_id'] = $order_id;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data

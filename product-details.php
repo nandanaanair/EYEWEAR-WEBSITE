@@ -48,6 +48,9 @@ if(isset($_GET['success']) && $_GET['success'] == 1) {
 if(isset($_GET['success']) && $_GET['success'] == 2) {
     echo "<div class='alert alert-success' role='alert'>Order placed successfully!</div>";
 }
+if(isset($_GET['success']) && $_GET['success'] == 3) {
+    echo "<div class='alert alert-success' role='alert'>Payment Successful!</div>";
+}
 
 // Check for error messages
 if(isset($_GET['error'])) {
@@ -58,7 +61,7 @@ if(isset($_GET['error'])) {
         echo "<div class='alert alert-danger' role='alert'>Product ID not provided!</div>";
     }
     elseif($error_code == 3) {
-        echo "<div class='alert alert-danger' role='alert'>Order not placed!</div>";
+        echo "<div class='alert alert-danger' role='alert'>Payment Failed!</div>";
     }
 }
 

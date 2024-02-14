@@ -143,7 +143,9 @@ if(isset($_POST['remove_prod_id'])) {
                             echo $totalPrice; 
                         ?>
                     </span></p> <!-- Total price -->
-                    <button id="checkout-btn" class="btn btn-primary btn-block">Checkout</button>
+                    <form action="checkout-form.php" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-primary" id="orderNowBtn">Checkout</button>
+                    </form>
                 </div>
             </div>
         </div>
