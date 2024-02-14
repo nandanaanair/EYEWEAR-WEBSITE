@@ -79,9 +79,19 @@
                 <br>
                 <div class="card">
                     <div class="card-body">
+                        <h5 class="card-title">View Orders</h5>
+                        <p class="card-text">Click below to view the payment details.</p>
+                        <a href="" class="btn btn-primary">List Orders</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <div class="card">
+                    <div class="card-body">
                         <h5 class="card-title">View Payments</h5>
                         <p class="card-text">Click below to view the payment details.</p>
-                        <a href="#" class="btn btn-primary">List payments</a>
+                        <a href="list-payment.php" class="btn btn-primary">List Payment</a>
                     </div>
                 </div>
             </div>
