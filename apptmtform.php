@@ -10,12 +10,46 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <title>Appointment</title>
+    <style>
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #7caf4c;
+            color: white;
+        }
+        .error {
+            background-color: #943726;
+            color: white;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success') && urlParams.get('success') == '1') {
+                displayMessage("Appointment booked successfully! Email is sent to your registered email id.", "success");
+            } else if (urlParams.has('error') && urlParams.get('error') == '1') {
+                displayMessage("Appointment slot not available. Please choose another slot.", "error");
+            }else if (urlParams.has('error') && urlParams.get('error') == '2') {
+                displayMessage("Booking failed please try again.", "error");
+            }
+        };
 
+        function displayMessage(message, type) {
+            var messageContainer = document.createElement('div');
+            messageContainer.textContent = message;
+            messageContainer.classList.add('message', type);
+            document.body.insertBefore(messageContainer, document.body.firstChild);
+            setTimeout(function() {
+                messageContainer.remove();
+            }, 5000); // Remove message after 3 seconds
+        }
+
+    </script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const email = document.querySelector('input[name="cust_email"]');
-        const emailError = document.getElementById('emailError');
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         const date = document.querySelector('input[name="apptmt_date"]');
         const dateError = document.getElementById('dateError');
@@ -25,17 +59,6 @@
 
         const location = document.querySelector('input[name="apptmt_loc"]');
         const locationError = document.getElementById('locationError');
-
-        // Email validation
-        email.addEventListener('input', function () {
-            if (email.value.trim() === '') {
-                emailError.textContent = 'Email is required.';
-            } else if (!emailRegex.test(email.value)) {
-                emailError.textContent = 'Enter a valid email address.';
-            } else {
-                emailError.textContent = '';
-            }
-        });
 
         // Date validation
         date.addEventListener('input', function () {
@@ -47,13 +70,6 @@
             } else {
                 dateError.textContent = '';
             }
-        });
-
-        // Time validation
-        time.addEventListener('input', function () {
-            // You can add time validation logic here if needed
-            // For example, checking if the selected time is within your business hours
-            // Currently, it's left empty as a placeholder
         });
 
         // Location validation
@@ -102,29 +118,9 @@
     <div id="apptmt-head" class="mb-4">Schedule Your Eye-Checkup Appointment</div>
     
     <form action="apptmt.php" method="post" novalidate class="card px-1 py-4" style="background-color: rgba(250, 246, 242, 0.315);">
-        <!-- Your existing form fields -->
-    <!-- <div class="card px-1 py-4" style="background-color: rgba(250, 246, 242, 0.315);"> -->
+
         <div class="card-body" style="color: white;">
-            <h5 class="card-title mb-3">This appointment is for: </h5>
-            <div class="d-flex flex-row"> 
-                <!-- <label class="radio mr-1"> 
-                    <input type="radio" name="add" value="anz" checked> 
-                    <span> <i class="fa fa-user"></i> Anz CMK </span> 
-                </label> 
-                <label class="radio"> 
-                    <input type="radio" name="add" value="add"> 
-                    <span> <i class="fa fa-plus-circle"></i> Add </span> 
-                </label>  -->
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="input-group"> 
-                            <input class="form-control" type="text" placeholder="Email ID" name="cust_email"> <br><br>
-                            <div id="emailError" class="error-message"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <h5 class="information mt-4" >Please provide the required details below: </h5><br>
+            <h5 class="information mt-1" >Please provide the required details below: </h5><br>
             <h6 style="font-weight: 700; font-size: large;">Date</h6>
             <div class="row">
                 <div class="col-sm-12">
@@ -134,18 +130,8 @@
                         <div id="dateError" class="error-message"></div>
                     </div>
                 </div>
-            </div><br>
+            </div>
             <h6 style="font-weight: 700; font-size: large;">Time</h6>
-            <!-- <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="input-group"> 
-                            <input class="form-control" type="time" placeholder="Time" name="apptmt_time"> <br>
-                            <div id="timeError" class="error-message"></div>
-                        </div>
-                    </div>
-                </div>
-            </div><br> -->
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
@@ -156,16 +142,6 @@
                 </div>
             </div><br>
             <h6 style="font-weight: 700; font-size: large;">Location</h6>
-            <!-- <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="input-group"> 
-                            <input class="form-control" type="text" placeholder="Location" name="apptmt_loc"> <br>
-                            <div id="locationError" class="error-message"></div>
-                        </div>
-                    </div>
-                </div>
-            </div><br> -->
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "connect.php";
 
 require 'phpmailer2/SMTP.php';
@@ -12,7 +13,8 @@ use PHPMailer\PHPMailer\Exception;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate and sanitize input
-    $cust_email = isset($_POST['cust_email']) ? mysqli_real_escape_string($conn, trim($_POST['cust_email'])) : '';
+    // $cust_email = isset($_POST['cust_email']) ? mysqli_real_escape_string($conn, trim($_POST['cust_email'])) : '';
+    $cust_email = $_SESSION['cust_email'];
     $date = isset($_POST['apptmt_date']) ? mysqli_real_escape_string($conn, trim($_POST['apptmt_date'])) : '';
     $time = isset($_POST['apptmt_time']) ? mysqli_real_escape_string($conn, trim($_POST['apptmt_time'])) : '';
     $location = isset($_POST['apptmt_loc']) ? mysqli_real_escape_string($conn, trim($_POST['apptmt_loc'])) : '';
@@ -25,13 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = mysqli_query($conn, $checkAvailabilityQuery);
 
     if (mysqli_num_rows($result) > 0) {
-        echo "Sorry, the selected date and time are not available. Please choose another slot.";
+        // echo "Sorry, the selected date and time are not available. Please choose another slot.";
+        echo "<script>window.location.href = 'apptmtform.php?error=1';</script>";
     } else {
         // Insert the appointment details into the database
         $insertAppointmentQuery = "INSERT INTO appointment (apptmt_id, cust_email, apptmt_date, apptmt_time, apptmt_loc) VALUES ('$apptmt_id', '$cust_email', '$date', '$time', '$location')";
 
         if (mysqli_query($conn, $insertAppointmentQuery)) {
-            echo "Appointment booked successfully! Check your email to view the appointment details.";
+            // echo "Appointment booked successfully! Check your email to view the appointment details.";
+            echo "<script>window.location.href = 'apptmtform.php?success=1';</script>";
 
             // Send appointment details via email using PHPMailer
             try {
@@ -60,11 +64,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit('Message could not be sent. Mailer Error: ' . $mail->ErrorInfo);
             }
         } else {
-            echo "Error booking appointment: " . mysqli_error($conn);
+            // echo "Error booking appointment: " . mysqli_error($conn);
+            echo "<script>window.location.href = 'apptmtform.php?error=2';</script>";
         }
     }
 } else {
-    echo "Invalid request method.";
+    // echo "Invalid request method.";
+    echo "<script>window.location.href = 'apptmtform.php?error=2';</script>";
 }
 
 mysqli_close($conn);
