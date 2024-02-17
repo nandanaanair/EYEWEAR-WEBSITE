@@ -1,5 +1,8 @@
 <?php
-session_start();
+include 'authenticate-user.php';
+requireLogin();
+?>
+<?php
 // Fetch the product price from the session variable
 $prod_price = $_SESSION['prod_price'] ?? 0; // Default to 0 if session variable is not set
 // Retrieve session variables for customer email and order ID
