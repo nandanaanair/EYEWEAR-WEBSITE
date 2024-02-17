@@ -1,3 +1,14 @@
+<?php
+// session_start();
+include 'authenticate-user.php';
+// Verify if token is provided in the URL
+if(isset($_GET['token'])) {
+    $token = $_GET['token'];
+    
+    // Check if the token is valid by comparing it with the one stored in the session
+    if(isset($_SESSION['reset_token']) && $_SESSION['reset_token'] === $token) {
+        // Token is valid, allow access to reset password form
+        ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,4 +58,16 @@
 	</section>
 </body>
 </html>
+<?php
+    } else {
+        // Token is invalid, deny access
+        // echo "<script>window.location.href='login.html'</script>";
+        echo "token invalid";
+    }
+} else {
+    // Token is not provided, deny access
+    // echo "<script>window.location.href='login.html'</script>";
+    echo "token not provided";
+}
+?>
 

@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->SMTPSecure = 'tls';
                 $mail->Port       = 587;
 
-                // Set email body with a link to reset-password.html
-                $resetLink = 'http://localhost/eyewear-website/reset-password.html?token=' . $resetToken;
+                // Set email body with a link to reset-password2.php
+                $resetLink = 'http://localhost/eyewear-website/reset-password2.php?token=' . $resetToken;
                 $mailBody = 'Click the following link to reset your password: ' . $resetLink;
 
                 // Set email content
