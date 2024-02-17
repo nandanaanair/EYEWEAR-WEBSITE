@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check for validation errors
     if (isset($_POST['validationErrors']) && !empty($_POST['validationErrors'])) {
         // Handle validation errors (if needed), or simply exit without any message
+        echo "<script>window.location.href = 'register.html?error=1';</script>";
         exit();
     }
 
@@ -64,7 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     // Redirect to the registration form if accessed without form submission
     // header("Location: register.php");
-    echo "<script> window.location.href='register.php'</script>";
+    // echo "<script> window.location.href='register.php'</script>";
+    echo "<script>window.location.href = 'register.html?error=1';</script>";
     exit();
 }
 ?>

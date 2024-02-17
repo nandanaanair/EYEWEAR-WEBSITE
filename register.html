@@ -10,6 +10,38 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <title>Get Started</title>
+    <script>
+      window.onload = function() {
+          var urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.has('error') && urlParams.get('error') == '1') {
+              displayMessage("Incorrect details. Please check your details.", "error");
+          }
+          if (urlParams.has('error') && urlParams.get('success') == '1') {
+              displayMessage("Successfully Registered.", "error");
+          }
+      };
+
+      function displayMessage(message, type) {
+          var messageContainer = document.createElement('div');
+          messageContainer.textContent = message;
+          messageContainer.classList.add('message', type);
+          document.body.insertBefore(messageContainer, document.body.firstChild);
+          setTimeout(function() {
+                messageContainer.remove();
+            }, 5000); // Remove message after 3 seconds
+      }
+      </script>
+      <style>
+        .message {
+              padding: 10px;
+              margin-bottom: 10px;
+              border-radius: 5px;
+          }
+          .error {
+              background-color: #f44336;
+              color: white;
+          }
+      </style>
 
     <script>
       document.addEventListener('DOMContentLoaded', function () {
