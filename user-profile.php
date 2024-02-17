@@ -57,7 +57,7 @@ $conn->close();
 
     <!-- Navigation Bar -->
     <?php
-    include 'nav.html';
+    include 'nav.php';
     ?>
 
     <!-- User Profile Section -->

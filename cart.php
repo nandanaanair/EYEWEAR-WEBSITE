@@ -9,6 +9,7 @@ if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
     $cart = array();
 }
 
+
 // Function to remove a product from the cart
 function removeProduct($cart, $prod_id) {
     foreach($cart as $key => $item) {
@@ -92,8 +93,9 @@ if(isset($_POST['remove_prod_id'])) {
 <body>
     <!-- Navigation Bar -->
     <?php
-        include 'nav.html';
+        include 'nav.php';
     ?>
+
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-8">

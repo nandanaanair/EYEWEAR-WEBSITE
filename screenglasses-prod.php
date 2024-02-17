@@ -34,7 +34,7 @@ $conn->close();
     
 
 <?php
-    include 'nav.html';
+    include 'nav.php';
     ?>
 <br>
 <div class="container">

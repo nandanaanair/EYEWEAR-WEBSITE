@@ -114,7 +114,7 @@ requireLogin();
 <body>
     <!-- Navigation Bar -->
     <?php
-    include 'nav.html';
+    include 'nav.php';
     ?>
   
 

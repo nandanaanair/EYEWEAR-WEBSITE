@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <!-- Navigation Bar -->
     <?php
-    include 'nav.html';
+    include 'nav.php';
     ?>
 
 <div class="container mt-5 mb-5 d-flex flex-column align-items-center" >

@@ -74,7 +74,7 @@
     </div>
 </div>
 <?php
-    include 'nav.html';
+    include 'nav.php';
     ?>
 <!-- Bootstrap JavaScript and dependencies -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

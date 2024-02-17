@@ -1,3 +1,16 @@
+<?php
+// Function to get the count of items in the cart
+function getCartItemCount() {
+    // Check if the cart session variable exists
+    if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+        // If the cart is not empty, return the count of items in the cart
+        return count($_SESSION['cart']);
+    } else {
+        // If the cart is empty, return 0
+        return 0;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +52,15 @@
                     <a class="nav-link" href="contact-us.php">Contact us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+                    <a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"> 
+                    <?php 
+                    // Retrieve the count of items in the cart (you need to implement this)
+                    $cartItemCount = getCartItemCount(); 
+                    if ($cartItemCount > 0) {
+                        // Display the badge only if there are items in the cart
+                        echo '<span class="badge bg-danger">' . $cartItemCount . '</span>';
+                    }
+                    ?></i></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="user-profile.php"><i class="fas fa-user"></i></a>

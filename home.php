@@ -56,6 +56,9 @@ requireLogin();
 
 <body>
     <!-- Navigation Bar -->
+    <?php include 'nav.php'; ?>
+
+    <!-- Navigation Bar
     <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
         <a class="navbar-brand" href="home.php"> O⌄O VisionVibes </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +98,7 @@ requireLogin();
                 </li>
             </ul>
         </div>
-    </nav>
+    </nav> -->
 
     <!-- Page Content -->
     <div class="container mt-5 position-relative">

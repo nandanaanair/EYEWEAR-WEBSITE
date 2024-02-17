@@ -80,7 +80,7 @@ $conn->close();
 </head>
 <body>
     <!-- Navigation Bar -->
-    <?php include 'nav.html'; ?>
+    <?php include 'nav.php'; ?>
 
     <div class="container mt-2">
         <div class="row">

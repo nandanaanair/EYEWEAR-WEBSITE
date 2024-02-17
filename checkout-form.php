@@ -113,7 +113,7 @@ $_SESSION['order_id'] = $order_id;
 </head>
 <body>
     <?php
-    include 'nav.html';
+    include 'nav.php';
     ?>
 
 <div class="container mt-5">
