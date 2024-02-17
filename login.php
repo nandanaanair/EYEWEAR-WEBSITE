@@ -3,7 +3,7 @@ session_start();
 include "connect.php";
 
 if (isset($_SESSION['cust_email'])) {
-    echo "<script>window.location.href='home.html'</script>";
+    echo "<script>window.location.href='home.php'</script>";
     exit();
 }
 
@@ -29,8 +29,8 @@ if (isset($_POST['cust_email']) && isset($_POST['cust_password'])) {
 
     if ($fetchedEmail === $email && password_verify($pass, $hashedPassword)) {
         $_SESSION['cust_email'] = $fetchedEmail;
-        // echo "<script>window.location.href='home.html'</script>";
-        echo "<script>window.location.href = 'home.html?success=1';</script>";
+        // echo "<script>window.location.href='home.php'</script>";
+        echo "<script>window.location.href = 'home.php?success=1';</script>";
         exit();
     } else {
         // echo "<script>alert('Incorrect email or password');</script>";
