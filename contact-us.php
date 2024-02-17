@@ -1,4 +1,8 @@
 <?php
+include 'authenticate-user.php';
+requireLogin();
+?>
+<?php
 session_start();
 include "connect.php";
 
