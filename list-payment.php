@@ -1,5 +1,8 @@
 <?php
-session_start();
+include 'authenticate-admin.php';
+requireLogin();
+?>
+<?php
 include "connect.php";
 
 // Retrieve all payment details from the database

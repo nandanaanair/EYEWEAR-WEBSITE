@@ -5,7 +5,7 @@ include "connect.php";
 
 // Function to check if user is logged in
 function isLoggedIn() {
-    return isset($_SESSION['cust_email']);
+    return isset($_SESSION['admin_email']);
 }
 
 // Function to restrict access to logged-in users

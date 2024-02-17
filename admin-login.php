@@ -31,9 +31,10 @@ if (isset($_POST['admin_email']) && isset($_POST['admin_password'])) {
     mysqli_stmt_close($stmt);
 
     if ($fetchedEmail === $email && $pass === $storedPassword) {
-        echo "Admin Logged in!";
+        // echo "Admin Logged in!";
         // $_SESSION['admin_email'] = $fetchedEmail;
         // header("Location: admin-home.php");
+        $_SESSION['admin_email'] = $email;
         echo "<script> window.location.href='admin-home.php'</script>";
         exit();
     } else {

@@ -1,5 +1,8 @@
 <?php
-session_start();
+include 'authenticate-admin.php';
+requireLogin();
+?>
+<?php
 include "connect.php";
 
 // Handle delete action

@@ -1,4 +1,8 @@
 <?php
+include 'authenticate-admin.php';
+requireLogin();
+?>
+<?php
 // Assuming you have a database connection
 include "connect.php";
 
