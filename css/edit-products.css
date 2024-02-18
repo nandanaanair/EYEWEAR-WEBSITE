@@ -1,88 +1,113 @@
-/* list-appointment.css */
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding: 0;
+/* Search Form Styles */
+.search-container {
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: 100vh; /* Set the height of the body to 100% of the viewport height */
-}
-
-.container {
-    max-width: 800px;
-    width: 100%;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.table {
-    width: 100%;
     margin-top: 20px;
 }
 
-.table th, .table td {
-    text-align: center;
+.search-input {
+    width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
 }
 
-.table th {
-    background-color: #007bff;
+.search-input:focus {
+    border-color: #2e180b !important;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-btn {
+    background-color: #2e180b !important;
     color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f8f9fa;
+.search-btn:hover {
+    background-color: #743a19;
 }
 
-.table-striped tbody tr:hover {
-    background-color: #e9ecef;
-}
-
-/* Edit Form Styles */
-#editFormContainer {
-    display: block;
-    max-width: 400px;
+/* Edit Product Popup Styles */
+#editProductPopupOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    margin: 20px auto; /* Center the form */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 9998; /* Ensure it's below the popup container */
 }
 
-#editFormContainer h2 {
+#editProductPopupContainer {
+    max-width: 80%; /* Adjust the maximum width as needed */
+    width: auto; /* Allow the container to expand based on content */
+    max-height: 80%; /* Adjust the maximum height as needed */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    z-index: 9999; /* Ensure it's above other content */
+    
+}
+
+
+#editProductPopupContainer h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 
-#editFormContainer label {
-    display: block;
-    margin-bottom: 8px;
+#editProductPopupContainer label {
     font-weight: bold;
 }
 
-#editFormContainer input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
+#editProductPopupContainer input[type="text"],
+#editProductPopupContainer input[type="number"],
+#editProductPopupContainer textarea,
+#editProductPopupContainer select {
+    width: calc(100% - 22px); /* Adjust for padding and border */
+    padding: 10px;
+    margin-bottom: 10px;
     border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
 }
 
-#editFormContainer button {
+#editProductPopupContainer textarea {
+    resize: vertical;
+}
+
+#editProductPopupContainer button {
     width: 100%;
-    padding: 10px;
     background-color: #2e180b;
     color: #fff;
     border: none;
     border-radius: 5px;
+    padding: 10px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-#editFormContainer button:hover {
-    background-color: rgb(65, 28, 6);
+#editProductPopupContainer button:hover {
+    background-color: #743a19;
+}
+
+/* Add this to disable scrolling when the popup is open */
+body.popup-open {
+    overflow: hidden;
 }

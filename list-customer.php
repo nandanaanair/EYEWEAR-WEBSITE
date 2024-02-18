@@ -2,6 +2,7 @@
 include 'authenticate-admin.php';
 requireLogin();
 ?>
+
 <?php
 include "connect.php";
 
@@ -117,7 +118,11 @@ $result = $conn->query($sql);
     <div class="container mt-5">
         <h2 class="text-center">Customer List</h2>
         <br>
-
+    <!-- Add this code to your admin list products page where you want the search bar to appear -->
+    <form action="admin_list_products.php" method="GET">
+        <input type="text" name="search_query" placeholder="Search products...">
+        <button type="submit">Search</button>
+    </form>
         <!-- Display customer information in a table -->
         <table class="table table-striped">
             <thead>
