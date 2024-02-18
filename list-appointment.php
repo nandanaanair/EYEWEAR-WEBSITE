@@ -5,12 +5,19 @@ requireLogin();
 <?php
 include "connect.php";
 
-// Check if the user is logged in as admin
-// if (!isset($_SESSION['admin_email'])) {
-//     // Redirect to the admin login page if not logged in
-//     header("Location: admin-login.php");
-//     exit();
-// }
+// Initialize variables
+$searchQuery = "";
+
+// Check if the search query is submitted
+if(isset($_GET['searchQuery'])) {
+    $searchQuery = $_GET['searchQuery'];
+
+    // Construct the SQL query to search for appointments
+    $sql = "SELECT * FROM appointment WHERE cust_email LIKE '%$searchQuery%'";
+
+    // Execute the query
+    $result = $conn->query($sql);
+}
 
 // Handle delete action
 if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['apptmt_id'])) {
@@ -19,7 +26,6 @@ if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['apptmt_
     $sql_delete = "DELETE FROM appointment WHERE apptmt_id = $apptmt_id";
     if ($conn->query($sql_delete) === TRUE) {
         // Redirect back to the page to reflect changes
-        // header("Location: ".$_SERVER['PHP_SELF']);
         echo "<script> window.location.href='list-appointment.php'</script>";
         exit();
     } else {
@@ -38,79 +44,11 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/list-appointment.css">
+    <script src="./js/list-appointment.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha384-4mOC5PJSq1Yq3Jasv4G1kAqQ6owlsOfQ1uHRzBy6ZYgdT1pef0nGhHPfD5QZbb3J" crossorigin="anonymous">
     <title>Admin Appointments</title>
-    <link rel="stylesheet" href="list-appointment.css">
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const email = document.querySelector('input[name="edit_cust_email"]');
-        // const emailError = document.getElementById('emailError');
-        // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        const date = document.querySelector('input[name="edit_apptmt_date"]');
-        const dateError = document.getElementById('dateError');
-
-        const time = document.querySelector('input[name="edit_apptmt_time"]');
-        const timeError = document.getElementById('timeError');
-
-        const location = document.querySelector('input[name="edit_apptmt_loc"]');
-        const locationError = document.getElementById('locationError');
-
-        // Email validation
-        // email.addEventListener('input', function () {
-        //     if (email.value.trim() === '') {
-        //         emailError.textContent = 'Email is required.';
-        //     } else if (!emailRegex.test(email.value)) {
-        //         emailError.textContent = 'Enter a valid email address.';
-        //     } else {
-        //         emailError.textContent = '';
-        //     }
-        // });
-
-        // Date validation
-        date.addEventListener('input', function () {
-            const currentDate = new Date();
-            const selectedDate = new Date(date.value);
-
-            if (selectedDate < currentDate) {
-                dateError.textContent = 'Select a future date between 2 months from today.';
-            } else {
-                dateError.textContent = '';
-            }
-        });
-
-        // Time validation
-        time.addEventListener('input', function () {
-            // You can add time validation logic here if needed
-            // For example, checking if the selected time is within your business hours
-            // Currently, it's left empty as a placeholder
-        });
-
-        // Location validation
-        location.addEventListener('input', function () {
-            if (location.value.trim() === '') {
-                locationError.textContent = 'Location is required.';
-            } else {
-                locationError.textContent = '';
-            }
-        });
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const selectTime = document.getElementById('edit_apptmt_time');
-
-        // Generate time options
-        for (let hour = 1; hour <= 23; hour++) {
-            for (let minutes of ['00', '30']) {
-                const timeString = `${hour}:${minutes}`;
-                const option = new Option(timeString, timeString);
-                selectTime.appendChild(option);
-            }
-        }
-    });
-</script>
 <style>
       .error-message {
     color: rgb(255, 176, 176);
@@ -119,18 +57,24 @@ $result = $conn->query($sql);
     width: 100%; /* Ensure the error message spans the full width */
     text-align: left; /* Align the error message to the left */
 }
-
   </style>
 </head>
 
 <body>
+    <!-- Overlay -->
+    <div id="editAppointmentOverlay" class="overlay" onclick="hideEditForm()"></div>
+    <!-- Search Form -->
+    <div class="container mt-3">
+        <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <input type="text" name="searchQuery" id="searchQuery" class="search-input" placeholder="Search appointments..." value="<?php echo $searchQuery; ?>">
+        </form>
+    </div>
 
     <!-- Admin Appointments Section -->
     <div class="container mt-5">
         <h2 class="text-center">Appointment List</h2>
         <br>
 
-        <!-- Display appointment information in a table -->
         <!-- Display appointment information in a table -->
         <table class="table table-striped">
             <thead>
@@ -143,7 +87,6 @@ $result = $conn->query($sql);
                     <th>Status</th>
                     <th>Edit/Update</th>
                     <th>Remove</th>
-                    <!-- Add more columns if needed -->
                 </tr>
             </thead>
             <tbody>
@@ -172,26 +115,25 @@ $result = $conn->query($sql);
         </table>
 
 
-        <!-- Edit Appointment Form -->
-        <div id="editFormContainer" style="display: none;">
+        <!-- Edit Appointment Form Popup Container -->
+        <div id="editAppointmentPopupContainer" class="edit-form-container">
             <h2 class="text-center">Edit Appointment</h2>
             <form action="update-appointment.php" method="post" id="editForm" novalidate>
                 <!-- Display appointment details in form fields for editing -->
                 <label for="edit_apptmt_id">Appointment ID:</label>
                 <input type="text" id="edit_apptmt_id" name="apptmt_id" required readonly>
-                <br><br>
+                <br>
                 <label for="edit_cust_email">Customer Email:</label>
                 <input type="email" id="edit_cust_email" name="cust_email" required readonly>
-                <br><br>
+                <br>
                 <label for="edit_apptmt_date">Date:</label>
                 <input type="date" id="edit_apptmt_date" name="apptmt_date" required min="<?php echo date('Y-m-d'); ?>" max="<?= date('Y-m-d', strtotime('+2 months')); ?>">
                 <div id="dateError" class="error-message"></div>
-                <br><br>
                 <label for="edit_apptmt_time">Time:</label>
                 <select id="edit_apptmt_time" name="apptmt_time">
                     <option value="">Select Time</option>
                 </select>                
-                <br><br>
+                <br>
                 <label for="edit_apptmt_loc">Location:</label>
                 <select id="edit_apptmt_loc" name="apptmt_loc">
                             <option value="">Select Location</option>
@@ -200,7 +142,7 @@ $result = $conn->query($sql);
                             <option value="Kalyan">Kalyan</option>
                         </select>
                         <div id="locationError" class="error-message"></div>
-                <br><br>
+                <br>
                 <!-- Add the appointment status dropdown -->
                 <label for="edit_apptmt_status">Status:</label>
                 <select id="edit_apptmt_status" name="apptmt_status">
@@ -210,9 +152,8 @@ $result = $conn->query($sql);
                 <br><br>
                 <!-- Add more fields if needed -->
                 <button type="submit">Update Appointment</button>
-            </form>
-        </div>
-
+            <button type="button" onclick="hideEditAppointmentPopup()">Cancel</button>
+        </form>
     </div>
 
     <?php
@@ -226,32 +167,6 @@ $result = $conn->query($sql);
     <script src="https://kit.fontawesome.com/7785e19128.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js" integrity="sha384-7v1vbll1aXQN+/6fkI65f8F6TfT8/zy4PXdMW9sQY3TI4NdIiFqQ0W/gFqgoj3I1" crossorigin="anonymous"></script>
 
-    <!-- Add this part inside the showEditForm function -->
-<script>
-    function showEditForm(apptmt_id, cust_email, apptmt_date, apptmt_time, apptmt_loc, apptmt_status) {
-        // Set the values of the form fields
-        document.getElementById("edit_apptmt_id").value = apptmt_id;
-        document.getElementById("edit_cust_email").value = cust_email;
-        document.getElementById("edit_apptmt_date").value = apptmt_date;
-
-        // Format the time to "HH:mm"
-        var formattedTime = new Date("2000-01-01T" + apptmt_time);
-        var hours = formattedTime.getHours().toString().padStart(2, '0');
-        var minutes = formattedTime.getMinutes().toString().padStart(2, '0');
-        var formattedTimeString = hours + ":" + minutes;
-
-        document.getElementById("edit_apptmt_time").value = formattedTimeString;
-        document.getElementById("edit_apptmt_loc").value = apptmt_loc;
-        document.getElementById("edit_apptmt_status").value = apptmt_status; // Set the selected status in the dropdown
-        
-        // Toggle the display of the edit form
-        var editFormContainer = document.getElementById("editFormContainer");
-        editFormContainer.style.display = (editFormContainer.style.display === "none") ? "block" : "none";
-    }
-        
-</script>
-
 
 </body>
-
 </html>
