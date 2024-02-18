@@ -26,7 +26,9 @@ body {
 .table th, .table td {
     text-align: center;
 }
-
+.table-striped thead tr th {
+    color:black;
+}
 .table th {
     background-color: #007bff;
     color: #fff;
@@ -40,46 +42,34 @@ body {
     background-color: #e9ecef;
 }
 
-/* Edit Form Styles */
-#editFormContainer {
-    display: none;
-    max-width: 400px;
-    width: 100%;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
 
-#editFormContainer h2 {
-    text-align: center;
-    margin-bottom: 20px;
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50%;
 }
-
-#editFormContainer label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-#editFormContainer input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#editFormContainer button {
+.search-input {
     width: 100%;
     padding: 10px;
-    background-color: #2e180b;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    margin-top: 5%; /* Add margin from the top */
+}
+
+
+.search-input:focus {
+    border-color: #743a19; /* Darker border color on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-btn {
+    background-color: #2e180b !important;
     color: #fff;
     border: none;
     border-radius: 5px;
+    padding: 15px 30px; /* Increase padding for larger button */
+    margin-left: 10px;
     cursor: pointer;
-}
-
-#editFormContainer button:hover {
-    background-color: rgb(65, 28, 6);
+    transition: background-color 0.3s;
 }

@@ -43,23 +43,19 @@ body {
     background-color: #e9ecef;
 }
 
-/* Search Form Styles */
 .search-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 50%;
+}
+.search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
-.search-input {
-    width: 100%; /* Adjust the width to your desired length */
-    padding: 8px; /* Increase padding for more space */
-    margin-top: 3%;
-    border-radius: 25px; /* Rounded border */
-    border: 2px solid #2e180b; /* Darker border color */
-    font-size: 18px; /* Larger font size */
-    outline: none;
-    transition: border-color 0.3s;
-}
 
 .search-input:focus {
     border-color: #743a19; /* Darker border color on focus */
@@ -76,6 +72,7 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 
 /* Edit Product Popup Styles */
 #editCustomerPopupOverlay {
