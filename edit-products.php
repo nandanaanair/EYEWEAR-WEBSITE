@@ -97,7 +97,7 @@ $result = $conn->query($sql);
     <!-- Search Form -->
     <div class="container mt-3">
         <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <input type="text" name="searchQuery" id="searchQuery" placeholder="Search products..." value="<?php echo $searchQuery; ?>">
+            <input type="text" name="searchQuery" id="searchQuery" class="search-input" placeholder="Search products..." value="<?php echo $searchQuery; ?>">
         </form>
     </div>
 

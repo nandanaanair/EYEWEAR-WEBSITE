@@ -1,5 +1,4 @@
 // JavaScript for edit-products page
-
 document.addEventListener('DOMContentLoaded', function () {
     const name = document.getElementById('edit_prod_name');
     const nameError = document.getElementById('nameError');
@@ -86,6 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Add event listener for image input
+    const image = document.getElementById('edit_prod_img'); // Added missing line to get image input element
+    const imageError = document.getElementById('imageError'); // Added missing line to get image error element
+
     image.addEventListener('change', function () {
         if (image.files.length === 0) {
             imageError.textContent = 'Image is required.';
@@ -98,17 +100,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('searchQuery');
     const rows = document.querySelectorAll('tbody tr');
 
-    // Add event listener to the search input
     searchInput.addEventListener('input', function () {
         const filter = searchInput.value.toLowerCase();
-        // Iterate through all rows in the table
         rows.forEach(function (row) {
-            const nameColumn = row.querySelector('td:nth-child(2)'); // Assuming product name is in the second column
-            const descriptionColumn = row.querySelector('td:nth-child(3)'); // Assuming product description is in the third column
+            const nameColumn = row.querySelector('td:nth-child(2)');
+            const descriptionColumn = row.querySelector('td:nth-child(3)');
             if (nameColumn && descriptionColumn) {
                 const name = nameColumn.textContent.toLowerCase();
                 const description = descriptionColumn.textContent.toLowerCase();
-                // Toggle row display based on whether the product name or description matches the search query
                 if (name.includes(filter) || description.includes(filter)) {
                     row.style.display = '';
                 } else {
@@ -120,60 +119,44 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function showEditForm(prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color, prod_img) {
-    // Call a function to set the form field values
     setEditFormValues(prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color, prod_img);
-
-    // Toggle the display of the popup container
     showEditProductPopup();
 }
 
+function setEditFormValues(prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color, prod_img) {
+    document.getElementById("edit_prod_id").value = prod_id;
+    document.getElementById("edit_prod_name").value = prod_name;
+    document.getElementById("edit_prod_description").value = prod_description;
+    document.getElementById("edit_prod_frametype").value = prod_frametype;
+    document.getElementById("edit_prod_category").value = prod_category;
+    document.getElementById("edit_prod_price").value = prod_price;
+    document.getElementById("edit_prod_brand").value = prod_brand;
+    document.getElementById("edit_prod_color").value = prod_color;
+    document.getElementById('edit_prod_img_preview').src = prod_img;
+}
 
-    // Function to set the form field values
-    function setEditFormValues(prod_id, prod_name, prod_description, prod_frametype, prod_category, prod_price, prod_brand, prod_color, prod_img) {
-        document.getElementById("edit_prod_id").value = prod_id;
-        document.getElementById("edit_prod_name").value = prod_name;
-        document.getElementById("edit_prod_description").value = prod_description;
-        document.getElementById("edit_prod_frametype").value = prod_frametype;
-        document.getElementById("edit_prod_category").value = prod_category;
-        document.getElementById("edit_prod_price").value = prod_price;
-        document.getElementById("edit_prod_brand").value = prod_brand;
-        document.getElementById("edit_prod_color").value = prod_color;
-        // document.getElementById("edit_prod_img").src = prod_img;
-        // Update image preview
-        document.getElementById('edit_prod_img_preview').src = prod_img;
+function showEditProductPopup() {
+    document.getElementById("editProductPopupOverlay").style.display = "block";
+    document.getElementById("editProductPopupContainer").style.display = "block";
+    document.body.classList.add("popup-open");
+}
+
+function hideEditProductPopup() {
+    document.getElementById("editProductPopupOverlay").style.display = "none";
+    document.getElementById("editProductPopupContainer").style.display = "none";
+    document.body.classList.remove("popup-open");
+}
+
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('edit_prod_img_preview').src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
     }
-    // Function to show the edit product form popup
-    function showEditProductPopup() {
-        document.getElementById("editProductPopupOverlay").style.display = "block";
-        document.getElementById("editProductPopupContainer").style.display = "block";
-        document.body.classList.add("popup-open"); // Disable scrolling
-    }
+}
 
-    // Function to hide the edit product form popup
-    function hideEditProductPopup() {
-        document.getElementById("editProductPopupOverlay").style.display = "none";
-        document.getElementById("editProductPopupContainer").style.display = "none";
-        document.body.classList.remove("popup-open"); // Enable scrolling
-    }
-
-    // Function to handle image preview
-    function previewImage(input) {
-        // Check if any file is selected
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                // Set the src attribute of the image element to the data URL
-                document.getElementById('edit_prod_img_preview').src = e.target.result;
-            };
-
-            // Read the file as a data URL
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    // Add event listener to the file input element
-    document.getElementById('edit_prod_img').addEventListener('change', function () {
-        // Call the previewImage function when a file is selected
-        previewImage(this);
-    });
+document.getElementById('edit_prod_img').addEventListener('change', function () {
+    previewImage(this);
+});
