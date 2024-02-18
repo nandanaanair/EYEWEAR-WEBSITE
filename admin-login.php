@@ -5,7 +5,7 @@ include "connect.php";
 // Check if admin is already logged in
 if (isset($_SESSION['admin_email'])) {
     // header("Location: home.html");
-    echo "<script> window.location.href='home.html'</script>";
+    echo "<script> window.location.href='admin-home.php'</script>";
     exit();
 }
 
