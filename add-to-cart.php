@@ -12,10 +12,11 @@ if(isset($_POST['prod_id'])) {
     // If product details are retrieved successfully, add it to the cart
     if($product) {
         addToCart($product);
+        
         // Store cart details in local storage
         storeCartInLocalStorage($_SESSION['cart']);
+        
         // Redirect back to the product details page with a success message
-        // echo "<meta http-equiv='refresh' content='0;url=product-details.php?id=$prod_id&success=1'>";
         echo "<script>window.location.href='product-details.php?id=$prod_id&success=1'</script>";
         exit();
     } else {
@@ -56,15 +57,16 @@ function addToCart($product) {
     $_SESSION['cart'][$product['prod_id']] = $cartProduct; // Use $cartProduct instead of $product
 }
 
-
 // Function to store cart details in local storage
 function storeCartInLocalStorage($cart) {
-    echo "<script>localStorage.setItem('cart', JSON.stringify(".json_encode($cart)."));</script>";
+    echo "<script>";
+    echo "var cartData = " . json_encode($cart) . ";"; // Convert PHP array to JavaScript object
+    echo "localStorage.setItem('cart', JSON.stringify(cartData));"; // Set cart data in local storage
+    echo "</script>";
 }
 
 // Function to redirect back to the product details page with an error message
 function redirectWithError($prod_id, $error_code) {
-    // echo "<meta http-equiv='refresh' content='0;url=product-details.php?id=$prod_id&error=$error_code'>";
     echo "<script>window.location.href='product-details.php?id=$prod_id&error=1'</script>";
     exit();
 }
