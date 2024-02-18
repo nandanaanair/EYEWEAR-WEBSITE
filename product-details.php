@@ -41,29 +41,6 @@ if (isset($_SESSION['cust_email'])) {
 $reviews_sql = "SELECT * FROM reviews WHERE prod_id = '$prod_id'";
 $reviews_result = $conn->query($reviews_sql);
 
-// Check for success message
-if(isset($_GET['success']) && $_GET['success'] == 1) {
-    echo "<div class='alert alert-success' role='alert'>Product added to cart successfully!</div>";
-}
-if(isset($_GET['success']) && $_GET['success'] == 2) {
-    echo "<div class='alert alert-success' role='alert'>Order placed successfully!</div>";
-}
-if(isset($_GET['success']) && $_GET['success'] == 3) {
-    echo "<div class='alert alert-success' role='alert'>Payment Successful!</div>";
-}
-
-// Check for error messages
-if(isset($_GET['error'])) {
-    $error_code = $_GET['error'];
-    if($error_code == 1) {
-        echo "<div class='alert alert-danger' role='alert'>Product not found!</div>";
-    } elseif($error_code == 2) {
-        echo "<div class='alert alert-danger' role='alert'>Product ID not provided!</div>";
-    }
-    elseif($error_code == 3) {
-        echo "<div class='alert alert-danger' role='alert'>Payment Failed!</div>";
-    }
-}
 
 // Close the database connection
 $conn->close();
@@ -78,6 +55,52 @@ $conn->close();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/product-details.css">
 </head>
+<style>
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #7caf4c;
+            color: white;
+        }
+        .error {
+            background-color: #943726;
+            color: white;
+        }
+</style>
+<script>
+window.onload = function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('success') && urlParams.get('success') == '1') {
+        displayMessage("Product added to cart successfully!", "success");
+    }
+    if (urlParams.has('success') && urlParams.get('success') == '2') {
+        displayMessage("Order placed successfully!", "success");
+    }
+    if (urlParams.has('error') && urlParams.get('error') == '1') {
+        displayMessage("Product not found!", "error");
+    }
+    if (urlParams.has('error') && urlParams.get('error') == '2') {
+        displayMessage("Product ID not provided!", "error");
+    }
+    if (urlParams.has('error') && urlParams.get('error') == '3') {
+        displayMessage("Payment Failed!", "error");
+    }
+};
+
+function displayMessage(message, type) {
+    var messageContainer = document.createElement('div');
+    messageContainer.textContent = message;
+    messageContainer.classList.add('message', type);
+    document.body.insertBefore(messageContainer, document.body.firstChild);
+    setTimeout(function() {
+        messageContainer.remove();
+    }, 3000); // Remove message after 3 seconds
+}
+
+</script>
 <body>
     <!-- Navigation Bar -->
     <?php include 'nav.php'; ?>

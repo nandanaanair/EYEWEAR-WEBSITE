@@ -3,6 +3,7 @@ include 'authenticate-user.php';
 requireLogin();
 ?>
 <?php
+include "connect.php";
 // Fetch the product price from the session variable
 $prod_price = $_SESSION['prod_price'] ?? 0; // Default to 0 if session variable is not set
 // Retrieve session variables for customer email and order ID
@@ -16,6 +17,7 @@ $_SESSION['order_id'] = $order_id;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/checkout-form.css">
     <title>Checkout</title>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -122,7 +124,7 @@ $_SESSION['order_id'] = $order_id;
     <!-- <input type="button" id="razorGateway" name="submit" class="submit action-button"
                                     value="Pay" /> -->
     <!-- Checkout Form -->
-    <form id="paymentForm"  method="post" novalidate>
+    <form id="paymentForm" action="process-order.php" method="post" novalidate>
         <div class="form-group">
             <label class="form-label" for="order_bldg">Building/Street:</label>
             <input type="text" class="form-control" id="order_bldg" name="order_bldg" required>
@@ -146,6 +148,11 @@ $_SESSION['order_id'] = $order_id;
             <input type="text" class="form-control" id="order_pincode" name="order_pincode" required>
             <div id="orderPincodeError" class="error-message"></div>
         </div>
+    <h2 class="text-center">Prescription Details</h2>
+        <div class="form-group">
+            <label class="form-label" for="pdf_file">Upload PDF of your eye prescription:</label>
+            <input type="file" class="form-control" id="pdf_file" name="pdf_file" accept=".pdf">
+        </div>
 
         <!-- Hidden field to store Razorpay order ID -->
         <input type="hidden" id="razorpay_order_id" name="razorpay_order_id">
@@ -159,8 +166,8 @@ $_SESSION['order_id'] = $order_id;
     var prod_price = <?php echo json_encode($prod_price); ?>;
     var options = {
         "key": "rzp_test_cUE46WfnuayEgH", 
-        // "amount": prod_price * 100,
-        "amount": 100,
+        "amount": prod_price * 100,
+        // "amount": 100,
         "currency": "INR",
         "description": "VisionVibes",
         "image": "https://visionvibes.000webhostapp.com/logo2.png",
@@ -227,6 +234,8 @@ $_SESSION['order_id'] = $order_id;
                     }
                 };
 </script>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
