@@ -1,0 +1,153 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Set the height of the body to 100% of the viewport height */
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+
+.table th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.table-striped thead tr th {
+    color:black !important;
+    background-color: #fff;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.table-striped tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50%;
+}
+.search-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+
+.search-input:focus {
+    border-color: #743a19; /* Darker border color on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-btn {
+    background-color: #2e180b !important;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 15px 30px; /* Increase padding for larger button */
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+/* Edit Product Popup Styles */
+#editOrderPopupOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 9998; /* Ensure it's below the popup container */
+}
+
+#editOrderPopupContainer {
+    width: 80%; /* Adjust the width as needed */
+    max-height: 80%; /* Adjust the maximum height as needed */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    z-index: 9999; /* Ensure it's above other content */
+}
+
+
+
+#editOrderPopupContainer h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#editOrderPopupContainer label {
+    font-weight: bold;
+}
+
+#editOrderPopupContainer input[type="text"],
+#editOrderPopupContainer input[type="number"],
+#editOrderPopupContainer textarea,
+#editOrderPopupContainer select {
+    width: calc(100% - 22px); /* Adjust for padding and border */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    height:60px;
+}
+
+#editOrderPopupContainer textarea {
+    resize: vertical;
+}
+
+#editOrderPopupContainer button {
+    width: 100%;
+    background-color: #2e180b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#editOrderPopupContainer button:hover {
+    background-color: #743a19;
+}
+
+/* Add this to disable scrolling when the popup is open */
+body.popup-open {
+    overflow: hidden;
+}
