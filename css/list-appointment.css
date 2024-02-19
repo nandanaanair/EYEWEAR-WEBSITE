@@ -43,13 +43,20 @@ body {
     color:black;
 }
 
-/* Search Form Styles */
+.search-container {
+    position: sticky;
+    top: 0;
+    z-index: 999; /* Ensure it's above other content */
+    background-color: white; /* Adjust as needed */
+    padding: 50%;
+    margin-top: 10%;
+    margin-bottom: 10px;
+}
 .search-input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 20px;
 }
 
 .edit-form-container {
