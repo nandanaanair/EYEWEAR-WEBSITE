@@ -34,6 +34,9 @@ requireLogin();
                 <a href="list-orders.php">Orders</a>
             </li>
             <li>
+                <a href="list-prescription.php">Prescriptions</a>
+            </li>
+            <li>
                 <a href="admin-pay.php">Payments</a>
             </li>
         </ul>
@@ -87,8 +90,18 @@ requireLogin();
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">View Orders</h5>
-                        <p class="card-text">Click below to view the payment details.</p>
+                        <p class="card-text">Click below to view the orders placed.</p>
                         <a href="list-orders.php" class="btn btn-primary">List Orders</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">View Prescriptions</h5>
+                        <p class="card-text">Click below to view the Prescriptions sent.</p>
+                        <a href="list-prescription.php" class="btn btn-primary">List Prescriptions</a>
                     </div>
                 </div>
             </div>
