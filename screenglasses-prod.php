@@ -39,13 +39,21 @@ $conn->close();
     ?>
 <br>
 <div class="container">
-            <div class="row mb-3">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <?php include 'side-bar.php'; ?>
+        </div>
                 <div class="col-md-12 mt-3">
                     <input type="text" id="searchInput" class="form-control" placeholder="Search products...">
                 </div>
             </div>
+
+        <div class="col-md-9">
+        <div class="row">
         <h2 class="mt-4 mb-3">Screen Glasses</h2>
         <br>
+        <div id="productContainer">
         <div class="row">
             <?php
             // Check if there are products
@@ -78,6 +86,7 @@ $conn->close();
             }
             ?>
         </div>
+    </div>
     </div>
 
 

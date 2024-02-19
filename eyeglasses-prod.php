@@ -33,33 +33,25 @@ $conn->close();
 
 <body>
     
-
 <?php
     include 'nav.php';
     ?>
 <br>
 <div class="container">
-        <div class="row mb-3">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <?php include 'side-bar.php'; ?>
+        </div>
                 <div class="col-md-12 mt-3">
                     <input type="text" id="searchInput" class="form-control" placeholder="Search products...">
                 </div>
             </div>
 
-            <!-- Add the sorting/filtering dropdown menu -->
-    <!-- <div class="row mb-3">
-        <div class="col-md-12 mt-3">
-            <select id="sortFilterSelect" class="form-select" aria-label="Default select example">
-                <option value="default">Sort by</option>
-                <option value="nameAsc">Name (A-Z)</option>
-                <option value="nameDesc">Name (Z-A)</option>
-                <option value="priceAsc">Price (Low to High)</option>
-                <option value="priceDesc">Price (High to Low)</option>
-            </select>
-        </div>
-    </div> -->
-
-        <h2 class="mt-4 mb-3">Eyeglasses</h2>
-        <br>
+        <div class="col-md-9">
+        <div class="row">
+        <h2 class="mt-4 mb-5">Eyeglasses</h2>
+        <br><br>
         <div id="productContainer">
         <div class="row">
             <?php

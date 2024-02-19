@@ -1,0 +1,23 @@
+.sidebar {
+    margin-top: 15%;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.sidebar h5 {
+    margin-top: 0;
+}
+
+.sidebar .form-group {
+    margin-bottom: 15px;
+}
+
+/* Adjusted positioning */
+.sidebar {
+    position:fixed;
+    margin-top: 11%;
+    height: 55%;
+    width: 17%;
+}
