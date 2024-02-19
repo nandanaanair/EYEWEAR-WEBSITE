@@ -13,11 +13,14 @@
     <script>
       window.onload = function() {
           var urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.has('success') && urlParams.get('success') == '1') {
+              displayMessage("Successfully Registered.", "success");
+          }
+          if (urlParams.has('success') && urlParams.get('success') == '2') {
+              displayMessage("Account deleted.", "success");
+          }
           if (urlParams.has('error') && urlParams.get('error') == '1') {
               displayMessage("Incorrect email or password.", "error");
-          }
-          if (urlParams.has('error') && urlParams.get('success') == '1') {
-              displayMessage("Successfully Registered.", "error");
           }
       };
 
@@ -65,15 +68,19 @@
       font-size: 14px;
       margin-top: 5px;
       }
-    .message {
-              padding: 10px;
-              margin-bottom: 10px;
-              border-radius: 5px;
-          }
-          .error {
-              background-color: #f44336;
-              color: white;
-          }
+      .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #7caf4c;
+            color: white;
+        }
+        .error {
+            background-color: #943726;
+            color: white;
+        }
   </style>
 </head>
 <body>

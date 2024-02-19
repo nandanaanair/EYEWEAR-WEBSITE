@@ -36,13 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entered_otp'])) {
         // Redirect to a success page or login page
         // header("Location: login.html");
         // echo "<script> window.location.href='login.html'</script>";
-        echo "<script>window.location.href = 'login.html?success=1';</script>";
+        echo "<script>window.location.href='login.html?success=1';</script>";
         exit();
     } else {
         // Incorrect OTP, redirect back to verify-otp.html
         // header("Location: verify-otp.html");
         // echo "<script> window.location.href='verify-otp.html'</script>";
-        echo "<script>window.location.href = 'verify-otp.html?error=1';</script>";
+        echo "<script>window.location.href='verify-otp.html?error=1';</script>";
         exit();
     }
 } else {

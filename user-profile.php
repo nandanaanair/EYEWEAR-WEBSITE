@@ -67,7 +67,7 @@ $conn->close();
         <div class="profile-header">
             <div class="profile-avatar">
                 <!-- Assuming you have a profile picture field in your database -->
-                <img src="https://storage.prompt-hunt.workers.dev/clfmmgx650001m907e27rphnf_3" alt="User Avatar">
+                <img src="https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg" alt="User Avatar">
             </div>
             
         </div>
@@ -78,6 +78,8 @@ $conn->close();
             <!-- ... Add more user details if needed -->
             <div class="edit-profile-link">
             <a href="#" id="editProfileBtn">Edit Profile</a>
+            <!-- Add the delete account link/button -->
+            <a href="#" id="deleteAccountBtn">Delete Account</a>
             </div>
         </div>
     </div>
@@ -100,6 +102,24 @@ $conn->close();
         <button type="button" id="cancelEditBtn">Cancel</button>
     </form>
     
+    <!-- Delete Account Confirmation Modal -->
+    <div class="modal" id="deleteAccountModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="cancelDeleteAccount()"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete your account?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cancelDeleteAccount()">Cancel</button>
+                    <a href="delete-account.php" class="btn btn-danger">Delete Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer Section -->
     <!-- ... Your existing footer code ... -->
@@ -121,6 +141,17 @@ $conn->close();
         }, 300); // Adjust the delay to match the transition duration
     });
 
+    // JavaScript to handle showing the delete account modal
+    document.getElementById('deleteAccountBtn').addEventListener('click', function () {
+        var deleteAccountModal = new bootstrap.Modal(document.getElementById('deleteAccountModal'));
+        deleteAccountModal.show();
+    });
+
+    // Function to handle modal cancellation
+    function cancelDeleteAccount() {
+        // Hide the delete account modal
+        $('#deleteAccountModal').modal('hide');
+    }
     </script>
 
     <!-- Bootstrap JavaScript and dependencies -->
