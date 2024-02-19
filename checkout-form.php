@@ -148,10 +148,45 @@ $_SESSION['order_id'] = $order_id;
             <input type="text" class="form-control" id="order_pincode" name="order_pincode" required>
             <div id="orderPincodeError" class="error-message"></div>
         </div>
-    <h2 class="text-center">Prescription Details</h2>
+    <!-- <h2 class="text-center">Prescription Details</h2>
         <div class="form-group">
             <label class="form-label" for="pdf_file">Upload PDF of your eye prescription:</label>
             <input type="file" class="form-control" id="pdf_file" name="pdf_file" accept=".pdf">
+        </div> -->
+
+        <!-- Prescription Details -->
+        <h2 class="text-center">Prescription Details</h2>
+        <div class="form-group">
+            <label class="form-label" for="l_sph">Left Sphere (L_SPH):</label>
+            <input type="text" class="form-control" id="l_sph" name="l_sph" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="r_sph">Right Sphere (R_SPH):</label>
+            <input type="text" class="form-control" id="r_sph" name="r_sph" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="l_cyl">Left Cylinder (L_CYL):</label>
+            <input type="text" class="form-control" id="l_cyl" name="l_cyl" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="r_cyl">Right Cylinder (R_CYL):</label>
+            <input type="text" class="form-control" id="r_cyl" name="r_cyl" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="l_axis">Left Axis (L_AXIS):</label>
+            <input type="text" class="form-control" id="l_axis" name="l_axis" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="r_axis">Right Axis (R_AXIS):</label>
+            <input type="text" class="form-control" id="r_axis" name="r_axis" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="l_addn">Left Addition (L_ADDN):</label>
+            <input type="text" class="form-control" id="l_addn" name="l_addn" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="r_addn">Right Addition (R_ADDN):</label>
+            <input type="text" class="form-control" id="r_addn" name="r_addn" required>
         </div>
 
         <!-- Hidden field to store Razorpay order ID -->

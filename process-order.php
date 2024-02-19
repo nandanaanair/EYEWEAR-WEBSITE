@@ -35,52 +35,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>window.location.href='product-details.php?id=$prod_id&error=3'</script>";
     }
 }
-// Handle file upload
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["pdf_file"])) {
-    $targetDir = "uploads/"; // Specify the directory where you want to store uploaded files
-    $targetFile = $targetDir . basename($_FILES["pdf_file"]["name"]);
-    $uploadOk = 1;
-    $pdfFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-    // Check if the file is a PDF
-    if ($pdfFileType != "pdf") {
-        echo "Only PDF files are allowed.";
-        $uploadOk = 0;
-    }
+// Retrieve the prescription details from the form
+$l_sph = $_POST['l_sph'];
+$r_sph = $_POST['r_sph'];
+$l_cyl = $_POST['l_cyl'];
+$r_cyl = $_POST['r_cyl'];
+$l_axis = $_POST['l_axis'];
+$r_axis = $_POST['r_axis'];
+$l_addn = $_POST['l_addn'];
+$r_addn = $_POST['r_addn'];
 
-    // Check if file already exists
-    if (file_exists($targetFile)) {
-        echo "Sorry, file already exists.";
-        $uploadOk = 0;
-    }
+// Retrieve the order ID from the session
+$order_id = $_SESSION['order_id'];
 
-    // Check file size
-    if ($_FILES["pdf_file"]["size"] > 5000000) { // Adjust the file size limit as per your requirement
-        echo "Sorry, your file is too large.";
-        $uploadOk = 0;
-    }
+// Prepare and execute the SQL statement to insert prescription details into the database
+$stmt = $conn->prepare("INSERT INTO prescription (order_id, l_sph, r_sph, l_cyl, r_cyl, l_axis, r_axis, l_addn, r_addn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("issssssss", $order_id, $l_sph, $r_sph, $l_cyl, $r_cyl, $l_axis, $r_axis, $l_addn, $r_addn);
 
-    // If everything is ok, try to upload file
-    if ($uploadOk == 1) {
-        if (move_uploaded_file($_FILES["pdf_file"]["tmp_name"], $targetFile)) {
-            echo "The file " . htmlspecialchars(basename($_FILES["pdf_file"]["name"])) . " has been uploaded.";
-            
-            // Now you can store $targetFile (path to the uploaded file) in the database along with other details
-            
-            // Prepare and execute SQL statement to insert data into orders table
-            $sql = "INSERT INTO orders (order_id, order_date, order_bldg, order_city, order_state, order_pincode, total_price, cust_email, prod_id, pdf_path) 
-                    VALUES ('$order_id', '$order_date', '$order_bldg', '$order_city', '$order_state', '$order_pincode', '$total_price', '$cust_email', '$prod_id', '$targetFile')";
-
-            if ($conn->query($sql) === TRUE) {
-                echo "New record created successfully";
-            } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
-    }
+// Check if the statement executed successfully
+if ($stmt->execute()) {
+    // Prescription details inserted successfully
+    echo "Prescription details saved successfully!";
+} else {
+    // Error occurred while inserting prescription details
+    echo "Error: " . $stmt->error;
 }
+
+// Close the statement and database connection
+$stmt->close();
 
 
 // Close database connection
