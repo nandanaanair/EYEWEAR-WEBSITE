@@ -26,6 +26,16 @@ requireLogin();
             background-color: #943726;
             color: white;
         }
+        .card {
+            border: none;
+            border-radius: 15px;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
     </style>
     <script>
         window.onload = function() {
@@ -57,48 +67,6 @@ requireLogin();
 <body>
     <!-- Navigation Bar -->
     <?php include 'nav.php'; ?>
-
-    <!-- Navigation Bar
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-        <a class="navbar-brand" href="home.php"> O⌄O VisionVibes </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="home.php">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Products
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="eyeglasses-prod.php">Eyeglasses</a>
-                        <a class="dropdown-item" href="sunglasses-prod.php">Sunglasses</a>
-                        <a class="dropdown-item" href="screenglasses-prod.php">Screen Glasses</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="view-apptmt.php"">Appointments</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact-us.php">Contact us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="user-profile.php"><i class="fas fa-user"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="logout.php"><i class="fa fa-sign-out"></i></a>
-                </li>
-            </ul>
-        </div>
-    </nav> -->
 
     <!-- Page Content -->
     <div class="container mt-5 position-relative">
