@@ -58,7 +58,7 @@ function getCartItemCount() {
                     </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i>
+                <a class="nav-link" href="shopping-cart.php"><i class="fas fa-shopping-cart"></i>
                     <?php 
                     // Retrieve the count of items in the cart
                     $cartItemCount = getCartItemCount(); 

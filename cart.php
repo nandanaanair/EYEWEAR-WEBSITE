@@ -44,14 +44,14 @@
 
     // Remove item with the specified prod_id from cartData
     if (cartData && cartData[prod_id]) {
-        delete cartData[prod_id];
+        delete cartData[prod_id]; // This line removes the item from cartData
+
+        // Update local storage with modified cart data
+        localStorage.setItem('cart', JSON.stringify(cartData));
+
+        // Re-render cart items
+        renderCartItems(); // This line re-renders the cart items after removal
     }
-
-    // Update local storage with modified cart data
-    localStorage.setItem('cart', JSON.stringify(cartData));
-
-    // Re-render cart items
-    renderCartItems();
 }
 
     // Function to render cart items dynamically
@@ -63,7 +63,10 @@
         var totalPrice = 0;
 
         // Retrieve cart data from local storage
+
         var cartData = JSON.parse(localStorage.getItem('cart'));
+        // Filter out removed items from cart data
+        cartData = filterRemovedItems(cartData);
 
         // Loop through cart data and create HTML for each item
         for (var key in cartData) {
@@ -105,7 +108,19 @@
         // Update total items and total price in the summary
         document.getElementById('total-items').innerText = totalItems;
         document.getElementById('total-price').innerText = totalPrice.toFixed(2);
-
+    }
+        // Function to filter out removed items from cart data
+        function filterRemovedItems(cartData) {
+            var filteredCartData = {};
+            for (var key in cartData) {
+                var item = cartData[key];
+                // Check if the item exists in the cart
+                if (item) {
+                    filteredCartData[key] = item;
+                }
+            }
+            return filteredCartData;
+        }
         // Attach click event listener to remove buttons
         var removeButtons = document.querySelectorAll('.remove-button');
         removeButtons.forEach(function(button) {
@@ -122,7 +137,7 @@
             }
         });
 
-    }
+    
 
     // Call the renderCartItems function to display cart items
     renderCartItems();
