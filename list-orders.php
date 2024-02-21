@@ -13,7 +13,7 @@ if(isset($_GET['searchQuery'])) {
     $searchQuery = $_GET['searchQuery'];
 
     // Construct the SQL query to search for orders
-    $sql = "SELECT * FROM orders WHERE order_id LIKE '%$searchQuery%' OR cust_email LIKE '%$searchQuery%' OR order_details LIKE '%$searchQuery%' OR order_bldg LIKE '%$searchQuery%' OR order_city LIKE '%$searchQuery%' OR order_state LIKE '%$searchQuery%' OR order_pincode LIKE '%$searchQuery%' OR order_status LIKE '%$searchQuery%' OR order_date LIKE '%$searchQuery%' OR total_price LIKE '%$searchQuery%'";
+    $sql = "SELECT * FROM orders WHERE order_id LIKE '%$searchQuery%' OR cust_email LIKE '%$searchQuery%' OR order_bldg LIKE '%$searchQuery%' OR order_city LIKE '%$searchQuery%' OR order_state LIKE '%$searchQuery%' OR order_pincode LIKE '%$searchQuery%' OR order_status LIKE '%$searchQuery%' OR order_date LIKE '%$searchQuery%' OR total_price LIKE '%$searchQuery%'";
 
     // Execute the query
     $result = $conn->query($sql);
@@ -39,8 +39,8 @@ $result = $conn->query($sql);
 
 <body>
     <?php include "admin-nav.html"; ?>
-<!-- Add this overlay -->
-<div id="editOrderPopupOverlay" onclick="hideEditOrderPopup()"></div>
+    <!-- Add this overlay -->
+    <div id="editOrderPopupOverlay" onclick="hideEditOrderPopup()"></div>
     <!-- Search Form -->
     <div class="container mt-3">
         <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -57,7 +57,6 @@ $result = $conn->query($sql);
                 <tr>
                     <th>Order ID</th>
                     <th>Customer Email</th>
-                    <th>Order Details</th>
                     <th>Order Address</th>
                     <th>Order Status</th>
                     <th>Order Date</th>
@@ -71,7 +70,7 @@ $result = $conn->query($sql);
                 if (isset($_GET['searchQuery']) && !empty($_GET['searchQuery'])) {
                     // Construct the SQL query to search for orders
                     $searchQuery = $_GET['searchQuery'];
-                    $sql = "SELECT * FROM orders WHERE order_id LIKE '%$searchQuery%' OR cust_email LIKE '%$searchQuery%' OR order_details LIKE '%$searchQuery%' OR order_bldg LIKE '%$searchQuery%' OR order_city LIKE '%$searchQuery%' OR order_state LIKE '%$searchQuery%' OR order_pincode LIKE '%$searchQuery%' OR order_status LIKE '%$searchQuery%' OR order_date LIKE '%$searchQuery%' OR total_price LIKE '%$searchQuery%'";
+                    $sql = "SELECT * FROM orders WHERE order_id LIKE '%$searchQuery%' OR cust_email LIKE '%$searchQuery%' OR order_bldg LIKE '%$searchQuery%' OR order_city LIKE '%$searchQuery%' OR order_state LIKE '%$searchQuery%' OR order_pincode LIKE '%$searchQuery%' OR order_status LIKE '%$searchQuery%' OR order_date LIKE '%$searchQuery%' OR total_price LIKE '%$searchQuery%'";
 
                     // Execute the query
                     $result = $conn->query($sql);
@@ -83,12 +82,11 @@ $result = $conn->query($sql);
                             echo "<tr>";
                             echo "<td>" . $row['order_id'] . "</td>";
                             echo "<td>" . $row['cust_email'] . "</td>";
-                            echo "<td>" . $row['order_details'] . "</td>";
                             echo "<td>" . $row['order_bldg'] . ", " . $row['order_city'] . ", " . $row['order_state'] . ", " . $row['order_pincode'] . "</td>";
                             echo "<td>" . $row['order_status'] . "</td>";
                             echo "<td>" . $row['order_date'] . "</td>";
                             echo "<td>" . $row['total_price'] . "</td>";
-                            echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['order_id'] . "\", \"" . $row['cust_email'] . "\", \"" . $row['order_details'] . "\", \"" . $row['order_bldg'] . "\", \"" . $row['order_city'] . "\", \"" . $row['order_state'] . "\", \"" . $row['order_pincode'] . "\", \"" . $row['order_status'] . "\", \"" . $row['order_date'] . "\", \"" . $row['total_price'] . "\")'>Edit</a></td>";
+                            echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['order_id'] . "\", \"" . $row['cust_email'] . "\", \"" . $row['order_bldg'] . "\", \"" . $row['order_city'] . "\", \"" . $row['order_state'] . "\", \"" . $row['order_pincode'] . "\", \"" . $row['order_status'] . "\", \"" . $row['order_date'] . "\", \"" . $row['total_price'] . "\")'>Edit</a></td>";
                             echo "</tr>";
                         }
                     } else {
@@ -103,16 +101,15 @@ $result = $conn->query($sql);
                         echo "<tr>";
                         echo "<td>" . $row['order_id'] . "</td>";
                         echo "<td>" . $row['cust_email'] . "</td>";
-                        echo "<td>" . $row['order_details'] . "</td>";
                         echo "<td>" . $row['order_bldg'] . ", " . $row['order_city'] . ", " . $row['order_state'] . ", " . $row['order_pincode'] . "</td>";
                         echo "<td>" . $row['order_status'] . "</td>";
                         echo "<td>" . $row['order_date'] . "</td>";
                         echo "<td>" . $row['total_price'] . "</td>";
-                        echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['order_id'] . "\", \"" . $row['cust_email'] . "\", \"" . $row['order_details'] . "\", \"" . $row['order_bldg'] . "\", \"" . $row['order_city'] . "\", \"" . $row['order_state'] . "\", \"" . $row['order_pincode'] . "\", \"" . $row['order_status'] . "\", \"" . $row['order_date'] . "\", \"" . $row['total_price'] . "\")'>Edit</a></td>";
+                        echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['order_id'] . "\", \"" . $row['cust_email'] . "\", \"" . $row['order_bldg'] . "\", \"" . $row['order_city'] . "\", \"" . $row['order_state'] . "\", \"" . $row['order_pincode'] . "\", \"" . $row['order_status'] . "\", \"" . $row['order_date'] . "\", \"" . $row['total_price'] . "\")'>Edit</a></td>";
                         echo "</tr>";
                     }
                 }
-                ?>
+            ?>
 
             </tbody>
         </table>
@@ -126,10 +123,6 @@ $result = $conn->query($sql);
             <div class="form-group">
                 <label for="edit_cust_email">Customer Email:</label>
                 <input type="text" class="form-control" id="edit_cust_email" name="edit_cust_email" readonly>
-            </div>
-            <div class="form-group">
-                <label for="edit_order_details">Order Details:</label>
-                <input type="text" class="form-control" id="edit_order_details" name="edit_order_details" readonly>
             </div>
             <div class="form-group">
                 <label for="edit_order_bldg">Order Building:</label>
@@ -160,7 +153,7 @@ $result = $conn->query($sql);
             <button type="button" onclick="hideEditOrderPopup()">Cancel</button>
         </form>
     </div>
-</div>
+
     <!-- Bootstrap JavaScript and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

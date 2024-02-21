@@ -1,9 +1,8 @@
 // Function to show the edit order form popup
-function showEditForm(orderId, custEmail, orderDetails, orderBldg, orderCity, orderState, orderPincode, orderStatus) {
+function showEditForm(orderId, custEmail, orderBldg, orderCity, orderState, orderPincode, orderStatus) {
     // Populate form fields with order data
     document.getElementById('edit_order_id').value = orderId;
     document.getElementById('edit_cust_email').value = custEmail;
-    document.getElementById('edit_order_details').value = orderDetails;
     document.getElementById('edit_order_bldg').value = orderBldg;
     document.getElementById('edit_order_city').value = orderCity;
     document.getElementById('edit_order_state').value = orderState;
@@ -20,7 +19,6 @@ function hideEditOrderPopup() {
     // Reset form fields
     document.getElementById('edit_order_id').value = '';
     document.getElementById('edit_cust_email').value = '';
-    document.getElementById('edit_order_details').value = '';
     document.getElementById('edit_order_bldg').value = '';
     document.getElementById('edit_order_city').value = '';
     document.getElementById('edit_order_state').value = '';
@@ -41,9 +39,11 @@ document.getElementById('editOrderForm').addEventListener('submit', function (ev
     var orderStatus = document.getElementById('edit_order_status').value.trim();
 
     // Perform additional validation if needed
+    if (orderStatus === '') {
+        alert('Please select an order status.');
+        return;
+    }
 
     // If all fields are valid, submit the form
     this.submit();
 });
-
-
