@@ -72,6 +72,30 @@ if(isset($_GET['id']))
 
 // Pass total price to session variable
 $_SESSION['total_price'] = $total_price;
+
+// Retrieve saved address data from the database based on the user's email
+// Assuming you have a table named 'user_addresses' with columns 'bldg', 'city', 'state', and 'pincode'
+
+// Fetch the user's saved address data from the database
+$user_address_sql = "SELECT * FROM customer WHERE cust_email = '$cust_email'";
+$user_address_result = $conn->query($user_address_sql);
+
+// Check if address data is found
+if ($user_address_result && $user_address_result->num_rows > 0) {
+    // Fetch the address data
+    $user_address_row = $user_address_result->fetch_assoc();
+    $saved_bldg = $user_address_row['bldg'];
+    $saved_city = $user_address_row['city'];
+    $saved_state = $user_address_row['state'];
+    $saved_pincode = $user_address_row['pincode'];
+} else {
+    // Set default values if no address data is found
+    $saved_bldg = '';
+    $saved_city = '';
+    $saved_state = '';
+    $saved_pincode = '';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -185,29 +209,31 @@ $_SESSION['total_price'] = $total_price;
     <br>
     <!-- <input type="button" id="razorGateway" name="submit" class="submit action-button"
                                     value="Pay" /> -->
+
+
     <!-- Checkout Form -->
     <form id="paymentForm" action="process-order.php" method="post" novalidate>
         <div class="form-group">
             <label class="form-label" for="order_bldg">Building/Street:</label>
-            <input type="text" class="form-control" id="order_bldg" name="order_bldg" required>
+            <input type="text" class="form-control" id="order_bldg" name="order_bldg" value="<?php echo $saved_bldg; ?>" required>
             <div id="orderBldgError" class="error-message"></div>
         </div>
 
         <div class="form-group">
             <label class="form-label" for="order_city">City:</label>
-            <input type="text" class="form-control" id="order_city" name="order_city" required>
+            <input type="text" class="form-control" id="order_city" name="order_city" value="<?php echo $saved_city; ?>" required>
             <div id="orderCityError" class="error-message"></div>
         </div>
 
         <div class="form-group">
             <label class="form-label" for="order_state">State:</label>
-            <input type="text" class="form-control" id="order_state" name="order_state" required>
+            <input type="text" class="form-control" id="order_state" name="order_state" value="<?php echo $saved_state; ?>" required>
             <div id="orderStateError" class="error-message"></div>
         </div>
 
         <div class="form-group">
             <label class="form-label" for="order_pincode">Pincode:</label>
-            <input type="text" class="form-control" id="order_pincode" name="order_pincode" required>
+            <input type="text" class="form-control" id="order_pincode" name="order_pincode" value="<?php echo $saved_pincode; ?>" required>
             <div id="orderPincodeError" class="error-message"></div>
         </div>
     <!-- <h2 class="text-center">Prescription Details</h2>

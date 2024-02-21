@@ -5,15 +5,14 @@ include "connect.php";
 // Check if the user is logged in
 if (!isset($_SESSION['cust_email'])) {
     // Redirect to the login page if not logged in
-    // header("Location: login.php");
-    echo "<script> window.location.href='login.html'</script>";
+    echo "<script> window.location.href='index.html'</script>";
     exit();
 }
 
 // Assuming you have cust_email stored in the session after login
 $cust_email = $_SESSION['cust_email'];
 
-// Fetch user details from the database
+// Fetch user details including address from the database
 $stmt = $conn->prepare("SELECT * FROM customer WHERE cust_email = ?");
 $stmt->bind_param("s", $cust_email);
 $stmt->execute();
@@ -26,11 +25,13 @@ if ($result->num_rows > 0) {
     $lastName = $user_data['lastName'];
     $cust_email = $user_data['cust_email'];
     $cust_phno = $user_data['cust_phno'];
-
-    // ... Add more user details if needed
+    // Add address fields
+    $bldg = $user_data['bldg'];
+    $city = $user_data['city'];
+    $state = $user_data['state'];
+    $pincode = $user_data['pincode'];
 } else {
     // Redirect to the login page if the user does not exist
-    // header("Location: login.php");
     echo "<script> window.location.href='login.html'</script>";
     exit();
 }
@@ -39,6 +40,7 @@ if ($result->num_rows > 0) {
 $stmt->close();
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +61,7 @@ $conn->close();
     <?php
     include 'nav.php';
     ?>
-
+    <div class="overlay" id="overlay"></div>
     <!-- User Profile Section -->
     <br>
     <h1>Your Profile</h1>
@@ -73,19 +75,25 @@ $conn->close();
         </div>
         <div class="profile-details">
             <h2><?php echo $firstName . ' ' . $lastName; ?></h2>
-            <p>Email: <?php echo $cust_email; ?></p>
-            <p>Phone: <?php echo $cust_phno; ?></p>
+            <p><b>Email: </b><?php echo $cust_email; ?></p>
+            <p><b>Phone: </b><?php echo $cust_phno; ?></p>
+            <p><b>Address: </b><?php echo $bldg . ', ' . $city . ', ' . $state . ', ' . $pincode; ?></p>
             <!-- ... Add more user details if needed -->
             <div class="edit-profile-link">
             <a href="#" id="editProfileBtn">Edit Profile</a>
+            </div><br>
             <!-- Add the delete account link/button -->
+            <div class="delete-profile-link">
             <a href="#" id="deleteAccountBtn">Delete Account</a>
             </div>
+            
         </div>
     </div>
 
+    
+   
     <!-- Edit Profile Form (Initially Hidden) -->
-    <form id="editProfileForm" style="display: none;" action="update-profile.php" method="POST">
+    <form id="editProfileForm" action="update-profile.php" method="POST">
         <label for="editFirstName">First Name:</label>
         <input type="text" id="editFirstName" name="editFirstName" value="<?php echo $firstName; ?>" required>
 
@@ -97,6 +105,19 @@ $conn->close();
 
         <label for="editPhone">Phone:</label>
         <input type="tel" id="editPhone" name="editPhone" value="<?php echo $cust_phno; ?>" required>
+
+        <label for="editBldg">Building:</label>
+        <input type="text" id="editBldg" name="editBldg" value="<?php echo $bldg; ?>">
+
+        <label for="editCity">City:</label>
+        <input type="text" id="editCity" name="editCity" value="<?php echo $city; ?>">
+
+        <label for="editState">State:</label>
+        <input type="text" id="editState" name="editState" value="<?php echo $state; ?>">
+
+        <label for="editPincode">Pincode:</label>
+        <input type="text" id="editPincode" name="editPincode" value="<?php echo $pincode; ?>">
+
 
         <button type="submit">Save Changes</button>
         <button type="button" id="cancelEditBtn">Cancel</button>
@@ -152,6 +173,25 @@ $conn->close();
         // Hide the delete account modal
         $('#deleteAccountModal').modal('hide');
     }
+
+    // Function to toggle the visibility of the overlay
+function toggleOverlay() {
+    var overlay = document.getElementById('overlay');
+    overlay.classList.toggle('active');
+}
+
+// Call the toggleOverlay function to show/hide the overlay
+document.getElementById('editProfileBtn').addEventListener('click', function () {
+    toggleOverlay();
+    // Your existing code to show the edit profile form goes here
+});
+
+document.getElementById('cancelEditBtn').addEventListener('click', function () {
+    toggleOverlay();
+    // Your existing code to hide the edit profile form goes here
+});
+
+
     </script>
 
     <!-- Bootstrap JavaScript and dependencies -->

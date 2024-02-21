@@ -5,7 +5,6 @@ include "connect.php";
 // Check if the user is logged in
 if (!isset($_SESSION['cust_email'])) {
     // Redirect to the login page if not logged in
-    // header("Location: login.php");
     echo "<script> window.location.href='login.html'</script>";
     exit();
 }
@@ -28,13 +27,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $stmt->close();
 
+    // Get updated address details from the form
+    $bldg = $_POST['editBldg'];
+    $city = $_POST['editCity'];
+    $state = $_POST['editState'];
+    $pincode = $_POST['editPincode'];
+
+    // Update address fields in the database
+    $stmt = $conn->prepare("UPDATE customer SET bldg = ?, city = ?, state = ?, pincode = ? WHERE cust_email = ?");
+    $stmt->bind_param("sssis", $bldg, $city, $state, $pincode, $cust_email);
+    $stmt->execute();
+    $stmt->close();
+
     // Redirect back to the profile page
-    // header("Location: user-profile.php");
     echo "<script> window.location.href='user-profile.php'</script>";
     exit();
 } else {
     // Redirect to the user profile page if accessed without form submission
-    // header("Location: user-profile.php");
     echo "<script> window.location.href='user-profile.php'</script>";
     exit();
 }

@@ -13,18 +13,19 @@ h1 {
     color: #2e180b;
 }
 
+/* Adjusting the Padding of the .profile-container to Allow Room for the Pseudo-Element */
 .profile-container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 50px auto;
-    padding: 20px;
+    padding: 70px 20px 20px; /* Increase the top padding to create space for the pseudo-element */
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: auto;
 }
 
 .profile-header {
     text-align: center;
-    margin-bottom: 20px;
 }
 
 .profile-avatar img {
@@ -34,6 +35,9 @@ h1 {
     object-fit: cover;
     border: 4px solid #2e180b;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    float: left; /* Align the image to the left */
+    margin-top: 40px;
+    margin-right: 40px; /* Optional: Add some space between the image and the text */
 }
 
 .profile-details p {
@@ -53,20 +57,34 @@ h1 {
     color: #080402;
 }
 
-/* Additional Styles for Enhanced Attractiveness */
+.delete-profile-link a {
+    color: #c81010;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.delete-profile-link a:hover {
+    text-decoration: none;
+    color: #6c1313;
+}
+
+
+/* Adjust the Positioning of the Pseudo-Element */
 .profile-container:before {
     content: url('images/smile.png'); /* Replace 'images/smile.png' with the correct path to your smiley face image */
     width: 50px;
     height: 50px;
     position: absolute;
-    top: -20px;
+    top: -50px; /* Adjust this value to ensure the pseudo-element doesn't overlap with the content */
     left: 50%;
     transform: translateX(-50%);
 }
 
-.profile-details h2 {
-    font-size:large ;
-    color: #333;
+/* Ensure Content Triggers Scrolling */
+.profile-details {
+    /* Add a height or max-height to the .profile-details container to limit its height */
+    max-height: 400px; /* Adjust this value as needed */
+    overflow-y: auto; /* Enable vertical scrolling for content exceeding the container's height */
 }
 
 .profile-details h2::after {
@@ -83,16 +101,22 @@ h1 {
     margin-right: 5px;
     color: #2e180b;
 }
+.delete-profile-link a::before {
+    margin-right: 5px;
+    color: #2e180b;
+}
 
 /* Edit Profile Form Styles */
 #editProfileForm {
     display: none;
     position: fixed;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 400px;
-    width: 100%;
+    max-width: 80%; /* Adjust the maximum width of the form */
+    width: 400px;
+    max-height: 80%; /* Set a maximum height for the form */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds the container height */
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -100,6 +124,11 @@ h1 {
     z-index: 1000;
     opacity: 0; /* Initially hidden */
     transition: opacity 0.3s ease-in-out; /* Add a smooth transition */
+}
+
+/* Adjust the opacity when the form is visible */
+#editProfileForm.visible {
+    opacity: 1;
 }
 
 #editProfileForm label {
@@ -134,4 +163,28 @@ h1 {
     display: none;
     margin-top: 10px;
     text-align: center;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); /* Transparent initially */
+    z-index: 999; /* Ensure the overlay is above other content */
+    transition: background-color 0.3s ease-in-out; /* Smooth transition effect */
+    pointer-events: none; /* Allow interaction with elements behind the overlay */
+}
+
+.overlay.active {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    pointer-events: auto; /* Enable interaction with overlay */
+}
+
+
+/* Adjust the transition property for a smooth fade effect */
+.overlay.fade-in {
+    display: block;
+    transition: opacity 0.3s ease-in-out;
 }
