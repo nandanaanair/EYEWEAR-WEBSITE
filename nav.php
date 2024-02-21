@@ -17,6 +17,7 @@ function getCartItemCount() {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/home.css">
+    <script src="./js/update-cart-badge.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha384-4mOC5PJSq1Yq3Jasv4G1kAqQ6owlsOfQ1uHRzBy6ZYgdT1pef0nGhHPfD5QZbb3J" crossorigin="anonymous">
     <title>nav</title>
@@ -57,18 +58,10 @@ function getCartItemCount() {
                         Orders
                     </a>
                 </li>
-                <li class="nav-item">
-                <a class="nav-link" href="shopping-cart.php"><i class="fas fa-shopping-cart"></i>
-                    <?php 
-                    // Retrieve the count of items in the cart
-                    $cartItemCount = getCartItemCount(); 
-                    if ($cartItemCount > 0) {
-                        // Display the badge only if there are items in the cart
-                        echo '<span class="badge bg-danger">' . $cartItemCount . '</span>';
-                    }
-                    ?>
-                    </a>
-                </li>
+                <a href="shopping-cart.php" class="nav-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge bg-danger rounded-pill" id="cart-badge">0</span>
+                </a>
                 <li class="nav-item">
                     <a class="nav-link" href="user-profile.php"><i class="fas fa-user"></i></a>
                 </li>
