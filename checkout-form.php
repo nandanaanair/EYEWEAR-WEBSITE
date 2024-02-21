@@ -5,32 +5,68 @@ requireLogin();
 <?php
 include "connect.php";
 // Fetch the product price from the session variable
-$prod_price = $_SESSION['prod_price'] ?? 0; // Default to 0 if session variable is not set
+$prod_price = $_SESSION['prod_price'] ?? 0; // Default to 0 if session variable is not set IMPORTANT DONT REMOVE IF REMOVED PAYMENT WONT GET INITIATED
 // Retrieve session variables for customer email and order ID
 $cust_email = $_SESSION['cust_email'] ?? ''; // Retrieve cust_email from session
 $order_id = mt_rand(100000, 999999);
 $_SESSION['order_id'] = $order_id;
 
-// Retrieve cart items from the database
-$cust_email = $_SESSION['cust_email'];
-$sql = "SELECT * FROM cart WHERE cust_email = '$cust_email'";
-$result = $conn->query($sql);
-
-// Calculate total price
+// Initialize total price
 $total_price = 0;
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        // Fetch product price from products table based on product_id
-        $product_id = $row['product_id'];
-        $product_sql = "SELECT prod_price FROM products WHERE prod_id = '$product_id'";
-        $product_result = $conn->query($product_sql);
-        
-        // If product found, calculate total price
-        if ($product_result->num_rows > 0) {
-            $product_row = $product_result->fetch_assoc();
-            $product_price = $product_row['prod_price'];
-            $total_price += $product_price * $row['quantity'];
+
+// Check if the product price is set in the session
+// Fetch the product price from the session variable or from URL based on condition
+if(isset($_GET['id']))
+{
+    // Fetch product price from the database based on prod_id
+    $prod_id = $_GET['id']; // Assuming the parameter name is 'id'
+    $product_sql = "SELECT prod_price FROM products WHERE prod_id = '$prod_id'";
+    $product_result = $conn->query($product_sql);
+    if ($product_result && $product_result->num_rows > 0) {
+        $product_row = $product_result->fetch_assoc();
+        $total_price = $product_row['prod_price'];
+    } else {
+        // Handle error: Product price not found for the specified prod_id
+        // You may log an error or handle it as per your application's requirement
+        $total_price = 0; // Set default price if price not found
+    }
+}
+ else {
+    // Retrieve cust_email from session
+    $cust_email = $_SESSION['cust_email'] ?? '';
+
+    // Check if cust_email is set
+    if($cust_email) {
+        // Retrieve cart items from the database
+        $sql = "SELECT * FROM cart WHERE cust_email = '$cust_email'";
+        $result = $conn->query($sql);
+
+        // Check if cart items are found
+        if ($result && $result->num_rows > 0) {
+            // Iterate through cart items to calculate total price
+            while($row = $result->fetch_assoc()) {
+                // Fetch product price from products table based on product_id
+                $product_id = $row['product_id'];
+                $product_sql = "SELECT prod_price FROM products WHERE prod_id = '$product_id'";
+                $product_result = $conn->query($product_sql);
+                
+                // Check if product price is found
+                if ($product_result && $product_result->num_rows > 0) {
+                    $product_row = $product_result->fetch_assoc();
+                    $product_price = $product_row['prod_price'];
+                    $total_price += $product_price * $row['quantity'];
+                } else {
+                    // Handle error: Product price not found
+                    // You may log an error or handle it as per your application's requirement
+                }
+            }
+        } else {
+            // Handle error: Cart items not found
+            // You may log an error or handle it as per your application's requirement
         }
+    } else {
+        // Handle error: cust_email not found in session
+        // You may log an error or handle it as per your application's requirement
     }
 }
 
@@ -259,7 +295,7 @@ $_SESSION['total_price'] = $total_price;
                     trans_id: response.razorpay_payment_id,
                     payment_type: "Netbanking",
                     payment_date: new Date().toISOString().split('T')[0],
-                    payment_amt: "<?php echo $prod_price; ?>",
+                    payment_amt: "<?php echo $total_price; ?>", //THE PRODUCT PRICE OF $prod_price defined
                     cust_email: "<?php echo $cust_email; ?>", // Use cust_email retrieved from session
                     order_id: "<?php echo $order_id; ?>" // Use order_id retrieved from session
                 };

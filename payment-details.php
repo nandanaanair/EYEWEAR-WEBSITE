@@ -20,7 +20,7 @@ if (isset($_SESSION['order_id'])) {
 }
 
 // Retrieve the total price from the session
-$total_price = $_SESSION['prod_price'];
+$total_price = $_SESSION['total_price'];
 
 // Validate if all necessary data is present
 if (!$trans_id || !$payment_type || !$payment_date || !$cust_email || !$order_id || !$total_price) {

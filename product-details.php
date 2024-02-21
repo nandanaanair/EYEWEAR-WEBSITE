@@ -135,7 +135,7 @@ function displayMessage(message, type) {
                             <p class="card-text"><strong>Color:</strong> <span class="color-box" style="background-color: <?php echo $product['prod_color']; ?>;"></span></p>
                             <!-- Add to cart and order now buttons -->
                             <div class="mt-4">
-                                <form action="checkout-form.php" method="post" class="d-inline">
+                                <form action="checkout-form.php?id=<?php echo $_GET['id']; ?>" method="post" class="d-inline">
                                     <button type="submit" class="btn btn-primary" id="orderNowBtn">Order Now</button>
                                 </form>
                                 <form action="add-to-cart.php" method="post" class="d-inline">
