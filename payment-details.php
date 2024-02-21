@@ -19,8 +19,11 @@ if (isset($_SESSION['order_id'])) {
     // Handle error: order ID not found in session
 }
 
+// Retrieve the total price from the session
+$total_price = $_SESSION['prod_price'];
+
 // Validate if all necessary data is present
-if (!$trans_id || !$payment_type || !$payment_date || !$payment_amt || !$cust_email || !$order_id) {
+if (!$trans_id || !$payment_type || !$payment_date || !$cust_email || !$order_id || !$total_price) {
     echo json_encode(array("success" => false, "error" => "Missing payment details"));
     exit; // Terminate the script
 }
@@ -29,7 +32,7 @@ if (!$trans_id || !$payment_type || !$payment_date || !$payment_amt || !$cust_em
 $sql = "INSERT INTO payment (trans_id, payment_type, payment_date, payment_amt, cust_email, order_id) 
         VALUES (?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ssssss", $trans_id, $payment_type, $payment_date, $payment_amt, $cust_email, $order_id);
+$stmt->bind_param("ssssss", $trans_id, $payment_type, $payment_date, $total_price, $cust_email, $order_id);
 
 if ($stmt->execute()) {
     // Call process-order.php upon successful payment

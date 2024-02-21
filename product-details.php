@@ -77,7 +77,7 @@ window.onload = function() {
         displayMessage("Product added to cart successfully!", "success");
     }
     if (urlParams.has('success') && urlParams.get('success') == '2') {
-        displayMessage("Order placed successfully!", "success");
+        displayMessage("Order placed successfully and prescription details also got added with your order. Shop more! Thankyou!", "success");
     }
     if (urlParams.has('error') && urlParams.get('error') == '1') {
         displayMessage("Product not found!", "error");

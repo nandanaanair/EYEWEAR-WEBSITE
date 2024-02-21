@@ -10,6 +10,32 @@ $prod_price = $_SESSION['prod_price'] ?? 0; // Default to 0 if session variable 
 $cust_email = $_SESSION['cust_email'] ?? ''; // Retrieve cust_email from session
 $order_id = mt_rand(100000, 999999);
 $_SESSION['order_id'] = $order_id;
+
+// Retrieve cart items from the database
+$cust_email = $_SESSION['cust_email'];
+$sql = "SELECT * FROM cart WHERE cust_email = '$cust_email'";
+$result = $conn->query($sql);
+
+// Calculate total price
+$total_price = 0;
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        // Fetch product price from products table based on product_id
+        $product_id = $row['product_id'];
+        $product_sql = "SELECT prod_price FROM products WHERE prod_id = '$product_id'";
+        $product_result = $conn->query($product_sql);
+        
+        // If product found, calculate total price
+        if ($product_result->num_rows > 0) {
+            $product_row = $product_result->fetch_assoc();
+            $product_price = $product_row['prod_price'];
+            $total_price += $product_price * $row['quantity'];
+        }
+    }
+}
+
+// Pass total price to session variable
+$_SESSION['total_price'] = $total_price;
 ?>
 
 <!DOCTYPE html>
@@ -198,7 +224,7 @@ $_SESSION['order_id'] = $order_id;
 </div>
 <!-- Include Razorpay SDK -->
 <script>
-    var prod_price = <?php echo json_encode($prod_price); ?>;
+    var prod_price = <?php echo json_encode($_SESSION['total_price']); ?>;
     var options = {
         "key": "rzp_test_cUE46WfnuayEgH", 
         "amount": prod_price * 100,
