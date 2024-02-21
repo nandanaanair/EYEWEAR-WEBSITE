@@ -46,7 +46,7 @@ if (isset($_POST['admin_email']) && isset($_POST['admin_password'])) {
     <!-- Your HTML body content here -->
     <header>
         <h4 class="logo">
-            <a href="index.html" id="logoLink"> O⌄O VisionVibes </a>
+            <a href="index.php" id="logoLink"> O⌄O VisionVibes </a>
         </h4>
     </header>
     <section class="background-radial-gradient overflow-hidden">

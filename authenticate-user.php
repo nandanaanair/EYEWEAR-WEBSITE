@@ -9,7 +9,7 @@ function isLoggedIn() {
 function requireLogin() {
     if (!isLoggedIn()) {
         // Redirect to login page if user is not logged in
-        echo "<script>window.location.href='index.html'</script>";
+        echo "<script>window.location.href='index.php'</script>";
         exit();
     } 
 }

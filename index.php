@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (isset($_SESSION['cust_email'])) {
+    echo "<script>window.location.href='home.php'</script>";
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
