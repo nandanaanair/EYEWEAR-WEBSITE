@@ -163,8 +163,6 @@ function previewImage(event) {
 
     reader.readAsDataURL(input.files[0]);
 }
-
-
 // function previewImage(event) {
 //     var input = event.target;
 //     var reader = new FileReader();

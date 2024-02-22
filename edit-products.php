@@ -254,8 +254,23 @@ $result = $conn->query($sql);
     <script src="https://kit.fontawesome.com/7785e19128.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js" integrity="sha384-7v1vbll1aXQN+/6fkI65f8F6TfT8/zy4PXdMW9sQY3TI4NdIiFqQ0W/gFqgoj3I1" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js"></script>
-
-    
+    <script>
+    $(document).ready(function() {
+        $("#edit_prod_color").spectrum({
+            showPalette: true,
+            palette: [
+                ["#000000", "#FFFFFF", "#FF0000"],
+                ["#00FF00", "#0000FF", "#FFFF00"],
+                ["#FFC0CB", "#FFA500", "#800080"],
+                ["#F5CBA7", "#AF601A", "#F8F9F9"],
+                ["#D2B4DE", "#F7DC6F", "#ABB2B9"],
+                ["#E59866", "#F1948A", "#D0ECE7"]
+                
+                // Add more hex colors to the palette as needed
+            ]
+        });
+    });
+</script> 
 
 </body>
 

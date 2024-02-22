@@ -72,7 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($update_sql) === TRUE) {
         // Redirect back to the edit-products.php page
-        header("Location: edit-products.php");
+        // header("Location: edit-products.php");
+        echo "<script> window.location.href='edit-products.php'</script>";
         exit();
     } else {
         echo "Error updating product: " . $conn->error;
