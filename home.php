@@ -90,7 +90,7 @@ requireLogin();
                     <div class="card-body">
                         <h5 class="card-title">Women Collection</h5>
                         <p class="card-text">Eyes that Sparkle: Discover the Elegance of Our Women's Eyewear Collection</p>
-                        <a href="login.html" class="btn btn-primary">Shop Now</a>
+                        <a href="eyeglasses-prod.php" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@ requireLogin();
                     <div class="card-body">
                         <h5 class="card-title">Men Collection</h5>
                         <p class="card-text">Sharper Vision, Bolder Style: Unleash the Power of Our Men's Eyewear Collection</p>
-                        <a href="login.html" class="btn btn-primary">Shop Now</a>
+                        <a href="eyeglasses-prod.php" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -110,7 +110,7 @@ requireLogin();
                     <div class="card-body">
                         <h5 class="card-title">Kids Collection</h5>
                         <p class="card-text">Frame the Future: Cute and Comfy Eyewear for Your Little Ones</p>
-                        <a href="login.html" class="btn btn-primary">Shop Now</a>
+                        <a href="eyeglasses-prod.php" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -133,7 +133,7 @@ requireLogin();
                 <div class="card-body">
                     <h5 class="card-title">Elegant Geometric Frames</h5>
                     <p class="card-text">Shop sleek elegance with our geometric frames.</p>
-                    <a href="login.html" class="btn btn-primary">Shop Now</a>
+                    <a href="eyeglasses-prod.php" class="btn btn-primary">Shop Now</a>
                 </div>
             </div>
         </div>
@@ -143,7 +143,7 @@ requireLogin();
                 <div class="card-body">
                     <h5 class="card-title">Classic Aviator Frames</h5>
                     <p class="card-text">Timeless style meets modern flair with our aviator frames.</p>
-                    <a href="login.html" class="btn btn-primary">Shop Now</a>
+                    <a href="eyeglasses-prod.php" class="btn btn-primary">Shop Now</a>
                 </div>
             </div>
         </div>
@@ -153,7 +153,7 @@ requireLogin();
                 <div class="card-body">
                     <h5 class="card-title">Trending Transparent Frames</h5>
                     <p class="card-text">Stay on-trend with our transparent frames collection.</p>
-                    <a href="login.html" class="btn btn-primary">Shop Now</a>
+                    <a href="eyeglasses-prod.php" class="btn btn-primary">Shop Now</a>
                 </div>
             </div>
         </div>
@@ -176,7 +176,7 @@ requireLogin();
                 <div class="card-body">
                     <h5 class="card-title">Eyeglasses</h5>
                     <p class="card-text">Find your perfect pair with our stylish eyeglasses.</p>
-                    <a href="login.html" class="btn btn-primary">Shop Now</a>
+                    <a href="eyeglasses-prod.php" class="btn btn-primary">Shop Now</a>
                 </div>
             </div>
         </div>
@@ -186,7 +186,7 @@ requireLogin();
                 <div class="card-body">
                     <h5 class="card-title">Sunglasses</h5>
                     <p class="card-text">Shade your eyes in style with our chic sunglasses.</p>
-                    <a href="login.html" class="btn btn-primary">Shop Now</a>
+                    <a href="sunglasses-prod.php" class="btn btn-primary">Shop Now</a>
                 </div>
             </div>
         </div>
@@ -196,7 +196,7 @@ requireLogin();
                 <div class="card-body">
                     <h5 class="card-title">Screen Glasses</h5>
                     <p class="card-text">Protect your eyes in style with our screen glasses.</p>
-                    <a href="login.html" class="btn btn-primary">Shop Now</a>
+                    <a href="screenglasses-prod.php" class="btn btn-primary">Shop Now</a>
                 </div>
             </div>
         </div>

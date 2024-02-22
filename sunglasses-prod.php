@@ -35,8 +35,13 @@ $conn->close();
     
 
 <?php
-    include 'nav.php';
-    ?>
+    // include 'nav.php';
+    if (isset($_SESSION['cust_email'])) {
+        include 'nav.php';
+    }else{
+        include 'index-nav.php';
+    }
+?>
 <br>
 <div class="container">
     <div class="row">

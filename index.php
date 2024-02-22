@@ -38,50 +38,10 @@ if (isset($_SESSION['cust_email'])) {
 </head>
 
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-        <a class="navbar-brand" href="#"> O⌄O VisionVibes </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="home.html">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Products
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="eyeglasses-prod.php">Eyeglasses</a>
-                        <a class="dropdown-item" href="sunglasses-prod.php">Sunglasses</a>
-                        <a class="dropdown-item" href="screenglasses-prod.php">Screen Glasses</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html"">Appointments</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact-us.php">Contact us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
-                </li>&nbsp;
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline" href="login.html" style="border-color: #bba190; border-radius: 20%;">Login</a>
-                </li>&nbsp;&nbsp;
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline" href="register.html" style="border-color: #bba190; border-radius: 20%;">Register</a>
-                </li>&nbsp;&nbsp;
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline" href="admin-login.php" style="border-color: #bba190; border-radius: 20%;">Admin</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+
+<?php
+    include 'index-nav.php';
+?>
 
     <!-- Page Content -->
     <div class="container mt-5 position-relative">
