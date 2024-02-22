@@ -147,16 +147,36 @@ function hideEditProductPopup() {
     document.body.classList.remove("popup-open");
 }
 
-function previewImage(input) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            document.getElementById('edit_prod_img_preview').src = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('edit_prod_img');
+    input.addEventListener('change', previewImage);
+});
+
+function previewImage(event) {
+    var input = event.target;
+    var reader = new FileReader();
+
+    reader.onload = function(){
+        var imgPreview = document.getElementById('edit_prod_img_preview');
+        imgPreview.src = reader.result;
+    };
+
+    reader.readAsDataURL(input.files[0]);
 }
 
-document.getElementById('edit_prod_img').addEventListener('change', function () {
-    previewImage(this);
-});
+
+// function previewImage(event) {
+//     var input = event.target;
+//     var reader = new FileReader();
+
+//     reader.onload = function(){
+//         var imgPreview = document.getElementById('edit_prod_img_preview');
+//         imgPreview.src = reader.result;
+//     };
+
+//     reader.readAsDataURL(input.files[0]);
+// }
+
+// document.getElementById('edit_prod_img').addEventListener('change', function () {
+//     previewImage(this);
+// });
