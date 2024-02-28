@@ -12,15 +12,29 @@ $searchQuery = "";
 if(isset($_GET['searchQuery'])) {
     $searchQuery = $_GET['searchQuery'];
 
-    // Construct the SQL query to search for orders
-    $sql = "SELECT * FROM orders WHERE order_id LIKE '%$searchQuery%' OR cust_email LIKE '%$searchQuery%' OR order_bldg LIKE '%$searchQuery%' OR order_city LIKE '%$searchQuery%' OR order_state LIKE '%$searchQuery%' OR order_pincode LIKE '%$searchQuery%' OR order_status LIKE '%$searchQuery%' OR order_date LIKE '%$searchQuery%' OR total_price LIKE '%$searchQuery%'";
+    $sql = "SELECT orders.*, GROUP_CONCAT(CONCAT(order_details.prod_id, ' - ', order_details.prod_name) SEPARATOR ', ') AS products
+        FROM orders
+        LEFT JOIN order_details ON orders.order_id = order_details.order_id
+        WHERE orders.order_id LIKE '%$searchQuery%' OR 
+              orders.cust_email LIKE '%$searchQuery%' OR 
+              orders.order_bldg LIKE '%$searchQuery%' OR 
+              orders.order_city LIKE '%$searchQuery%' OR 
+              orders.order_state LIKE '%$searchQuery%' OR 
+              orders.order_pincode LIKE '%$searchQuery%' OR 
+              orders.order_status LIKE '%$searchQuery%' OR 
+              orders.order_date LIKE '%$searchQuery%' OR 
+              orders.total_price LIKE '%$searchQuery%'
+        GROUP BY orders.order_id";
 
     // Execute the query
     $result = $conn->query($sql);
 }
 
 // Retrieve all order details from the database
-$sql = "SELECT * FROM orders";
+$sql = "SELECT orders.*, GROUP_CONCAT(order_details.prod_name SEPARATOR ', ') AS product_names
+        FROM orders
+        LEFT JOIN order_details ON orders.order_id = order_details.order_id
+        GROUP BY orders.order_id";
 $result = $conn->query($sql);
 ?>
 
@@ -61,6 +75,7 @@ $result = $conn->query($sql);
                     <th>Order Status</th>
                     <th>Order Date</th>
                     <th>Total Price</th>
+                    <th>Product Details</th> <!-- New column for product details -->
                     <th>Edit Action</th>
                 </tr>
             </thead>
@@ -70,7 +85,19 @@ $result = $conn->query($sql);
                 if (isset($_GET['searchQuery']) && !empty($_GET['searchQuery'])) {
                     // Construct the SQL query to search for orders
                     $searchQuery = $_GET['searchQuery'];
-                    $sql = "SELECT * FROM orders WHERE order_id LIKE '%$searchQuery%' OR cust_email LIKE '%$searchQuery%' OR order_bldg LIKE '%$searchQuery%' OR order_city LIKE '%$searchQuery%' OR order_state LIKE '%$searchQuery%' OR order_pincode LIKE '%$searchQuery%' OR order_status LIKE '%$searchQuery%' OR order_date LIKE '%$searchQuery%' OR total_price LIKE '%$searchQuery%'";
+                    $sql = "SELECT orders.*, GROUP_CONCAT(CONCAT(order_details.prod_id, ' - ', order_details.prod_name) SEPARATOR ', ') AS products
+                            FROM orders
+                            LEFT JOIN order_details ON orders.order_id = order_details.order_id
+                            WHERE orders.order_id LIKE '%$searchQuery%' OR 
+                                orders.cust_email LIKE '%$searchQuery%' OR 
+                                orders.order_bldg LIKE '%$searchQuery%' OR 
+                                orders.order_city LIKE '%$searchQuery%' OR 
+                                orders.order_state LIKE '%$searchQuery%' OR 
+                                orders.order_pincode LIKE '%$searchQuery%' OR 
+                                orders.order_status LIKE '%$searchQuery%' OR 
+                                orders.order_date LIKE '%$searchQuery%' OR 
+                                orders.total_price LIKE '%$searchQuery%'
+                            GROUP BY orders.order_id";
 
                     // Execute the query
                     $result = $conn->query($sql);
@@ -86,6 +113,7 @@ $result = $conn->query($sql);
                             echo "<td>" . $row['order_status'] . "</td>";
                             echo "<td>" . $row['order_date'] . "</td>";
                             echo "<td>" . $row['total_price'] . "</td>";
+                            echo "<td>" . $row['products'] . "</td>"; // Display product details
                             echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['order_id'] . "\", \"" . $row['cust_email'] . "\", \"" . $row['order_bldg'] . "\", \"" . $row['order_city'] . "\", \"" . $row['order_state'] . "\", \"" . $row['order_pincode'] . "\", \"" . $row['order_status'] . "\", \"" . $row['order_date'] . "\", \"" . $row['total_price'] . "\")'>Edit</a></td>";
                             echo "</tr>";
                         }
@@ -95,7 +123,10 @@ $result = $conn->query($sql);
                     }
                 } else {
                     // Retrieve all order data from the database
-                    $sql = "SELECT * FROM orders";
+                    $sql = "SELECT orders.*, GROUP_CONCAT(CONCAT(order_details.prod_id, ' - ', order_details.prod_name) SEPARATOR ', ') AS products
+                            FROM orders
+                            LEFT JOIN order_details ON orders.order_id = order_details.order_id
+                            GROUP BY orders.order_id";
                     $result = $conn->query($sql);
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
@@ -105,6 +136,7 @@ $result = $conn->query($sql);
                         echo "<td>" . $row['order_status'] . "</td>";
                         echo "<td>" . $row['order_date'] . "</td>";
                         echo "<td>" . $row['total_price'] . "</td>";
+                        echo "<td>" . $row['products'] . "</td>"; // Display product details
                         echo "<td><a href='javascript:void(0);' onclick='showEditForm(\"" . $row['order_id'] . "\", \"" . $row['cust_email'] . "\", \"" . $row['order_bldg'] . "\", \"" . $row['order_city'] . "\", \"" . $row['order_state'] . "\", \"" . $row['order_pincode'] . "\", \"" . $row['order_status'] . "\", \"" . $row['order_date'] . "\", \"" . $row['total_price'] . "\")'>Edit</a></td>";
                         echo "</tr>";
                     }
