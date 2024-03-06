@@ -179,10 +179,9 @@ function displayMessage(message, type) {
                 <div class="card">
                     <h5 class="card-header">Add Review</h5>
                     <div class="card-body">
-                        <form action="submit-review.php" method="post">
+                    <form action="submit-review.php?id=<?php echo $prod_id; ?>" method="post">
                             <!-- Hide the input fields for customer's first name and prod ID -->
                             <input type="hidden" name="firstName" value="<?php echo $customer_fname; ?>">
-                            <input type="hidden" name="prod_id" value="<?php echo $prod_id; ?>">
                             <div class="form-group">
                                 <label for="review_content">Content</label>
                                 <textarea class="form-control" id="review_content" name="review_content" rows="3" required></textarea>

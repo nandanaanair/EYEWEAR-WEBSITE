@@ -1,6 +1,8 @@
 <?php
-include 'authenticate-admin.php';
-requireLogin();
+// // Include necessary PHP files or define functions here
+// include 'authenticate-admin.php';
+// requireLogin();
+
 include "connect.php";
 // Fetch total number of products
 $productCountQuery = "SELECT COUNT(*) AS total FROM products";
@@ -92,7 +94,7 @@ $conn->close();
                 <a href="list-prescription.php">Prescriptions</a>
             </li>
             <li>
-                <a href="list-payment.php">Payments</a>
+                <a href="admin-pay.php">Payments</a>
             </li>
         </ul>
     </nav>
