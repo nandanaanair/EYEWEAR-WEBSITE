@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="home.html">Home
+                    <a class="nav-link" href="home.php">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -34,7 +34,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.html"">Appointments</a>
+                    <a class="nav-link" href="login.html">Appointments</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="contact-us.php">Contact us</a>
