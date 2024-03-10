@@ -50,9 +50,51 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha384-4mOC5PJSq1Yq3Jasv4G1kAqQ6owlsOfQ1uHRzBy6ZYgdT1pef0nGhHPfD5QZbb3J" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="./css/home.css"> -->
     <link rel="stylesheet" href="./css/user-profile.css">
-    <title>User Profile</title> <!-- Set the web page title here -->
+    <title>User Profile</title> 
+    <style>
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #7caf4c;
+            color: white;
+        }
+        .error {
+            background-color: #943726;
+            color: white;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success') && urlParams.get('success') == '1') {
+                displayMessage("Password Successfully changed!", "success");
+            }
+        };
+
+        function displayMessage(message, type) {
+            var messageContainer = document.createElement('div');
+            messageContainer.textContent = message;
+            messageContainer.classList.add('message', type);
+            document.body.insertBefore(messageContainer, document.body.firstChild);
+            setTimeout(function() {
+                messageContainer.remove();
+            }, 3000); // Remove message after 3 seconds
+        }
+    </script>
 </head>
 
 <body>
@@ -81,6 +123,9 @@ $conn->close();
             <!-- ... Add more user details if needed -->
             <div class="edit-profile-link">
             <a href="#" id="editProfileBtn">Edit Profile</a>
+            </div><br>
+            <div class="edit-profile-link">
+            <a href="change-password.php" id="editProfileBtn">Change Password</a>
             </div><br>
             <!-- Add the delete account link/button -->
             <div class="delete-profile-link">
@@ -143,7 +188,6 @@ $conn->close();
     </div>
 
     <!-- Footer Section -->
-    <!-- ... Your existing footer code ... -->
     <script>
     document.getElementById('editProfileBtn').addEventListener('click', function () {
     document.getElementById('editProfileForm').style.opacity = '1';
