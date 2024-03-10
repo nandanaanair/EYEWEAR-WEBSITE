@@ -9,21 +9,20 @@
     <title>nav</title>
 </head>
 <body>
-    <!-- Footer Section -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    O⌄O VisionVibes
-                </div>
-                <div class="footer-text">
-                    <p>&copy; 2023 Vision Vibes. All Rights Reserved.</p>
-                </div>
+<footer class="footer" >
+    <div class="container" style="color:white; background-color: #20120a;">
+        <div class="footer-content" style="color:white; background-color: #20120a;">
+            <div class="footer-logo" style="color:white; background-color: #20120a;">
+                O⌄O VisionVibes
+            </div>
+            <div class="footer-text" style="color:white; background-color: #20120a;">
+                <p>&copy; <?php echo date("Y"); ?> Vision Vibes. All Rights Reserved.</p>
             </div>
         </div>
-        <hr style="margin-left: 5%; margin-right: 5%">
-        <p style="text-align: center;">Designed with <span class="heart">&hearts;</span> by Nandana</p>
-    </footer>
+    </div>
+    <hr style="margin-left: 5%; margin-right: 5%">
+    <p style="text-align: center;">Designed with <span class="heart">&hearts;</span> by Nandana</p>
+</footer>
 
 
 

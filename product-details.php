@@ -210,7 +210,10 @@ function displayMessage(message, type) {
             </div>
         </div>
     </div>
-
+    <br><br><br><br>
+    <?php
+include "footer.php";
+?>
     <script>
         // Toggle visibility of add review section and scroll to it
         document.getElementById('addReviewBtn').addEventListener('click', function() {
