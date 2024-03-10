@@ -45,24 +45,31 @@ if ($stmt) {
             while ($row = $result->fetch_assoc()) {
                 // Output data of each row
                 ?>
-                <div class="col-md-4"> <!-- Adjust the grid size as needed -->
-                    <div class="card mb-3"> <!-- Add margin bottom to space the cards -->
-                        <?php if (!empty($row["prod_img"])) { ?>
-                            <img src="<?php echo $row["prod_img"]; ?>" class="card-img-top" alt="Product Image">
-                        <?php } else { ?>
-                            <!-- Add a placeholder image or default image here -->
-                            <img src="placeholder.jpg" class="card-img-top" alt="Product Image">
-                        <?php } ?>
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $row["prod_name"]; ?></h5>
-                            <p class="card-text"><?php echo $row["prod_description"]; ?></p>
-                            <p class="card-text">Price: <?php echo $row["prod_price"]; ?></p>
-                            <p class="card-text">Brand: <?php echo $row["prod_brand"]; ?></p>
-                            <!-- Add link to view product details -->
-                            <a href="product-details.php?id=<?php echo $row['prod_id']; ?>" class="btn btn-primary">View Details</a>
+                <div class="col-md-4">
+                        <div class="card">
+                            <?php if (!empty($row["prod_img"])) { ?>
+                                <img src="<?php echo $row["prod_img"]; ?>" class="card-img-top" alt="Product Image">
+                            <?php } else { ?>
+                                <!-- Add a placeholder image or default image here -->
+                                <img src="placeholder.jpg" class="card-img-top" alt="Product Image">
+                            <?php } ?>
+                            <div class="card-body">
+                                <div style="display: flex; justify-left: space-between;">
+                                <h5 class="card-title"><?php echo $row["prod_name"]; ?></h5>
+                                <h6 class="card-text"><br><b>₹<?php echo $row["prod_price"]; ?></b></h6>
+                                </div>
+                                <!-- <p class="card-text"><?php echo $row["prod_description"]; ?></p> -->
+                                <p class="card-text"><i><?php echo $row["prod_brand"]; ?></i></p>
+                                <hr>
+                                <a href="product-details.php?id=<?php echo $row['prod_id']; ?>" style="color: black; text-decoration: underline;"><b>View Details</b></a>
+                                <br><br>
+                                <form action="add-to-cart.php" method="POST">
+                                    <input type="hidden" name="prod_id" value="<?php echo $row['prod_id']; ?>">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <?php
             }
         } else {

@@ -79,6 +79,14 @@ $conn->close();
         .card:hover {
             transform: translateY(-5px);
         }
+        .placeholder-image img {
+            width: 100px; 
+            height: auto; 
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #2e180b;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
     </style>
     <script>
         window.onload = function() {
@@ -112,10 +120,10 @@ $conn->close();
     <h1>Your Profile</h1>
     <div class="profile-container">
         <div class="profile-header">
-            <div class="profile-avatar">
-                <!-- Assuming you have a profile picture field in your database -->
-                <img src="https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg" alt="User Avatar">
-            </div>
+        <div class="placeholder-image">
+        <img src="https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg" alt="User Placeholder Image"> <br><br>
+        </div>
+            
             
         </div>
         <div class="profile-details">
