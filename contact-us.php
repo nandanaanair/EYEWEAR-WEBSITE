@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Sender and recipient
         $mail->setFrom('editwithcharms@gmail.com');
-        $mail->addAddress('editwithcharms@gmail.com'); // Replace with your email address
+        $mail->addAddress('editwithcharms@gmail.com');
         $mail->addReplyTo($cust_email); // Set Reply-To address to customer's email
 
         // Content
@@ -106,23 +106,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // const email = document.getElementById('email');
-        // const emailError = document.getElementById('emailError');
-        // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         const message = document.getElementById('message');
         const messageError = document.getElementById('messageError');
         const maxMessageLength = 50;
 
-        // email.addEventListener('input', function () {
-        //     if (email.value.trim() === '') {
-        //         emailError.textContent = 'Email is required.';
-        //     } else if (!emailRegex.test(email.value)) {
-        //         emailError.textContent = 'Enter a valid email address.';
-        //     } else {
-        //         emailError.textContent = '';
-        //     }
-        // });
 
         message.addEventListener('input', function () {
             if (message.value.trim() === '') {
@@ -156,20 +144,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form action="contact-us.php" method="post" class="card px-1 py-4" style="background-color: rgba(250, 246, 242, 0.315);" novalidate>
         <!-- Your existing form fields -->
         <div class="card-body" style="color: white;">
-            <!-- <h6 style="font-weight: 700; font-size: large;">Email</h6>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <input class="form-control" type="text" placeholder="" name="email" id="email">
-                        <div id="emailError" class="error-message"></div>
-                    </div>
-                </div>
-            </div><br> -->
             <h6 style="font-weight: 700; font-size: large;">Message</h6>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <!-- Use textarea instead of input for multiline text -->
                         <textarea class="form-control" style="height: 200px;" rows="4" name="message" id="message"></textarea>
                         <div id="messageError" class="error-message"></div>
                     </div>
