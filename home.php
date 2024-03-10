@@ -247,22 +247,33 @@ requireLogin();
         </div>
     </div>
     <div class="row d-flex justify-content-center">
-        <div class="col-lg-2">
-            <img src="https://i.pinimg.com/originals/09/bc/d6/09bcd63e5f54460df25a1f4fdaa1c065.jpg" alt="Brand 1" class="img-fluid">
-        </div>
-        <div class="col-lg-2">
-            <img src="https://media.licdn.com/dms/image/C4D22AQHjOIVD0NaGLw/feedshare-shrink_800/0/1679583053175?e=2147483647&v=beta&t=CQGP8nmuQXaCIJpd5YKcNWVWKPUmZVCcmh_osg6yJ_M" alt="Brand 2" class="img-fluid">
-        </div>
-        <div class="col-lg-2">
-            <img src="https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0023/8503/brand.gif?itok=xs71GdV_" alt="Brand 3" class="img-fluid">
-        </div>
-        <div class="col-lg-2">
-            <img src="https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/S/al-eu-726f4d26-7fdb/eb3a4241-39a1-4e44-a6fd-5c47bae9b644.jpg" alt="Brand 4" class="img-fluid">
-        </div>
-        <div class="col-lg-2">
-            <img src="https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/072016/untitled-1_279.png?itok=YRJhrklt" alt="Brand 5" class="img-fluid">
-        </div>
+    <div class="col-lg-2">
+        <a href="https://india.ray-ban.com/">
+            <img src="https://i.pinimg.com/originals/09/bc/d6/09bcd63e5f54460df25a1f4fdaa1c065.jpg" alt="Ray-Ban" class="img-fluid">
+        </a>
     </div>
+    <div class="col-lg-2">
+        <a href="https://www.johnjacobseyewear.com/">
+            <img src="https://media.licdn.com/dms/image/C4D22AQHjOIVD0NaGLw/feedshare-shrink_800/0/1679583053175?e=2147483647&v=beta&t=CQGP8nmuQXaCIJpd5YKcNWVWKPUmZVCcmh_osg6yJ_M" alt="John Jacobs" class="img-fluid">
+        </a>
+    </div>
+    <div class="col-lg-2">
+        <a href="https://www.leecooper.com/">
+            <img src="https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/0023/8503/brand.gif?itok=xs71GdV_" alt="Lee Cooper" class="img-fluid">
+        </a>
+    </div>
+    <div class="col-lg-2">
+        <a href="https://www.coach.com/">
+            <img src="https://m.media-amazon.com/images/S/al-eu-726f4d26-7fdb/eb3a4241-39a1-4e44-a6fd-5c47bae9b644.jpg" alt="Vincent Chase" class="img-fluid">
+        </a>
+    </div>
+    <div class="col-lg-2">
+        <a href="https://www.oakley.com/">
+            <img src="https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/072016/untitled-1_279.png?itok=YRJhrklt" alt="Oakley" class="img-fluid">
+        </a>
+    </div>
+</div>
+
 </div>    
 <hr>
     <!-- // Footer Section -->
