@@ -33,7 +33,7 @@ if ($prod_category == 'eyeglass') {
 } elseif ($prod_category == 'sunglass') {
     $redirect_page = 'sunglasses-prod.php';
 } elseif ($prod_category == 'screen_glass') {
-    $redirect_page = 'sunglasses-prod.php';
+    $redirect_page = 'screenglasses-prod.php';
 } else {
     // Default redirection if type is not recognized
     $redirect_page = 'all-products.php';

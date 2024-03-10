@@ -1,82 +1,64 @@
 <?php
+// Include file to authenticate user
 include 'authenticate-user.php';
+// Check if user is logged in, otherwise redirect to login page
 requireLogin();
 ?>
+
 <?php
+// Include database connection
 include "connect.php";
+
 // Fetch the product price from the session variable
-$prod_price = $_SESSION['prod_price'] ?? 0; // Default to 0 if session variable is not set IMPORTANT DONT REMOVE IF REMOVED PAYMENT WONT GET INITIATED
-// Retrieve session variables for customer email and order ID
-$cust_email = $_SESSION['cust_email'] ?? ''; // Retrieve cust_email from session
+$prod_price = $_SESSION['prod_price'] ?? 0;
+
+// Retrieve customer email and generate order ID
+$cust_email = $_SESSION['cust_email'] ?? '';
 $order_id = mt_rand(100000, 999999);
 $_SESSION['order_id'] = $order_id;
 
 // Initialize total price
 $total_price = 0;
 
-// Check if the product price is set in the session
-// Fetch the product price from the session variable or from URL based on condition
-if(isset($_GET['id']))
-{
-    // Fetch product price from the database based on prod_id
-    $prod_id = $_GET['id']; // Assuming the parameter name is 'id'
+// Check if product ID is provided in the URL
+if(isset($_GET['id'])) {
+    // Fetch product price from the database based on product ID
+    $prod_id = $_GET['id'];
     $product_sql = "SELECT prod_price FROM products WHERE prod_id = '$prod_id'";
     $product_result = $conn->query($product_sql);
     if ($product_result && $product_result->num_rows > 0) {
         $product_row = $product_result->fetch_assoc();
         $total_price = $product_row['prod_price'];
     } else {
-        // Handle error: Product price not found for the specified prod_id
-        // You may log an error or handle it as per your application's requirement
-        $total_price = 0; // Set default price if price not found
+        // Set default price if price not found
+        $total_price = 0;
     }
-}
- else {
-    // Retrieve cust_email from session
-    $cust_email = $_SESSION['cust_email'] ?? '';
-
-    // Check if cust_email is set
+} else {
+    // If product ID not provided, fetch cart items for the customer
     if($cust_email) {
-        // Retrieve cart items from the database
         $sql = "SELECT * FROM cart WHERE cust_email = '$cust_email'";
         $result = $conn->query($sql);
-
-        // Check if cart items are found
         if ($result && $result->num_rows > 0) {
             // Iterate through cart items to calculate total price
             while($row = $result->fetch_assoc()) {
-                // Fetch product price from products table based on product_id
+                // Fetch product price from products table based on product ID
                 $product_id = $row['product_id'];
                 $product_sql = "SELECT prod_price FROM products WHERE prod_id = '$product_id'";
                 $product_result = $conn->query($product_sql);
-                
-                // Check if product price is found
                 if ($product_result && $product_result->num_rows > 0) {
                     $product_row = $product_result->fetch_assoc();
                     $product_price = $product_row['prod_price'];
                     $total_price += $product_price * $row['quantity'];
-                } else {
-                    // Handle error: Product price not found
-                    // You may log an error or handle it as per your application's requirement
                 }
             }
-        } else {
-            // Handle error: Cart items not found
-            // You may log an error or handle it as per your application's requirement
         }
-    } else {
-        // Handle error: cust_email not found in session
-        // You may log an error or handle it as per your application's requirement
     }
 }
 
-// Pass total price to session variable
+// Store total price in session variable
 $_SESSION['total_price'] = $total_price;
 
 // Retrieve saved address data from the database based on the user's email
-// Assuming you have a table named 'user_addresses' with columns 'bldg', 'city', 'state', and 'pincode'
-
-// Fetch the user's saved address data from the database
 $user_address_sql = "SELECT * FROM customer WHERE cust_email = '$cust_email'";
 $user_address_result = $conn->query($user_address_sql);
 
@@ -95,7 +77,6 @@ if ($user_address_result && $user_address_result->num_rows > 0) {
     $saved_state = '';
     $saved_pincode = '';
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -164,7 +145,7 @@ if ($user_address_result && $user_address_result->num_rows > 0) {
         <!-- Prescription Option Checkbox -->
         <div class="form-group" style="padding-left:20px;">
             <label class="form-check-label">
-                <h4><input type="checkbox" class="form-check-input" id="prescriptionOption"></h4> <h4> I   Require prescription details</h4>
+                <h4><input type="checkbox" class="form-check-input" id="prescriptionOption"></h4> <h4> I   Fill prescription details</h4>
             </label>
         </div>
         <!-- Prescription Details -->
