@@ -204,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group">
                 <label class="form-label" for="prod_description">Description:</label>
-                <textarea class="form-control" id="prod_description" name="prod_description" rows="4" required></textarea>
+                <textarea class="form-control" id="prod_description" name="prod_description" rows="10" required></textarea>
                 <div id="descriptionError" class="error-message"></div>
             </div>
 
@@ -288,10 +288,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $("#prod_color").spectrum({
                 showPalette: true,
                 palette: [
-                    ["black", "white", "red"],
-                    ["green", "blue", "yellow"],
-                    ["pink", "orange", "purple"]
-                    // Add more colors to the palette as needed
+                    ["#000000", "#FFFFFF", "#FF0000"],
+                    ["#00FF00", "#0000FF", "#FFFF00"],
+                    ["#FFC0CB", "#FFA500", "#800080"],
+                    ["#F5CBA7", "#AF601A", "#F8F9F9"],
+                    ["#D2B4DE", "#F7DC6F", "#ABB2B9"],
+                    ["#E59866", "#F1948A", "#D0ECE7"]
                 ]
             });
         });
