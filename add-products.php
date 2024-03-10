@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         VALUES ('$prod_id', '$prod_name', '$prod_description', '$prod_frametype', '$prod_category', '$prod_price', '$prod_brand', '$prod_color', '$imagePath')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Product added successfully";
+        echo "<script>window.location.href = 'edit-products.php?success=1';</script>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }

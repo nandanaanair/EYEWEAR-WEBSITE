@@ -59,14 +59,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mail->send();
 
                 // Echo JavaScript to show the pop-up
-                echo 'Password reset link has been sent to your email.';
+                // echo 'Password reset link has been sent to your email.';
+                echo "<script>window.location.href = 'login.html?success=3';</script>";
                 exit();
             } catch (Exception $e) {
                 // Handle mailer exception (e.g., log error)
-                echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+                echo "<script>window.location.href = 'forgot-password.html?error=1';</script>";
             }
         } else {
-            echo 'Email not found. Please enter a registered email.';
+            echo "<script>window.location.href = 'forgot-password.html?error=2';</script>";
         }
 
         $stmt->close();

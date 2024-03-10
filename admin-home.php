@@ -1,6 +1,8 @@
 <?php
-include 'authenticate-admin.php';
-requireLogin();
+// // Include necessary PHP files or define functions here
+// include 'authenticate-admin.php';
+// requireLogin();
+
 include "connect.php";
 // Fetch total number of products
 $productCountQuery = "SELECT COUNT(*) AS total FROM products";
@@ -92,7 +94,7 @@ $conn->close();
                 <a href="list-prescription.php">Prescriptions</a>
             </li>
             <li>
-                <a href="list-payment.php">Payments</a>
+                <a href="admin-pay.php">Payments</a>
             </li>
         </ul>
     </nav>
@@ -102,60 +104,134 @@ $conn->close();
         <h2 class="text-center">Welcome, Admin!</h2>
 
         <!-- Product Report and Order Placed Report -->
-<div class="row mt-4">
-    <div class="col-md-6">
-        <!-- Product Report Card -->
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title"><b>Product Report</b></h5>
-                <p class="card-text">Total Products: <?php echo $productCount; ?></p>
-                <p class="card-text">Top Selling Products:</p>
-                <ul>
-                    <?php foreach ($topSellingProducts as $product): ?>
-                        <li><?php echo $product['prod_name']; ?> (<?php echo $product['total_sales']; ?> sales)</li>
-                    <?php endforeach; ?>
-                </ul>
-                <canvas id="productChart" width="400" height="400"></canvas>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <!-- Product Report Card -->
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Product Report</b></h5>
+                        <p class="card-text">Total Products: <?php echo $productCount; ?></p>
+                        <p class="card-text">Top Selling Products:</p>
+                        <ul>
+                            <?php foreach ($topSellingProducts as $product): ?>
+                                <li><?php echo $product['prod_name']; ?> (<?php echo $product['total_sales']; ?> sales)</li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <canvas id="productChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- Order Placed Report Card -->
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Order Placed Report</b></h5>
+                        <p class="card-text">Total Orders: <?php echo $orderCount; ?></p>
+                        <p class="card-text">Total Revenue: $<?php echo $totalRevenue; ?></p>
+                        <canvas id="orderCategoryChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <!-- Order Placed Report Card -->
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title"><b>Order Placed Report</b></h5>
-                <p class="card-text">Total Orders: <?php echo $orderCount; ?></p>
-                <p class="card-text">Total Revenue: $<?php echo $totalRevenue; ?></p>
-                <canvas id="orderCategoryChart" width="400" height="400"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Appointment Booking Report and Customer Report -->
-<div class="row mt-4">
-    <div class="col-md-6">
-        <!-- Appointment Booking Report Card -->
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title"><b>Appointment Booking Report</b></h5>
-                <p class="card-text">Total Appointments: <?php echo $appointmentCount; ?></p>
-                <canvas id="appointmentChart" width="400" height="400"></canvas>
+        <!-- Appointment Booking Report and Customer Report -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <!-- Appointment Booking Report Card -->
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Appointment Booking Report</b></h5>
+                        <p class="card-text">Total Appointments: <?php echo $appointmentCount; ?></p>
+                        <canvas id="appointmentChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- Customer Report Card -->
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Customer Report</b></h5>
+                        <p class="card-text">Total Customers: <?php echo $customerCount; ?></p>
+                        <canvas id="customerChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <!-- Customer Report Card -->
-        <div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title"><b>Customer Report</b></h5>
-                <p class="card-text">Total Customers: <?php echo $customerCount; ?></p>
-                <canvas id="customerChart" width="400" height="400"></canvas>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card" style="margin-top: 23px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Add Products</h5>
+                        <p class="card-text">Click below to add a new product to the inventory.</p>
+                        <a href="add-products.php" class="btn btn-primary">Add a Product</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Edit products</h5>
+                        <p class="card-text">Click below to edit product information.</p>
+                        <a href="edit-products.php" class="btn btn-primary">Edit Products</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">List Customers</h5>
+                        <p class="card-text">Click below to view the customer details.</p>
+                        <a href="list-customer.php" class="btn btn-primary">List Customers</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">List Appointments</h5>
+                        <p class="card-text">Click below to view the appointment details.</p>
+                        <a href="list-appointment.php" class="btn btn-primary">List Appointments</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">View Orders</h5>
+                        <p class="card-text">Click below to view the orders placed.</p>
+                        <a href="list-orders.php" class="btn btn-primary">List Orders</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">View Prescriptions</h5>
+                        <p class="card-text">Click below to view the Prescriptions sent.</p>
+                        <a href="list-prescription.php" class="btn btn-primary">List Prescriptions</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">View Payments</h5>
+                        <p class="card-text">Click below to view the payment details.</p>
+                        <a href="list-payment.php" class="btn btn-primary">List Payment</a>
+                    </div>
+                </div>
             </div>
         </div>
+        <br>
+        <!-- Include your existing appointments table code here -->
     </div>
-</div>
-
     </div>
 </div>
 <script>

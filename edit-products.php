@@ -33,43 +33,6 @@ if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['prod_id
         echo "Error deleting record: " . $conn->error;
     }
 }
-// Handle update action
-// if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
-//     $prod_id = $_POST['prod_id'];
-//     $prod_name = $_POST['prod_name'];
-//     $prod_description = $_POST['prod_description'];
-//     $prod_frametype = $_POST['prod_frametype'];
-//     $prod_category = $_POST['prod_category'];
-//     $prod_price = $_POST['prod_price'];
-//     $prod_brand = $_POST['prod_brand'];
-//     $prod_color = $_POST['prod_color'];
-
-//     // Check if a file was uploaded
-//     if(isset($_FILES['prod_img']) && $_FILES['prod_img']['error'] === UPLOAD_ERR_OK) {
-//         $file_tmp = $_FILES['prod_img']['tmp_name'];
-//         $file_name = $_FILES['prod_img']['name'];
-//         $file_type = $_FILES['prod_img']['type'];
-
-//         // Move uploaded file to desired location
-//         $target_dir = "uploads/";
-//         $target_file = $target_dir . basename($file_name);
-
-//         if (move_uploaded_file($file_tmp, $target_file)) {
-//             // Update the image path in the database
-//             $sql_update_img = "UPDATE products SET prod_name='$prod_name', prod_description='$prod_description', prod_frametype='$prod_frametype', prod_category='$prod_category', prod_price='$prod_price', prod_brand='$prod_brand', prod_color='$prod_color', prod_img='$target_file' WHERE prod_id=$prod_id";
-
-//             if ($conn->query($sql_update_img) === TRUE) {
-//                 // Redirect back to the page to reflect changes
-//                 echo "<script> window.location.href='edit-products.php'</script>";
-//                 exit();
-//             } else {
-//                 echo "Error updating record: " . $conn->error;
-//             }
-//         } else {
-//             echo "Error uploading file.";
-//         }
-//     }
-// }
 
 // Retrieve all product data from the database
 $sql = "SELECT * FROM products";
@@ -89,6 +52,39 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha384-4mOC5PJSq1Yq3Jasv4G1kAqQ6owlsOfQ1uHRzBy6ZYgdT1pef0nGhHPfD5QZbb3J" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css">
     <title>Product List</title>
+    <style>
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #7caf4c;
+            color: white;
+        }
+        .error {
+            background-color: #943726;
+            color: white;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success') && urlParams.get('success') == '1') {
+                displayMessage("Product added successfully.", "success");
+            } 
+        };
+
+        function displayMessage(message, type) {
+            var messageContainer = document.createElement('div');
+            messageContainer.textContent = message;
+            messageContainer.classList.add('message', type);
+            document.body.insertBefore(messageContainer, document.body.firstChild);
+            setTimeout(function() {
+                messageContainer.remove();
+            }, 3000); // Remove message after 3 seconds
+        }
+    </script>
 </head>
 
 <body>
@@ -100,7 +96,12 @@ $result = $conn->query($sql);
             <input type="text" name="searchQuery" id="searchQuery" class="search-input" placeholder="Search products..." value="<?php echo $searchQuery; ?>">
         </form>
     </div>
-
+<br>
+<div class="row mt-4">
+    <div class="col-md-14 d-flex justify-content-center">
+        <a href="add-products.php" class="btn btn-primary">Add a Product</a>
+    </div>
+</div>
     <!-- Product List Section -->
     <div class="container mt-5">
         <h2 class="text-center">Product List</h2>

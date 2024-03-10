@@ -1,6 +1,7 @@
 <?php
 // session_start();
-include 'authenticate-user.php';
+// include 'authenticate-user.php';
+session_start();
 // Verify if token is provided in the URL
 if(isset($_GET['token'])) {
     $token = $_GET['token'];

@@ -16,6 +16,9 @@
           if (urlParams.has('success') && urlParams.get('success') == '1') {
               displayMessage("Successfully Registered.", "success");
           }
+          if (urlParams.has('success') && urlParams.get('success') == '3') {
+              displayMessage("Password link is sent to your email address.", "success");
+          }
           if (urlParams.has('success') && urlParams.get('success') == '2') {
               displayMessage("Account deleted.", "success");
           }
