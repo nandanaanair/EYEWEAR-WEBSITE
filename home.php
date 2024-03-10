@@ -42,9 +42,12 @@ requireLogin();
             var urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('success') && urlParams.get('success') == '1') {
                 displayMessage("Login successful!", "success");
-            } else if (urlParams.has('error') && urlParams.get('error') == '1') {
-                displayMessage("Incorrect email or password.", "error");
+            } else if (urlParams.has('success') && urlParams.get('success') == '2') {
+                displayMessage("Order placed successfully. Shop more! Thankyou!.", "success");
+            }else if (urlParams.has('error') && urlParams.get('error') == '3') {
+                displayMessage("Payment Failed", "error");
             }
+            
         };
 
         function displayMessage(message, type) {

@@ -91,17 +91,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if the statement executed successfully
         if ($stmt->execute()) {
             // Redirect to the success page
-            echo "<script>window.location.href='product-details.php?id=$prod_id&success=2'</script>";
+            echo "<script>window.location.href='home.php?id=$prod_id&success=2'</script>";
         } else {
             // Handle error
-            echo "<script>window.location.href='product-details.php?id=$prod_id&error=3'</script>";
+            echo "<script>window.location.href='home.php?id=$prod_id&error=3'</script>";
         }
 
         // Close the statement and database connection
         $stmt->close();
     } else {
         // Redirect to the success page as prescription fields are empty
-        echo "<script>window.location.href='product-details.php?id=$prod_id&success=2'</script>";
+        echo "<script>window.location.href='home.php?id=$prod_id&success=2'</script>";
     }
 }
 

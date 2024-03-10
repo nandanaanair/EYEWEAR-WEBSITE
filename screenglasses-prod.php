@@ -116,10 +116,8 @@ $conn->close();
                                 <a href="product-details.php?id=<?php echo $row['prod_id']; ?>" style="color: black; text-decoration: underline;"><b>View Details</b></a>
                                 <br><br>
                                 <form action="add-to-cart.php" method="POST">
-                                <a href="checkout-form.php?prod_id=<?php echo $row['prod_id']; ?>" class="btn btn-primary">Order Now</a>
-                                
                                     <input type="hidden" name="prod_id" value="<?php echo $row['prod_id']; ?>">
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-cart-plus"></i></button>
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                                 </form>
                             </div>
                         </div>

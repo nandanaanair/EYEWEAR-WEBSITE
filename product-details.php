@@ -76,18 +76,18 @@ window.onload = function() {
     if (urlParams.has('success') && urlParams.get('success') == '1') {
         displayMessage("Product added to cart successfully!", "success");
     }
-    if (urlParams.has('success') && urlParams.get('success') == '2') {
-        displayMessage("Order placed successfully. Shop more! Thankyou!", "success");
-    }
+    // if (urlParams.has('success') && urlParams.get('success') == '2') {
+    //     displayMessage("Order placed successfully. Shop more! Thankyou!", "success");
+    // }
     if (urlParams.has('error') && urlParams.get('error') == '1') {
         displayMessage("Product not found!", "error");
     }
     if (urlParams.has('error') && urlParams.get('error') == '2') {
         displayMessage("Product ID not provided!", "error");
     }
-    if (urlParams.has('error') && urlParams.get('error') == '3') {
-        displayMessage("Payment Failed!", "error");
-    }
+    // if (urlParams.has('error') && urlParams.get('error') == '3') {
+    //     displayMessage("Payment Failed!", "error");
+    // }
 };
 
 function displayMessage(message, type) {
