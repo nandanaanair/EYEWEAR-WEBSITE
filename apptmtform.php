@@ -32,9 +32,7 @@ requireLogin();
     <script>
         window.onload = function() {
             var urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('success') && urlParams.get('success') == '1') {
-                displayMessage("Appointment booked successfully! Email is sent to your registered email id.", "success");
-            } else if (urlParams.has('error') && urlParams.get('error') == '1') {
+            if (urlParams.has('error') && urlParams.get('error') == '1') {
                 displayMessage("Appointment slot not available. Please choose another slot.", "error");
             }else if (urlParams.has('error') && urlParams.get('error') == '2') {
                 displayMessage("Booking failed please try again.", "error");

@@ -1,5 +1,19 @@
 <?php
     session_start(); 
+    include "connect.php";
+    // Handle delete action
+    if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['apptmt_id'])) {
+        $apptmt_id = $_GET['apptmt_id'];
+        // Delete the entry from the database based on appointment ID
+        $sql_delete = "DELETE FROM appointment WHERE apptmt_id = $apptmt_id";
+        if ($conn->query($sql_delete) === TRUE) {
+
+            echo "<script>window.location.href = 'view-apptmt.php?success=2';</script>";
+            exit();
+        } else {
+            echo "Error deleting record: " . $conn->error;
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +24,48 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha384-4mOC5PJSq1Yq3Jasv4G1kAqQ6owlsOfQ1uHRzBy6ZYgdT1pef0nGhHPfD5QZbb3J" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/view-apptmt.css">
-    <title>Appointments</title> <!-- Set the web page title here -->
+    <title>Appointments</title> 
+    <style>
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #7caf4c;
+            color: white;
+        }
+        .error {
+            background-color: #943726;
+            color: white;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success') && urlParams.get('success') == '2') {
+                displayMessage("Appointment has been cancelled successful!", "success");
+            }
+            if (urlParams.has('success') && urlParams.get('success') == '1') {
+                displayMessage("Appointment booked successfully! Email is sent to your registered email id.", "success");
+            }
+        };
+
+        function displayMessage(message, type) {
+            var messageContainer = document.createElement('div');
+            messageContainer.textContent = message;
+            messageContainer.classList.add('message', type);
+            document.body.insertBefore(messageContainer, document.body.firstChild);
+            setTimeout(function() {
+                messageContainer.remove();
+            }, 3000); // Remove message after 3 seconds
+        }
+
+        // Initialize Bootstrap components
+        $(document).ready(function(){
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
 </head>
 
 <body>
@@ -27,6 +82,7 @@
                     <th>Date</th>
                     <th>Time</th>
                     <th>Location</th>
+                    <th>Cancel Appointment</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,6 +106,7 @@
                             echo "<td>" . $row['apptmt_date'] . "</td>";
                             echo "<td>" . $row['apptmt_time'] . "</td>";
                             echo "<td>" . $row['apptmt_loc'] . "</td>";
+                            echo "<td><a href='?action=delete&apptmt_id=" . $row['apptmt_id'] . "' onclick='return confirm(\"Are you sure you want to cancel this appointment?\")'>Cancel</a></td>";
                             echo "</tr>";
                         }
                     } else {

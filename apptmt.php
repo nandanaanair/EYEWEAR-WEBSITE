@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (mysqli_query($conn, $insertAppointmentQuery)) {
             // echo "Appointment booked successfully! Check your email to view the appointment details.";
-            echo "<script>window.location.href = 'apptmtform.php?success=1';</script>";
+            echo "<script>window.location.href = 'view-apptmt.php?success=1';</script>";
 
             // Send appointment details via email using PHPMailer
             try {

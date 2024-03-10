@@ -22,7 +22,8 @@
 .table th:nth-child(1), /* Appointment ID */
 .table th:nth-child(2), /* Date */
 .table th:nth-child(3), /* Time */
-.table th:nth-child(4) { /* Location */
+.table th:nth-child(4),
+.table th:nth-child(5) { /* Location */
     background-color: #2e180b; /* Replace YourColor with the desired background color */
     color: #ffffff; /* Text color for better visibility */
 }
