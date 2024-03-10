@@ -82,19 +82,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $l_addn = $_POST['l_addn'];
     $r_addn = $_POST['r_addn'];
 
-    // Insert prescription details into the prescription table
-    $stmt = $conn->prepare("INSERT INTO prescription (order_id, l_sph, r_sph, l_cyl, r_cyl, l_axis, r_axis, l_addn, r_addn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("issssssss", $order_id, $l_sph, $r_sph, $l_cyl, $r_cyl, $l_axis, $r_axis, $l_addn, $r_addn);
+    // Check if all prescription fields are empty
+    if (!empty($l_sph) || !empty($r_sph) || !empty($l_cyl) || !empty($r_cyl) || !empty($l_axis) || !empty($r_axis) || !empty($l_addn) || !empty($r_addn)) {
+        // Insert prescription details into the prescription table
+        $stmt = $conn->prepare("INSERT INTO prescription (order_id, l_sph, r_sph, l_cyl, r_cyl, l_axis, r_axis, l_addn, r_addn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("issssssss", $order_id, $l_sph, $r_sph, $l_cyl, $r_cyl, $l_axis, $r_axis, $l_addn, $r_addn);
 
-    // Check if the statement executed successfully
-    if ($stmt->execute()) {
-        echo "<script>window.location.href='product-details.php?id=$prod_id&success=2'</script>";
+        // Check if the statement executed successfully
+        if ($stmt->execute()) {
+            // Redirect to the success page
+            echo "<script>window.location.href='product-details.php?id=$prod_id&success=2'</script>";
+        } else {
+            // Handle error
+            echo "<script>window.location.href='product-details.php?id=$prod_id&error=3'</script>";
+        }
+
+        // Close the statement and database connection
+        $stmt->close();
     } else {
-        echo "<script>window.location.href='product-details.php?id=$prod_id&error=3'</script>";
+        // Redirect to the success page as prescription fields are empty
+        echo "<script>window.location.href='product-details.php?id=$prod_id&success=2'</script>";
     }
-
-    // Close the statement and database connection
-    $stmt->close();
 }
 
 // Close database connection

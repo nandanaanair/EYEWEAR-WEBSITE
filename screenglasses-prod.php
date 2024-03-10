@@ -23,12 +23,43 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha384-4mOC5PJSq1Yq3Jasv4G1kAqQ6owlsOfQ1uHRzBy6ZYgdT1pef0nGhHPfD5QZbb3J" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/view-apptmt.css">
     <!-- <script src="./js/products.js"></script> -->
-    <title>Screen Glasses</title> <!-- Set the web page title here -->
+    <title>Screen Glasses</title> 
     <style>
         .card {
             margin-bottom: 20px;
         }
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #7caf4c;
+            color: white;
+        }
+        .error {
+            background-color: #943726;
+            color: white;
+        }
     </style>
+    <script>
+    window.onload = function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('success') && urlParams.get('success') == '1') {
+                displayMessage("Product added to cart successfully!", "success");
+            }
+        };
+
+        function displayMessage(message, type) {
+            var messageContainer = document.createElement('div');
+            messageContainer.textContent = message;
+            messageContainer.classList.add('message', type);
+            document.body.insertBefore(messageContainer, document.body.firstChild);
+            setTimeout(function() {
+                messageContainer.remove();
+            }, 3000); // Remove message after 3 seconds
+        }
+    </script>
 </head>
 
 <body>
@@ -56,8 +87,8 @@ $conn->close();
 
         <div class="col-md-9">
         <div class="row">
-        <h2 class="mt-4 mb-3">Screen Glasses</h2>
-        <br>
+        <h2 class="mt-4 mb-5">Screen Glasses</h2>
+        <br><br>
         <div id="productContainer">
         <div class="row">
             <?php
@@ -75,12 +106,21 @@ $conn->close();
                                 <img src="placeholder.jpg" class="card-img-top" alt="Product Image">
                             <?php } ?>
                             <div class="card-body">
+                                <div style="display: flex; justify-left: space-between;">
                                 <h5 class="card-title"><?php echo $row["prod_name"]; ?></h5>
-                                <p class="card-text"><?php echo $row["prod_description"]; ?></p>
-                                <p class="card-text">Price: <?php echo $row["prod_price"]; ?></p>
-                                <p class="card-text">Brand: <?php echo $row["prod_brand"]; ?></p>
-                                <!-- Add link to view product details -->
-                                <a href="product-details.php?id=<?php echo $row['prod_id']; ?>" class="btn btn-primary">View Details</a>
+                                <h6 class="card-text"><br><b>₹<?php echo $row["prod_price"]; ?></b></h6>
+                                </div>
+                                <!-- <p class="card-text"><?php echo $row["prod_description"]; ?></p> -->
+                                <p class="card-text"><i><?php echo $row["prod_brand"]; ?></i></p>
+                                <hr>
+                                <a href="product-details.php?id=<?php echo $row['prod_id']; ?>" style="color: black; text-decoration: underline;"><b>View Details</b></a>
+                                <br><br>
+                                <form action="add-to-cart.php" method="POST">
+                                <a href="checkout-form.php?prod_id=<?php echo $row['prod_id']; ?>" class="btn btn-primary">Order Now</a>
+                                
+                                    <input type="hidden" name="prod_id" value="<?php echo $row['prod_id']; ?>">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-cart-plus"></i></button>
+                                </form>
                             </div>
                         </div>
                     </div>
